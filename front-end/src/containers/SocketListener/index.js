@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client';
 import {subscribeToPlayerEvents} from './player'
 import {subscribeToHostEvents} from './host'
-import { hostSetRoom, playerJoined, setPlayerName, playerLeft } from 'actions/host'
-import { playerSetRoom } from 'actions/player'
+import { hostSetRoom, playerJoined, playerLeft } from 'actions/host'
+import { playerSetRoom, playerSetSelf } from 'actions/player'
 
 
 class SocketListener extends Component {
@@ -31,13 +31,13 @@ class SocketListener extends Component {
 }
 const mapStateToProps = state => ({
   // count: state.counter.count
+  gameState: state.host.gameState
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  push: (path) => push('/' + path),
+  push: (path) => push( path),
   hostSetRoom,
-  playerSetRoom,
-  setPlayerName,
+  playerSetSelf,
   playerJoined,
   playerLeft
 }, dispatch)

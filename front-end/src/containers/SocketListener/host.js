@@ -28,11 +28,20 @@ function roomGenerated(self, data){
 }
 
 function playerJoined(self, data){
-	self.props.playerJoined(data)
+	// here we need to establish the state of the game and send the user to the correct page when they rejoin
+	
+	data.gameState = self.props.gameState
+	console.log('in', data)
+	socket.emit('host-sending-game-state', data)
+	self.props.playerJoined(data.playerData)
 }
 
 function setPlayerName(self, data){
 	self.props.setPlayerName(data)
+}
+
+function gameEnd(){
+	// clear local storage
 }
 
 

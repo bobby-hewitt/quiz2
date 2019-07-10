@@ -8,7 +8,6 @@ import { toggleUserSelect } from 'actions/player'
 import { Route } from 'react-router'
 import './style.scss'
 import EnterName from './EnterName'
-import SelectTeam from './SelectTeam'
 import WaitingStart from './WaitingStart'
 
 

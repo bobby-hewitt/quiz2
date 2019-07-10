@@ -4,50 +4,50 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import './style.scss'
 import { BackButton, Button, TextInput, BottomContainer } from 'components'
-import { sendName } from 'containers/SocketListener/player'
+import { joinRoom } from 'containers/SocketListener/player'
 
 
 class NameTeam extends Component {
 
 	constructor(props){
 		super(props)
+		const prevData = window.localStorage.quiz ? JSON.parse(window.localStorage.quiz) : false
+		console.log(prevData)
 		this.state = {
-			value: ''
+			name: prevData && prevData.name ? prevData.name : '',
+			roomcode: prevData && prevData.room ? prevData.room : '',
 		}
 	}
 
-	onContinue(name){
-		sendName(
-			{
-
-				room: this.props.room ,
-				name: name
-			}
-		)
+	onContinue(){
+		const { roomcode, name } = this.state
+		joinRoom({room: roomcode, name: name})
 		this.props.push('/p/waiting-start')
 	}
 
-	onChange(value){
-		this.setState({value})
+	onChange(key, e){
+		console.log(key, e.target.value)
+		this.setState({[key]: e.target.value})
 	}
-
-	componentDidMount(){
-		if (window.localStorage && window.localStorage.quiz){
-			// window.localStorage.quiz = JSON.stringify({})
-			let oldData = JSON.parse(window.localStorage.quiz)
-			this.setState({value: oldData.name})
-		}
-	}
-
+	
 	render(){
-		const { value } = this.state
+		const { name, roomcode } = this.state
 		return(
 			<div className="nameTeamContainer">
-				<h4 className="title">What shall we call you?</h4>
+				<h4 className="title">Let's get started</h4>
 				<TextInput 
-					value={value} 
-					onChange={this.onChange.bind(this)}
-					onContinue={this.onContinue.bind(this)}/>
+					placeholder="Name"
+					value={name} 
+					onChange={this.onChange.bind(this, 'name')}
+					/>
+				<TextInput 
+					placeholder="Roomcode"
+					value={roomcode} 
+					onChange={this.onChange.bind(this, 'roomcode')}
+					/>
+				<div>
+					<Button text="lets go" onClick={this.onContinue.bind(this)}/>
+				</div>
 			</div>
 		)
 	}

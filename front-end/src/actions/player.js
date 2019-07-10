@@ -1,7 +1,7 @@
-export const playerSetRoom = (payload) => {
+export const playerSetSelf = (payload) => {
   return dispatch => {
     dispatch({
-      type: 'PLAYER_SET_ROOM',
+      type: 'PLAYER_SET_SELF',
       payload
     })
   }

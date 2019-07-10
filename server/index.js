@@ -7,6 +7,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const auto = require('google-autocomplete');
 //set up environment variables
 require('dotenv').config({path: '.env'})
 var PORT = process.env.PORT || 9000
@@ -40,15 +41,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
-
-
 io.on('connection', function(socket){
 	console.log('socket connected')
 	//set up listeners for all sockets  
 	//All listeners to be prefixed with 'host-' or 'player-'
 	socket.on('host-connected', Host.connected.bind(this, socket))
 	socket.on('player-connected', Player.connected.bind(this, socket))
-  	socket.on('player-set-name', Player.setName.bind(this, socket))
+  	socket.on('host-sending-game-state', Host.sendGameState.bind(this, socket, io))
+  	// socket.on('player-set-name', Player.setName.bind(this, socket))
+  	socket.on('player-submitted-question', Player.submittedQuestion.bind(this, socket))
+  	socket.on('start-game', Player.startGame.bind(this, socket))
   	socket.on('disconnect', disconnect.bind(this, socket));
 });
 

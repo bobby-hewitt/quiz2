@@ -56,3 +56,10 @@ exports.connected = function(socket){
 	// })
 	
 }
+
+exports.sendGameState = (socket, io, data) => {
+	console.log('sending game state', data)
+	// console.log(io)
+	io.to(data.playerData.id).emit('player-joined-room-successfully', data)
+
+}

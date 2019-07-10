@@ -9,12 +9,12 @@ export default class TextInput extends Component {
 
 
 	render(){
-		const { onContinue, value, onChange } = this.props
+		const { onContinue, value, placeholder, onChange } = this.props
 
 
 		return(
 			<div className="textInputContainer">
-				<input type="text" ref="input" value={value} onChange={onChange}/>
+				<input placeholder={placeholder} type="text" ref="input" value={value} onChange={onChange}/>
 				{onContinue &&
 					<div className="continue" onClick={this.onContinue.bind(this)}>
 						<img src={require('assets/images/svg/forward.svg')} />
