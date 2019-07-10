@@ -1,0 +1,31 @@
+.textInputContainer{
+	position: relative;
+	width:275px;
+	margin:auto;
+	input{
+		background:transparent;
+		border:none;
+		border-bottom:1px solid #fff;
+		width:275px;
+		padding:15px 0;
+		color:#fff;
+		text-align: center;
+		font-size:30px;
+		&:focus{
+			outline: none;
+		}
+	}
+	.continue{
+		cursor:pointer;
+		position: absolute;
+		right:0;
+		bottom:0;
+		height:80px;
+		width:50px;
+		display: flex;
+		align-items:center;
+		justify-content: center;
+		border-bottom:1px solid white;
+	}
+
+}

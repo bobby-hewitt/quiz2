@@ -1,0 +1,6 @@
+@mixin row {
+	display: -webkit-flex; /* Safari */
+	display: flex;
+	-webkit-flex-direction: row-reverse; /* Safari 6.1+ */
+	flex-direction: row-reverse; 
+}

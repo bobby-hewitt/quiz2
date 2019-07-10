@@ -1,0 +1,37 @@
+.playerWaitingStartContainer{
+	
+	height: 100%;
+	align-self:center;
+	width:100%;
+	display: flex;
+	flex:1;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	position:absolute;
+	top:50%;
+	transform:translateY(-50%);
+	left:0;
+	.title{
+		margin-bottom:100px;
+		line-height:50px;
+	}
+	.userNumberContainer{
+		padding: 0 16px;
+		height:50px;
+		border-radius: 25px;
+		background:#00000088;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		top:20px;
+		left:20px;
+	}
+	.userNumbers{
+		font-weight: bold;
+		font-size: 14px;
+		margin-left:7px;
+	}
+}

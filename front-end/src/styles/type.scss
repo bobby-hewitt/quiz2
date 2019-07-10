@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans|Nunito+Sans|Open+Sans&display=swap');
+
+body {
+  
+ /*  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+}
+
+
+
+code {
+ 
+}
+
+
+h1,h2,h3,h4,h5,h6{
+	margin:0;
+	font-family: 'Open Sans', sans-serif;
+	color:white;
+	font-weight: bold;
+}
+p{
+	margin:0;
+	font-family: 'Nunito Sans', sans-serif;
+	color:white;
+	
+}
+
+h1{
+	font-size:96px;
+}
+
+h2{
+	font-size:60px;
+}
+
+h3{
+	font-size:48px;
+}
+
+h4{
+	font-size:36px;
+	font-weight: bold!important;
+}
+
+h5{
+	font-size:24px;
+}
+
+h6{
+	font-size:20px;
+}
+
+p{
+	font-size:16px;
+}
