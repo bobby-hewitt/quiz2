@@ -16,5 +16,14 @@ export const toggleUserSelect = (payload) => {
   }
 }
 
+export const setLoading = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'PLAYER_SET_LOADING',
+      payload
+    })
+  }
+}
+
 
 

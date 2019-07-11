@@ -3,8 +3,9 @@ import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import './style.scss'
-import { BackButton, Button, TextInput, BottomContainer } from 'components'
+import { BackButton, Button, TextInput, BottomContainer, ColorText } from 'components'
 import { joinRoom } from 'containers/SocketListener/player'
+import { setLoading } from 'actions/player'
 
 
 class NameTeam extends Component {
@@ -21,20 +22,20 @@ class NameTeam extends Component {
 
 	onContinue(){
 		const { roomcode, name } = this.state
-		joinRoom({room: roomcode, name: name})
-		this.props.push('/p/waiting-start')
+		joinRoom(this, {room: roomcode, name: name})
+		// this.props.push('/p/waiting-start')
 	}
 
 	onChange(key, e){
 		console.log(key, e.target.value)
 		this.setState({[key]: e.target.value})
 	}
-	
+
 	render(){
 		const { name, roomcode } = this.state
 		return(
-			<div className="nameTeamContainer">
-				<h4 className="title">Let's get started</h4>
+			<div className="loginContainer">
+				<ColorText text="Let's get started" letterStyle={{fontSize:'50px'}}/>
 				<TextInput 
 					placeholder="Name"
 					value={name} 
@@ -43,10 +44,11 @@ class NameTeam extends Component {
 				<TextInput 
 					placeholder="Roomcode"
 					value={roomcode} 
+					onContinue={this.onContinue.bind(this)}
 					onChange={this.onChange.bind(this, 'roomcode')}
 					/>
 				<div>
-					<Button text="lets go" onClick={this.onContinue.bind(this)}/>
+					
 				</div>
 			</div>
 		)
@@ -60,7 +62,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  
+  	setLoading
 }, dispatch)
 
 export default connect(

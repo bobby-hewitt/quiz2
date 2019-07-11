@@ -8,6 +8,9 @@ function subscribeToHostEvents(self) {
 	socket.on('player-joined', playerJoined.bind(this, self))
 	socket.on('player-set-name', setPlayerName.bind(this, self))
 	socket.on('player-left', playerLeft.bind(this,self))
+	socket.on('start-game', startGame.bind(this, self))
+	socket.on('send-hints-to-host', showHints.bind(this, self))
+	socket.on('player-answer', playerAnswer.bind(this, self))
 	// socket.on('host-room-code-generated', successJoiningRoom.bind(this, self))
 }
 
@@ -17,6 +20,65 @@ function roomFull(self){
 
 function hostQuit(self){
 	
+}
+
+function playerAnswer(self, data){
+	const { players } = self.props
+	console.log('player answer received', data)
+	self.props.playerAnswerReceived(data)
+	if (allPlayersHaveAnswered(players)){
+		self.props.push('/host/answers')
+	}
+	
+}
+
+function revealScores(self){
+	console.log('reveal scores', self)
+	var players = Object.assign([], self.props.players)
+	var answers = Object.assign([], self.props.question.answers)
+
+	console.log(self.props.players, self.props.question.answers)
+	for (var i = 0; i < answers.length; i++){
+		var correctAnswer = players.find(p => p.answer === answers[i].answer)
+		console.log('correct answer', correctAnswer)
+		if (correctAnswer){
+
+			
+
+			answers[i].show = true
+		}
+	}
+
+	self.props.updateAnswers(answers)
+}
+
+function allPlayersHaveAnswered(players){
+	var answers = 0;
+	for (var i = 0; i < players.length; i++){
+		if (players[i].answer){
+			answers += 1
+		}
+	}
+	return answers === players.length ? true : false
+}
+
+function showHints(self, data){
+	self.props.push('/host/question')
+	self.props.showHints(data)
+}
+
+function startGame(self){
+	self.props.push('/host/instructions')
+}
+
+function sendQuestionInput(self){
+	//this function should push to host holding screen
+	const player = self.props.players[self.props.questionIndex ]
+	const data = {
+		player, 
+		room: self.props.room
+	}
+	socket.emit('host-send-question-input' , data)
 }
 
 function playerLeft(self, data){
@@ -40,6 +102,11 @@ function setPlayerName(self, data){
 	self.props.setPlayerName(data)
 }
 
+function sendAnswerInput(self, data){
+	console.log('sending answer input')
+	socket.emit('host-send-answer-input', self.props.room)
+}
+
 function gameEnd(){
 	// clear local storage
 }
@@ -60,5 +127,7 @@ function joinRoom(data, self){
 
 
 export { 
+	sendAnswerInput,
+	sendQuestionInput,
 	subscribeToHostEvents
 };

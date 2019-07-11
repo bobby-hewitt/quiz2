@@ -1,6 +1,9 @@
-.nameTeamContainer{
+.loginContainer{
 	height:100%;
-
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width:100%;
 	.title{
 		margin-bottom: 100px;
 		// position: absolute;

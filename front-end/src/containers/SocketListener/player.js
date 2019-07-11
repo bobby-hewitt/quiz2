@@ -9,11 +9,37 @@ function subscribeToPlayerEvents(self) {
 	socket.on('player-joined-room-successfully', successJoiningRoom.bind(this, self))
 	socket.on('error-joining-room-no-host', errorJoiningRoom.bind(this, self))
 	socket.on('error-joining-room', errorJoiningRoom.bind(this, self))
-	socket.on('example-listener', successJoiningRoom.bind(this, self))
+	socket.on('waiting', waiting.bind(this, self))
+	socket.on('question-input', questionInput.bind(this, self))
+	socket.on('answer-input', answerInput.bind(this, self))
 }
 
 function roomFull(self){
 	
+}
+
+function waiting(self){
+	self.props.push('/p/waiting')
+}
+
+function questionInput(self){
+	self.props.setLoading(false)
+	self.props.push('/p/question-input')
+}
+function answerInput(self){
+	self.props.setLoading(false)
+	self.props.push('/p/answer-input')
+}
+
+function sendQuestion(self, data){
+	socket.emit('player-submit-question', data)
+	self.props.setLoading(true)
+}
+
+function sendAnswer(self, data){
+	console.log('sending answer', data)
+	socket.emit('player-send-answer', data)
+	self.props.setLoading(true)
 }
 
 function hostQuit(self){
@@ -30,6 +56,7 @@ function successJoiningRoom(self, data){
 	}
 	window.localStorage.quiz = JSON.stringify(localData)
 	self.props.playerSetSelf(data)
+	self.props.setLoading(false)
 	self.props.push('/p/waiting-start')
 }
 
@@ -41,14 +68,20 @@ function startRound(self){
 	
 }
 
+function startGame(room){
+	console.log(room)
+	socket.emit('player-start-game', room)
+}
+
 function gameEnd(){
 	//clear local storage
 }
 
-function joinRoom(data){
+function joinRoom(self, data){
 	const prevId = window.localStorage.quiz ? JSON.parse(window.localStorage.quiz).id : false
 	data.prevId = prevId
 	socket.emit('player-connected', data)
+	self.props.setLoading(true)
 }
 
 function sendName(data){
@@ -67,7 +100,7 @@ function sendName(data){
 
 function emit(self, data){
 	if (self){
-		data.payload.room = self.props.room 
+		data.payload.room = self.props.playerRoom 
 	} else if(!data.payload.room){
 		return console.warn(`emitting ${data.action}, no room, must attach this manually`)
 
@@ -77,6 +110,9 @@ function emit(self, data){
 }
 
 export { 
+	startGame,
 	joinRoom, 
+	sendQuestion,
+	sendAnswer,
 	subscribeToPlayerEvents
 };

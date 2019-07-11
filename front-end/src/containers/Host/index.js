@@ -5,17 +5,37 @@ import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Route } from 'react-router'
-import { Player, Grid } from 'components'
+import Instructions from './Instructions'
+import Question from './Question'
+import PageTitle from './PageTitle'
+import { PlayerGrid } from 'components'
 
+import { sendQuestionInput } from 'containers/SocketListener/host'
 class Host extends Component {
+
+	instructionsComplete(){
+		console.log('instructions complete')
+		sendQuestionInput(this)
+	}
+
+	componentWillMount(){
+		if (!this.props.room){
+			this.props.push('/host')
+		}
+	}
+
 	render(){
-		const { room , players} = this.props
+		const { room , players, question} = this.props
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
-				<h4><span className="secondary">Room code: </span>{room? room.short : 'no room'}</h4>
-				<Grid players={players}/>
-				
+				<div className="hostMainContainer">
+					<Route exact path="/host" render={() => <PageTitle  title="What would yougle do" room={room}/>} />
+					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
+					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} isQuestion/>} />
+					<Route exact path="/host/answers" render={() => <Question question={question.question} answers={question.answers} isAnswers/>} />
+				</div>
+				<PlayerGrid players={players} title="What would yougle do" room={room}/>	
 			</div>
 		)
 	}
@@ -23,7 +43,9 @@ class Host extends Component {
 
 const mapStateToProps = state => ({
 	room: state.host.room,
-	players: state.host.players
+	players: state.host.players,
+	questionIndex: state.host.questionIndex,
+	question:state.host.question
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

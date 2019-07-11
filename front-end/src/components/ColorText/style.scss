@@ -1,0 +1,27 @@
+.colorTextContainer{
+		display: flex;
+		flex-direction: row;
+		letter-spacing:0.5px;;
+		padding-bottom:10px;
+		opacity:1!important;
+		.letterTitle{
+			font-size: 80px;
+			font-weight: light!important;
+			opacity:1!important;
+			&.blue{
+				color:#4285F4;
+			}
+			&.red{
+				color:#DB4437;
+			}
+			&.green{
+				color:#0F9D58;
+			}
+			&.yellow{
+				color: #F4B400;
+			}
+		}
+		.space{
+				width:10px;
+		}
+	}

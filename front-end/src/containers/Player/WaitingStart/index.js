@@ -4,20 +4,21 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ReactComponent as User } from 'assets/images/svg/user.svg'
 import './style.scss'
-import { Button } from 'components'
-
+import { Button, ColorText } from 'components'
+import { startGame } from 'containers/SocketListener/player'
 
 
 class WaitingStart extends Component {
 
 	onClick(){
-		this.props.push('/p/select-team')
+		startGame(this.props.room)
+		// this.props.push('/p/select-team')
 	}
 	render(){
-		const { users } = this.props
 		return(
 			<div className="playerWaitingStartContainer">
-				<h4 className="title">Sit tight, Let us know when everyone is in.</h4>
+			<ColorText text="Sit tight" letterStyle={{fontSize:'50px'}}/>
+				<h4 className="title">Let us know when everyone is in.</h4>
 				<Button text="Everybody's in" onClick={this.onClick.bind(this)}/>
 			</div>
 
@@ -26,8 +27,7 @@ class WaitingStart extends Component {
 }
 
 const mapStateToProps = state => ({
-	users: state.player.users,
-	usersSelected: state.player.usersSelected
+	room: state.player.room
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -44,7 +44,6 @@ exports.connected = function(socket){
 
 	function createRoom(){
 		Rooms.create({short: code, long: socket.id}, (err, room)=> {
-			console.log('host connected', room)
 			socket.emit('host-room-generated', room)
 		})
 	}
@@ -58,8 +57,15 @@ exports.connected = function(socket){
 }
 
 exports.sendGameState = (socket, io, data) => {
-	console.log('sending game state', data)
-	// console.log(io)
 	io.to(data.playerData.id).emit('player-joined-room-successfully', data)
+}
 
+exports.sendQuestionInput = (socket, io, data) => {
+	console.log('send question', data)
+	socket.broadcast.to(data.room.long).emit('waiting')
+	io.to(data.player.id).emit('question-input')
+}
+
+exports.sendAnswerInput = ( socket, io, data) => {
+	socket.broadcast.to(data.long).emit('answer-input')
 }

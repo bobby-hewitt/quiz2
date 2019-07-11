@@ -20,6 +20,7 @@ export default class TextInput extends Component {
 						<img src={require('assets/images/svg/forward.svg')} />
 					</div>
 				}
+				
 			</div>
 		)
 	}

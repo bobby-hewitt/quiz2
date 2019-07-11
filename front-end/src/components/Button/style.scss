@@ -1,5 +1,5 @@
 .buttonContainer{
-	background:#fff;
+	background:#4285F4;
 	height:50px;
 	padding:0 55px;
 	display: inline-block;
@@ -7,10 +7,13 @@
 	align-items: center;
 	justify-content: center;
 	pointer-events:auto;
+	box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+	cursor:pointer;
 	p{
+		margin-top:-2px;
 		line-height: 50px;
 		font-weight: bold;
 		font-size: 20px;
-		color:#000;
+		color:#fff;
 	}
 }

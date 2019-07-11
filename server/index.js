@@ -46,12 +46,14 @@ io.on('connection', function(socket){
 	//set up listeners for all sockets  
 	//All listeners to be prefixed with 'host-' or 'player-'
 	socket.on('host-connected', Host.connected.bind(this, socket))
+	socket.on('host-sending-game-state', Host.sendGameState.bind(this, socket, io))
+	socket.on('host-send-question-input', Host.sendQuestionInput.bind(this, socket, io))
 	socket.on('player-connected', Player.connected.bind(this, socket))
-  	socket.on('host-sending-game-state', Host.sendGameState.bind(this, socket, io))
-  	// socket.on('player-set-name', Player.setName.bind(this, socket))
-  	socket.on('player-submitted-question', Player.submittedQuestion.bind(this, socket))
-  	socket.on('start-game', Player.startGame.bind(this, socket))
+  	socket.on('host-send-answer-input', Host.sendAnswerInput.bind(this, socket, io))
+  	socket.on('player-start-game', Player.startGame.bind(this, socket, io))
+  	socket.on('player-submit-question', Player.submitQuestion.bind(this, socket, io))
   	socket.on('disconnect', disconnect.bind(this, socket));
+  	socket.on('player-send-answer', Player.submitAnswer.bind(this, socket))
 });
 
 
@@ -85,4 +87,57 @@ http.listen(PORT, function(err){
 
 
 
+function test(){
+	const query = 'what in the world'
+	auto.getQuerySuggestions(query, function(err, rawSuggestions) {
+		if (err ) return console.log('error',err,'error')
+		validateSuggestions(rawSuggestions, query).then((suggestions) => {
+			console.log('resolved')
+			for (var i = 0; i < suggestions.length; i++){
+				suggestions[i].answer = cleanAnswer(suggestions[i].suggestion, query)
+				suggestions[i].hint = createHint(suggestions[i].answer)
+			}
+
+			console.log(suggestions)
+		})
+		
+	})
+}
+
+function validateSuggestions(suggestions, query){
+	return new Promise((resolve, reject) => {
+		var trimmed = []
+		for (var i = 0; i < suggestions.length; i++){
+			if (suggestions[i].suggestion.indexOf(query) === 0){
+				trimmed.push(suggestions[i])
+			}
+		}
+		resolve(trimmed.slice(0,10))
+	})
+}
+
+function cleanAnswer(suggestion, query){
+	let answer = suggestion.replace(query, '')
+	if (answer[0] === ' '){
+		answer = answer.substring(1);
+	}
+	answer = answer.replace(/[^\w\s]/gi, '')
+	return answer.toLowerCase()
+}
+
+function createHint(answer){
+	let hint = []
+	for (var j = 0; j < answer.length; j++){
+		if (answer[j] !== ' '){
+			hint.push('_')
+		} else {
+			hint.push(' ')
+		}
+	}
+	return hint
+}
+
+
+
+test()
 

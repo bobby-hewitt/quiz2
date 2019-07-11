@@ -1,11 +1,12 @@
 .playerContainer{
 	
 	width:100%;
-	background: linear-gradient(to right, #0F2027, #203A43,#2c5364);
+	
 	z-index: -2;
 	position: absolute;
 	top:0;
 	left:0;
+	
 	box-sizing: border-box;
 	.title{
 		text-align: center;

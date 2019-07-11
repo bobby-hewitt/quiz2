@@ -7,7 +7,7 @@ const Routes = () => (
   <div>
     <main>
         <Route path="/p" component={Player} />
-        <Route exact path="/host" component={Host} />
+        <Route path="/host" component={Host} />
     </main>
   </div>
 )

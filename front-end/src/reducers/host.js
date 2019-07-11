@@ -1,7 +1,13 @@
 const initialState = {
   room: null,
   players: [],
-  gameState:'welcome'
+  gameState:'welcome',
+  questionIndex: 0,
+  round: 1,
+  question: {
+    question: '',
+    answers: []
+  },
 }
 
 //game states 
@@ -11,7 +17,7 @@ const initialState = {
 // answer entry 
 // question results
 // scores 
-// 
+// end
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -25,7 +31,6 @@ export default (state = initialState, action) => {
       var newPlayers = Object.assign([], state.players)
       action.payload.isConnected = true
       var disconnectedPlayerFound = false 
-      console.log(action.payload)
       for (var i = 0; i < newPlayers.length; i++ ){
         if (action.payload.prevId === newPlayers[i].id && !newPlayers[i].isConnected){
             console.log('reconnecting existing player')
@@ -36,6 +41,7 @@ export default (state = initialState, action) => {
       }
       if (!disconnectedPlayerFound){
         console.log('creating new player')
+        action.payload.score = 0
         newPlayers.push(action.payload)
       }
       return {
@@ -47,16 +53,65 @@ export default (state = initialState, action) => {
       var newPlayers = Object.assign([], state.players)
       for (var i = 0; i < newPlayers.length; i++){
         if (newPlayers[i].id === action.payload.id){
-            console.log('disconnecting', newPlayers[i])
             newPlayers[i].isConnected = false
-        
         }
-        console.log('disconnecting', newPlayers[i])
       }
-      console.log(newPlayers)
       return {
         ...state,
         players: newPlayers
+      }
+
+    case 'HOST_SET_GAME_STATE':
+      return {
+        ...state,
+        gameState: action.payload,
+      }
+    case 'HOST_NEXT_QUESTION':
+      const stateObj = state.questionIndex === state.players.length -1 ? {
+        ...state,
+        gameState: 'end'
+      } : {
+        ...state,
+        questionIndex: state.questionIndex + 1,
+      }
+      return stateObj
+
+    case 'HOST_SHOW_HINTS':
+      return {
+        ...state,
+        question: action.payload
+      }
+    case 'HOST_PLAYER_ANSWER_RECEIVED':
+    console.log('in player answered reducer')
+      var newPlayers = Object.assign([], state.players)
+      for(var i = 0; i < newPlayers.length; i++){
+        if (action.payload.id === newPlayers[i].id){
+          
+          newPlayers[i].answer = action.payload.answer
+        }
+      }
+      return {
+        ...state,
+        players: newPlayers
+      }
+    case 'HOST_UPDATE_ANSWERS':
+    console.log('updating answers', action.payload)
+      return {
+        ...state,
+        question: {
+          question: state.question.question,
+          answers: action.payload
+        }
+      }
+    case 'HOST_UPDATE_PLAYERS':
+      return {
+        ...state,
+        players: action.payload
+      }
+    case 'HOST_NEXT_ROUND':
+      return {
+        ...state,
+        round: state.round + 1
       }
     default:
       return state

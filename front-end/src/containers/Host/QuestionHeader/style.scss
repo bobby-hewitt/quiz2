@@ -1,0 +1,20 @@
+.answersHeaderContainer{
+	height:120px;
+	width:50vw;
+	.answersHeaderInner{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		/* justify-content: center; */
+		h4{
+			color:#000;
+		}
+		.answerTitle{
+			opacity:0.5;
+			margin: 0px 5px 0 20px;
+		}
+	}
+	
+	/*background:red;*/
+
+}

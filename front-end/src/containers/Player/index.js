@@ -9,7 +9,10 @@ import { Route } from 'react-router'
 import './style.scss'
 import EnterName from './EnterName'
 import WaitingStart from './WaitingStart'
-
+import Waiting from './Waiting'
+import QuestionInput from './QuestionInput'
+import AnswerInput from './AnswerInput'
+import Loading from './Loading'
 
 class Player extends Component {
 
@@ -27,22 +30,27 @@ class Player extends Component {
 		}
 	}
 	render(){
-		const { users, usersSelected }= this.props
+		const { loading }= this.props
 		return(
 			<div className="playerContainer">
 				<SocketListener />
-					<div className="routeContentContainer">
-						<Route exact path="/p" render={() => <EnterName push={this.changeScene.bind(this)}/>} />
-						<Route exact path="/p/waiting-start" render={() => <WaitingStart push={this.changeScene.bind(this)}/>} />
-					</div>
+				<div className="routeContentContainer">
+					<Route exact path="/p" render={() => <EnterName push={this.changeScene.bind(this)}/>} />
+					<Route exact path="/p/waiting-start" render={() => <WaitingStart push={this.changeScene.bind(this)}/>} />
+					<Route exact path="/p/waiting" render={() => <Waiting />} />
+					<Route exact path="/p/question-input" render={() => <QuestionInput />} />
+					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
+				</div>
+				{loading && 
+					<Loading />
+				}
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => ({
-	users: state.player.users,
-	usersSelected: state.player.usersSelected
+	loading:state.player.loading
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
