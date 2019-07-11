@@ -29,6 +29,7 @@ class SocketListener extends Component {
     )
   }
 }
+
 const mapStateToProps = state => ({
   // count: state.counter.count
   gameState: state.host.gameState,

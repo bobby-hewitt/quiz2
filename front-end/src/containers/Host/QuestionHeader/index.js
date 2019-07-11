@@ -94,6 +94,7 @@ class QuestionHeader extends Component {
 
 	nextRound(){
 		const { round, questionIndex, players } = this.props
+
 		const moreAnswersAvaliable = this.moreAnswersAvaliable()
 		if (!moreAnswersAvaliable || round === 3){
 			//next question input
@@ -103,7 +104,13 @@ class QuestionHeader extends Component {
 			//perform reset
 		} else {
 			//next round
+
 			this.props.setRound(round + 1)
+			var newPlayers = Object.assign([], players)
+			for(var i = 0; i < newPlayers.length; i++){
+				newPlayers[i].answer = false
+			}
+			this.props.updatePlayers(newPlayers)
 			sendAnswerInput(this, this.props.room)
 			this.props.push('/host/question')
 		}

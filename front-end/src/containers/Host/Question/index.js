@@ -8,7 +8,7 @@ export default class Question extends Component {
 		return(
 			<div className="questionContainer">
 				{isQuestion &&
-					<ColorText text="Fill in the blanks" containerStyle={{height:'120px'}}/>
+					<ColorText text="Fill in the blanks" containerStyle={{height:'150px', marginBottom:'20px'}}/>
 				}
 				{isAnswers &&
 					<QuestionHeader text="Fill in the blanks" />
@@ -24,6 +24,13 @@ export default class Question extends Component {
 						return (
 							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'}`}>
 								{answer && answer.hint && answer.hint.map((letter, j) => {
+									if (j === 0){
+										return(
+											<p key={`${i}${j}`}className={`hintLetter ${letter === ' ' && 'space'}`}>
+												{answer.answer[0]}
+											</p>
+										)
+									}
 									return(
 										<p key={`${i}${j}`}className={`hintLetter ${letter === ' ' && 'space'}`}>
 											{letter}

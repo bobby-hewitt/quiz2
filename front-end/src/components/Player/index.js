@@ -12,9 +12,7 @@ export default class Player extends Component {
 					
 						<p>{name && name[0] && name[0].toUpperCase() ? name[0].toUpperCase() : '?'}</p>
 					
-					{/*hasSubmitted && 
-						<p className="check">✅</p>
-					*/}
+					
 
 				</div>
 				<p className="name">{name || `Player ${index + 1}`}</p>
