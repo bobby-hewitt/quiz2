@@ -172,6 +172,8 @@ class QuestionHeader extends Component {
 			players[i].hasSubmitted = false
 		}
 		this.props.updatePlayers(newPlayers)
+		this.props.setRound(1)
+		this.props.nextQuestion(0)
 		endGame(this)
 	}
 

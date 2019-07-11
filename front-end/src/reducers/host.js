@@ -69,7 +69,7 @@ export default (state = initialState, action) => {
     case 'HOST_NEXT_QUESTION':
       return {
         ...state,
-        questionIndex: state.questionIndex + 1,
+        questionIndex: action.payload === 0 ? 0 : state.questionIndex + 1,
       }
      
 

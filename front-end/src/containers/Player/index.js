@@ -31,7 +31,7 @@ class Player extends Component {
 		}
 	}
 	render(){
-		const { loading }= this.props
+		const { loading, room }= this.props
 		return(
 			<div className="playerContainer">
 				<SocketListener />
@@ -41,7 +41,7 @@ class Player extends Component {
 					<Route exact path="/p/waiting" render={() => <Waiting />} />
 					<Route exact path="/p/question-input" render={() => <QuestionInput />} />
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
-					<Route exact path="/p/end" render={() => <End />} />
+					<Route exact path="/p/end" render={() => <End room={room}/>} />
 				</div>
 				{loading && 
 					<Waiting />
@@ -52,7 +52,8 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-	loading:state.player.loading
+	loading:state.player.loading,
+	room:state.player.room
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
