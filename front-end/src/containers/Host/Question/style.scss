@@ -74,6 +74,9 @@
 				line-height: 30px;
 
 				color:#676767;
+				.undiscovered{
+					color:#DB4437
+				}
 			}
 			.hintLetter{
 				height:30px;
@@ -90,5 +93,8 @@
 				}
 			}
 		}
+	}
+	.undiscovered{
+		color:#DB4437!important;
 	}
 }

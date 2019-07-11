@@ -12,10 +12,16 @@ function subscribeToPlayerEvents(self) {
 	socket.on('waiting', waiting.bind(this, self))
 	socket.on('question-input', questionInput.bind(this, self))
 	socket.on('answer-input', answerInput.bind(this, self))
+	socket.on('end-game', endGame.bind(this, self))
 }
 
 function roomFull(self){
 	
+}
+
+function endGame(self){
+	self.props.setLoading(false)
+	self.props.push('/p/end')
 }
 
 function waiting(self){

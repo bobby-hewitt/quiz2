@@ -7,3 +7,10 @@ html{
 	margin:0;
 	padding:0;
 }
+
+.appContainers{
+	max-height:100vh;
+	max-width:100vw;
+	overflow: hidden;
+	z-index: -1;
+}

@@ -67,14 +67,11 @@ export default (state = initialState, action) => {
         gameState: action.payload,
       }
     case 'HOST_NEXT_QUESTION':
-      const stateObj = state.questionIndex === state.players.length -1 ? {
-        ...state,
-        gameState: 'end'
-      } : {
+      return {
         ...state,
         questionIndex: state.questionIndex + 1,
       }
-      return stateObj
+     
 
     case 'HOST_SHOW_HINTS':
       return {
@@ -86,7 +83,7 @@ export default (state = initialState, action) => {
       var newPlayers = Object.assign([], state.players)
       for(var i = 0; i < newPlayers.length; i++){
         if (action.payload.id === newPlayers[i].id){
-          
+          newPlayers[i].hasSubmitted = true
           newPlayers[i].answer = action.payload.answer
         }
       }
@@ -108,10 +105,15 @@ export default (state = initialState, action) => {
         ...state,
         players: action.payload
       }
-    case 'HOST_NEXT_ROUND':
+    case 'HOST_SET_ROUND':
       return {
         ...state,
-        round: state.round + 1
+        round: action.payload
+      }
+    case 'HOST_SET_FINAL_PLAYERS':
+      return {
+        ...state,
+        finalPlayers: action.payload
       }
     default:
       return state

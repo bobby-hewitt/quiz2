@@ -35,9 +35,10 @@ export default class Question extends Component {
 							</div>
 						)
 					} else {
+						console.log(answer)
 						return(
 							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'}`}>
-								<p className="revealedAnswer">{answer.answer}</p>
+								<p className={`revealedAnswer ${answer.isUndiscovered && 'undiscovered'}`}>{answer.answer}</p>
 							</div>
 						)
 					}

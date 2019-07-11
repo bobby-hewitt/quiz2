@@ -46,10 +46,10 @@ export const updateAnswers = (payload) => {
   }
 }
 
-export const nextRound = (payload) => {
+export const setRound = (payload) => {
   return dispatch => {
     dispatch({
-      type: 'HOST_NEXT_ROUND',
+      type: 'HOST_SET_ROUND',
       payload
     })
   }
@@ -75,6 +75,14 @@ export const playerLeft = (payload) => {
 }
 
 
+export const setFinalPlayers = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'HOST_SET_FINAL_PLAYERS',
+      payload
+    })
+  }
+}
 
 export const showHints = (payload) => {
   return dispatch => {

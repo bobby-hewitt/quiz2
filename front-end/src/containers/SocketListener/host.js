@@ -71,6 +71,11 @@ function startGame(self){
 	self.props.push('/host/instructions')
 }
 
+function endGame(self){
+	self.props.push('/host/end')
+	socket.emit('host-end-game', self.props.room)
+}
+
 function sendQuestionInput(self){
 	//this function should push to host holding screen
 	const player = self.props.players[self.props.questionIndex ]
@@ -127,6 +132,7 @@ function joinRoom(data, self){
 
 
 export { 
+	endGame,
 	sendAnswerInput,
 	sendQuestionInput,
 	subscribeToHostEvents

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import './style.scss'
-
+import { ColorText } from 'components'
 export default class Waiting extends Component {
 	render(){
 		return(
 			<div className="waitingContainer">
-			<h4>Waiting</h4>
+			<ColorText text="waiting" letterStyle={{fontSize:'50px'}}/>
 			</div>
 		)
 	}

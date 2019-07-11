@@ -50,6 +50,7 @@ io.on('connection', function(socket){
 	socket.on('host-send-question-input', Host.sendQuestionInput.bind(this, socket, io))
 	socket.on('player-connected', Player.connected.bind(this, socket))
   	socket.on('host-send-answer-input', Host.sendAnswerInput.bind(this, socket, io))
+  	socket.on('host-end-game', Host.endGame.bind(this, socket, io))
   	socket.on('player-start-game', Player.startGame.bind(this, socket, io))
   	socket.on('player-submit-question', Player.submitQuestion.bind(this, socket, io))
   	socket.on('disconnect', disconnect.bind(this, socket));

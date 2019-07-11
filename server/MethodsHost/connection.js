@@ -60,6 +60,10 @@ exports.sendGameState = (socket, io, data) => {
 	io.to(data.playerData.id).emit('player-joined-room-successfully', data)
 }
 
+exports.endGame = (socket, io, data) => {
+	socket.broadcast.to(data.long).emit('end-game')
+}
+
 exports.sendQuestionInput = (socket, io, data) => {
 	console.log('send question', data)
 	socket.broadcast.to(data.room.long).emit('waiting')

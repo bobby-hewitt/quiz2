@@ -18,12 +18,17 @@ class AnswerInput extends Component {
 	onContinue(){
 		const { answer } = this.state
 		const { room, id } = this.props
+
 		const data = {
 			answer: answer.toLowerCase(),
 			room,
 			id
 		}
-		sendAnswer(this, data)
+		this.setState({answer: ''}, () => {
+			sendAnswer(this, data)
+		})
+		
+
 	}
 
 	onChange(key, e){

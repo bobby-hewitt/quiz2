@@ -10,6 +10,7 @@ import './style.scss'
 import EnterName from './EnterName'
 import WaitingStart from './WaitingStart'
 import Waiting from './Waiting'
+import End from './End'
 import QuestionInput from './QuestionInput'
 import AnswerInput from './AnswerInput'
 import Loading from './Loading'
@@ -40,9 +41,10 @@ class Player extends Component {
 					<Route exact path="/p/waiting" render={() => <Waiting />} />
 					<Route exact path="/p/question-input" render={() => <QuestionInput />} />
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
+					<Route exact path="/p/end" render={() => <End />} />
 				</div>
 				{loading && 
-					<Loading />
+					<Waiting />
 				}
 			</div>
 		)

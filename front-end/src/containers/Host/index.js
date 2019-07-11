@@ -8,6 +8,8 @@ import { Route } from 'react-router'
 import Instructions from './Instructions'
 import Question from './Question'
 import PageTitle from './PageTitle'
+import QuestionInput from './QuestionInput'
+import End from './End'
 import { PlayerGrid } from 'components'
 
 import { sendQuestionInput } from 'containers/SocketListener/host'
@@ -16,6 +18,7 @@ class Host extends Component {
 	instructionsComplete(){
 		console.log('instructions complete')
 		sendQuestionInput(this)
+		this.props.push('/host/question-input')
 	}
 
 	componentWillMount(){
@@ -25,7 +28,7 @@ class Host extends Component {
 	}
 
 	render(){
-		const { room , players, question} = this.props
+		const { room , players, question, questionIndex} = this.props
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -34,6 +37,8 @@ class Host extends Component {
 					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
 					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} isQuestion/>} />
 					<Route exact path="/host/answers" render={() => <Question question={question.question} answers={question.answers} isAnswers/>} />
+					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
+					<Route exact path="/host/end" render={() => <End />} />
 				</div>
 				<PlayerGrid players={players} title="What would yougle do" room={room}/>	
 			</div>
@@ -45,7 +50,7 @@ const mapStateToProps = state => ({
 	room: state.host.room,
 	players: state.host.players,
 	questionIndex: state.host.questionIndex,
-	question:state.host.question
+	question:state.host.question,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
