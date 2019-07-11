@@ -15,7 +15,7 @@ class QuestionHeader extends Component {
 	constructor(props){
 		super(props)
 		this.playerDuration = 6000;
-		this.answerDuration = 1000;
+		this.answerDuration = 600;
 		this.timeouts = []
 		this.state = {
 			showAnswer: false,
