@@ -58,9 +58,7 @@ exports.connected = function(socket){
 	
 }
 
-exports.showAnswerInput = (socket, io, data) => {
-	io.to(data.long).emit('answer-input')
-}
+
 
 exports.sendGameState = (socket, io, data) => {
 	io.to(data.playerData.id).emit('player-joined-room-successfully', data)
@@ -74,6 +72,10 @@ exports.sendQuestionInput = (socket, io, data) => {
 	console.log('send question', data)
 	socket.broadcast.to(data.room.long).emit('waiting')
 	io.to(data.player.id).emit('question-input')
+}
+
+exports.sendPlayerWaiting = (socket, io, data) => {
+	socket.broadcast.to(data.long).emit('waiting')
 }
 
 exports.sendAnswerInput = ( socket, io, data) => {

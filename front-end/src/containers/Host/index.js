@@ -11,7 +11,7 @@ import PageTitle from './PageTitle'
 import QuestionInput from './QuestionInput'
 import End from './End'
 import { PlayerGrid } from 'components'
-
+import { setViewResponses, setGameState } from 'actions/host'
 import { sendQuestionInput } from 'containers/SocketListener/host'
 class Host extends Component {
 
@@ -28,7 +28,7 @@ class Host extends Component {
 	}
 
 	render(){
-		const { room , players, question, questionIndex, isAnswers} = this.props
+		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds} = this.props
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -40,7 +40,7 @@ class Host extends Component {
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="What would yougle do" room={room}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
-					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room}/>} />
+					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
@@ -59,11 +59,13 @@ const mapStateToProps = state => ({
 	players: state.host.players,
 	questionIndex: state.host.questionIndex,
 	question:state.host.question,
+	sounds: state.sounds,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push: (path) => push(path),
-
+  setViewResponses,
+  setGameState,
 }, dispatch)
 
 export default connect(

@@ -23,6 +23,20 @@ export default class Response extends Component {
 		})
 	}
 
+	componentWillReceiveProps(np){
+		if (np.showRightWrong && !this.props.showRightWrong){
+			setTimeout(() => {
+				if (np.showRightWrong === 'right'){
+					var audio = new Audio(require('assets/sounds/correct.mp3'));
+					audio.play()
+				} else {
+					var audio = new Audio(require('assets/sounds/wrong.wav'));
+					audio.play()
+				}
+			},100)
+		}
+	}
+
 	componentWillUnmount(){
 		for(var i = 0; i < this.timeouts.length; i++){
 			clearTimeout(this.timeouts[i])
@@ -34,7 +48,7 @@ export default class Response extends Component {
 			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'}`}>
 				<Player color={color}{...player} />
 				{!(bonus || bonus === 0) &&
-				<InputStyleText primaryText={player.answer} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
+				<InputStyleText primaryText={player.answer || '❌'} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
 				}
 					<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>
 				

@@ -2,20 +2,40 @@ import React, { Component } from 'react'
 import './style.scss'
 import { ColorText, InputStyleText} from 'components'
 import QuestionHeader from '../QuestionHeader'
-import { showAnswerInput } from 'containers/SocketListener/host'
+import { sendAnswerInput, endCountdown } from 'containers/SocketListener/host'
 export default class Question extends Component {
 
 	constructor(props){
 		super(props)
 		this.timeout = false
+		this.countdownTimeout = false
 		this.state = {
-			visible: -1
+			visible: -1,
+			countdown: false,
+			
 		}
 	}
 
 	componentDidMount(){
 		// this.showAnswer(0)
+	}
 
+	countdown(isStart){
+		if (isStart) this.setState({countdown: 30})
+		this.countdownTimeout = setTimeout(() => {
+			if (this.state.countdown > 0){
+				this.setState({countdown: this.state.countdown - 1})
+				this.countdown()
+				if (this.state.countdown === 11){
+					this.props.timerSound.play()
+				}
+			} else {
+				this.props.timerSound.pause();
+    			this.props.timerSound.currentTime = 0;
+				//end countdown
+				endCountdown(this, this.props.room)
+			}
+		},1000)
 	}
 
 	componentWillReceiveProps(np){
@@ -23,12 +43,18 @@ export default class Question extends Component {
 			setTimeout(() => {
 				this.showAnswer(0)
 			},100)
-
+		}
+		if (this.props.isAnswers !== np.isAnswers){
+			if (np.isAnswers){
+				clearTimeout(this.countdownTimeout)
+				this.setState({countdown: false})
+			} else {
+				this.countdown(true)
+			}
 		}
 	}
 
 	showAnswer(index){
-
 		const { answers } = this.props
 		console.log(answers)
 		this.timeout = setTimeout(() => {
@@ -37,7 +63,8 @@ export default class Question extends Component {
 				if (answers && index < answers.length -1){
 					this.showAnswer(index +1)
 				} else {
-					showAnswerInput(this.props.room)
+					this.countdown(true)
+					sendAnswerInput(this, this.props.room)
 				}
 			})
 
@@ -45,6 +72,7 @@ export default class Question extends Component {
 	}
 
 	componentWillUnmount(){
+		clearTimeout(this.countdownTimeout)
 		clearTimeout(this.timeout)
 	}
 
@@ -56,10 +84,13 @@ export default class Question extends Component {
 		const { question, answers, isQuestion, isAnswers, players } = this.props
 		return(
 			<div className="questionContainer">
+				{(this.state.countdown || this.state.countdown === 0) &&
+					<p className="countdown"><span className="secondary">Time left: </span>{this.state.countdown}</p>
+				}
 				<div className="questionInfoContainer">
 				
 				
-					<QuestionHeader text="Fill in the blanks"/>
+					<QuestionHeader text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)}/>
 				
 				</div>
 				<div className="questionAndAnswerContainer">

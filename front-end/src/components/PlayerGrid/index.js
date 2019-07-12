@@ -24,7 +24,7 @@ export default class Grid extends Component {
 					<div className="gridIcon">
 						{grids.map((g, i) => {
 							return (
-								<div className="gridIconSquare" />
+								<div  key={i} className="gridIconSquare" />
 							)
 						})}
 					</div>

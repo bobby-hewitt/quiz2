@@ -1,5 +1,14 @@
 .questionContainer{
-
+	.countdown{
+		position: fixed;
+		top:20px;
+		left:20px;
+		font-weight: extra-light!important;
+		color:#000;
+		margin:10px;
+		font-size:25px;
+		opacity:0.5;
+	}
 	
 
 	display: flex;
@@ -90,8 +99,6 @@
 			&.isVisible{
 				opacity:1;
 				transform: translateX(0px);
-				
-
 			}
 			.answerScoreContainer{
 				position: absolute;

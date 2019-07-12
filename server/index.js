@@ -55,7 +55,8 @@ io.on('connection', function(socket){
   	socket.on('player-submit-question', Player.submitQuestion.bind(this, socket, io))
   	socket.on('disconnect', disconnect.bind(this, socket));
   	socket.on('player-send-answer', Player.submitAnswer.bind(this, socket))
-  	socket.on('show-answer-input', Host.showAnswerInput.bind(this, socket, io))
+  	
+  	socket.on('send-player-waiting', Host.sendPlayerWaiting.bind(this, socket, io))
 });
 
 

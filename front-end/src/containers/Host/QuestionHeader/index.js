@@ -37,6 +37,10 @@ class QuestionHeader extends Component {
 
 	}
 
+
+
+	
+
 	showPlayer(i){
 		const { players } = this.props
 		// this.timeouts[i] = setTimeout(() => {
@@ -178,6 +182,7 @@ class QuestionHeader extends Component {
 				this.setState({player: players[questionIndex], bonus: answeredCount}, () => {
 					newPlayers[questionIndex].score += 500 * answeredCount
 					this.props.updatePlayers(newPlayers)
+					this.props.updateAnswers([])
 					setTimeout(() => {
 						//add bonus points
 						this.setState({player: false, bonus: false}) 
@@ -257,11 +262,12 @@ class QuestionHeader extends Component {
 
 	componentWillReceiveProps(np){
 		console.log('getting props')
-		if(np.isAnswers !== this.props.isAnswers && np.isAnswers){
-			console.log('showing players')
-			setTimeout(() => {
-				this.showPlayer(0)
-			},600)
+		if(np.isAnswers !== this.props.isAnswers){
+			if(np.isAnswers){
+				setTimeout(() => {
+					this.showPlayer(0)
+				},600)
+			}
 		} 
 	}
 
@@ -296,6 +302,7 @@ const mapStateToProps = state => ({
 	room: state.host.room,
 	questionIndex: state.host.questionIndex,
 	isAnswers: state.host.viewResponses,
+	
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
