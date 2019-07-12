@@ -14,10 +14,16 @@ function subscribeToPlayerEvents(self) {
 	socket.on('question-input', questionInput.bind(this, self))
 	socket.on('answer-input', answerInput.bind(this, self))
 	socket.on('end-game', endGame.bind(this, self))
+	socket.on('player-error-not-enough-suggestions', errorWithQuestion.bind(this, self))
 }
 
 function roomFull(self){
 	
+}
+
+function errorWithQuestion(self){
+	//need to message the error.
+	self.props.push('/p/question-input')
 }
 
 function endGame(self){
