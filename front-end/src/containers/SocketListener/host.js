@@ -63,6 +63,10 @@ function allPlayersHaveAnswered(players){
 	return answers === players.length ? true : false
 }
 
+function showAnswerInput(data){
+	socket.emit('show-answer-input', data)
+}
+
 function showHints(self, data){
 	self.props.push('/host/question')
 	self.props.showHints(data)
@@ -133,6 +137,7 @@ function joinRoom(data, self){
 
 
 export { 
+	showAnswerInput,
 	endGame,
 	sendAnswerInput,
 	sendQuestionInput,

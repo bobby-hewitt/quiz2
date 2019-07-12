@@ -20,6 +20,13 @@
 		.emoji{
 			margin-top:80px;
 			font-size: 80px;
+			opacity:0;
+			transition: transform 0.3s ease;
+			transform: translateY(50px);
+			&.isVisible{
+				opacity:1;
+				transform: translateY(0px);
+			}
 
 		}
 	}

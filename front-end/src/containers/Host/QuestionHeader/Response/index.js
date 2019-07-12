@@ -33,10 +33,11 @@ export default class Response extends Component {
 		return(
 			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'}`}>
 				<Player color={color}{...player} />
-				<InputStyleText secondaryText="Answer: " primaryText={player.answer} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
-				{showRightWrong && 
-					<h4 className="emoji">{showRightWrong === 'right' ? '✅' : '❌'}</h4>
+				{!(bonus || bonus === 0) &&
+				<InputStyleText primaryText={player.answer} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
 				}
+					<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>
+				
 				{(bonus || bonus === 0) &&
 					<h4 className="answer">{`500 bonus * ${bonus}`}</h4>	
 				}

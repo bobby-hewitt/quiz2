@@ -40,7 +40,7 @@ class Host extends Component {
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="What would yougle do" room={room}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
-					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers}/>} />
+					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />

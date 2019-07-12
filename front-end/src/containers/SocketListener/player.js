@@ -23,6 +23,8 @@ function roomFull(self){
 
 function errorWithQuestion(self){
 	//need to message the error.
+	console.log('error')
+	self.props.setLoading(false)
 	self.props.push('/p/question-input-error')
 }
 

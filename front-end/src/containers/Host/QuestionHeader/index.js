@@ -94,25 +94,36 @@ class QuestionHeader extends Component {
 
 	tallyScores(i){
 		const { answers, players } = this.props
-		var newPlayers = Object.assign([], players)
-		if (!answers[i].players.length){
-			if (i < answers.length - 1){
-				this.tallyScores(i+1)
-			} else {
-				this.nextRound()
+		//move on if no one found any answers
+		var answersCount = 0;
+		for (var j = 0; j < answers.length; j++ ){
+			if (answers[j].players.length){
+				answersCount += 1
 			}
+		}
+		if (!answersCount){
+			return this.revealAnswers()
 		} else {
-			for (var j = 0; j < answers[i].players.length; j++){
-				newPlayers[answers[i].players[j]].score += answers[i].score / answers[i].players.length
-				this.props.updatePlayers(newPlayers)
-			}
-			setTimeout(() => {
+			var newPlayers = Object.assign([], players)
+			if (!answers[i].players.length){
 				if (i < answers.length - 1){
 					this.tallyScores(i+1)
 				} else {
 					this.nextRound()
 				}
-			},500)
+			} else {
+				for (var j = 0; j < answers[i].players.length; j++){
+					newPlayers[answers[i].players[j]].score += answers[i].score / answers[i].players.length
+					this.props.updatePlayers(newPlayers)
+				}
+				setTimeout(() => {
+					if (i < answers.length - 1){
+						this.tallyScores(i+1)
+					} else {
+						this.nextRound()
+					}
+				},500)
+			}
 		}
 		
 	}

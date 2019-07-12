@@ -19,6 +19,7 @@
 	/* justify-content: center; */
 	z-index: 100000;
 
+
 	.responseContainer{
 		position: absolute;
 		top:95px;
@@ -83,6 +84,15 @@
 		
 		.hostHintContainer{
 			position: relative;
+			opacity:0;
+			transition: transform 0.3s ease, opacity 0.3s ease 0.1s;
+			transform: translateX(50px);
+			&.isVisible{
+				opacity:1;
+				transform: translateX(0px);
+				
+
+			}
 			.answerScoreContainer{
 				position: absolute;
 				right:20px;
