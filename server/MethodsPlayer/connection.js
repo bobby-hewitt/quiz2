@@ -50,15 +50,21 @@ exports.submitQuestion = (socket, io, data) => {
 			for (var i = 0; i < suggestions.length; i++){
 				suggestions[i].answer = cleanAnswer(suggestions[i].suggestion)
 				suggestions[i].hint = createHint(suggestions[i].answer)
+				suggestions[i].score = 1500 - (100 * i)
+				suggestions[i].players = []
 			}
-			const dataToSend = {
-				question: query,
-				answers: suggestions,
-			}
-			socket.to(data.room.long).emit('send-hints-to-host', dataToSend);
-			//should not broadcast immediately to all clients.  
-			//Should wait for host countdown complete
-			io.to(data.room.long).emit('answer-input')
+			if (suggestions.length >= 3){
+				const dataToSend = {
+					question: query,
+					answers: suggestions,
+				}
+				socket.to(data.room.long).emit('send-hints-to-host', dataToSend);
+				//should not broadcast immediately to all clients.  
+				//Should wait for host countdown complete
+				io.to(data.room.long).emit('answer-input')
+			} else {
+				socket.emit('player-error-not-enough-suggestions')
+			}	
 		})
 	})
 	

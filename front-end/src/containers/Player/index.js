@@ -14,6 +14,7 @@ import End from './End'
 import QuestionInput from './QuestionInput'
 import AnswerInput from './AnswerInput'
 import Loading from './Loading'
+import QuestionInputError from './QuestionInputError'
 
 class Player extends Component {
 
@@ -40,6 +41,7 @@ class Player extends Component {
 					<Route exact path="/p/waiting-start" render={() => <WaitingStart push={this.changeScene.bind(this)}/>} />
 					<Route exact path="/p/waiting" render={() => <Waiting />} />
 					<Route exact path="/p/question-input" render={() => <QuestionInput />} />
+					<Route exact path="/p/question-input-error" render={() => <QuestionInputError />} />
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
 					<Route exact path="/p/end" render={() => <End room={room}/>} />
 				</div>

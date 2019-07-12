@@ -2,8 +2,8 @@ import openSocket from 'socket.io-client';
 var socket;
 
 function subscribeToHostEvents(self) {
-	// socket = openSocket('http://localhost:9000');
-	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	socket = openSocket('http://localhost:9000');
+	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
 	socket.on('player-joined', playerJoined.bind(this, self))
@@ -28,7 +28,7 @@ function playerAnswer(self, data){
 	console.log('player answer received', data)
 	self.props.playerAnswerReceived(data)
 	if (allPlayersHaveAnswered(players)){
-		self.props.push('/host/answers')
+		self.props.setViewResponses(true)
 	}
 	
 }

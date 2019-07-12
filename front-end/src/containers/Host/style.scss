@@ -12,13 +12,46 @@
 		opacity:0;
 	} */
 	.hostMainContainer{
+		
 		display: flex;
 		flex:1;
+		padding-top:90px;
+		box-sizing: border-box;
 		// align-items: center;
 		justify-content: center;
 		position: relative;
+		padding-bottom:20px;
+		max-height: 100vh;
+		height:100vh;
+
 		// padding:90px 0;
 		// background:rgba(255,255,255,0.25);
+	}
+
+	.hostPlayersContainer{
+		
+		width:280px;
+		height:100vh;
+		position: relative;
+
+	}
+	.hostBackground{
+		position: fixed;
+		top:0px;
+		left:100px;
+		bottom:0;
+		right:0;
+		background-position: center;
+		background-size:cover;
+		.hostBackgroundOverlay{
+			position: absolute;
+			top:0;
+			left:0;
+			bottom:0;
+			right:0;
+			 background: linear-gradient(to bottom, #ffffffff,#ffffffee,#ffffffdd); 
+
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ const initialState = {
   gameState:'welcome',
   questionIndex: 0,
   round: 1,
+  viewResponses: false,
   question: {
     question: '',
     answers: []
@@ -114,6 +115,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         finalPlayers: action.payload
+      }
+    case 'HOST_SET_VIEW_RESPONSES':
+      return {
+        ...state,
+        viewResponses: action.payload
       }
     default:
       return state

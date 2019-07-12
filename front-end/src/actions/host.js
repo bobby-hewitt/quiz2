@@ -8,6 +8,15 @@ export const hostSetRoom = (payload) => {
   }
 }
 
+export const setViewResponses = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'HOST_SET_VIEW_RESPONSES',
+      payload
+    })
+  }
+}
+
 export const playerJoined = (payload) => {
   return dispatch => {
     dispatch({

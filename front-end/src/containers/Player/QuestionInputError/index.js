@@ -4,31 +4,26 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import './style.scss'
 import { Button, TextInput, BottomContainer, ColorText } from 'components'
-import { sendAnswer } from 'containers/SocketListener/player'
+import { sendQuestion } from 'containers/SocketListener/player'
 import { setLoading } from 'actions/player'
-class AnswerInput extends Component {
+class NameTeam extends Component {
 
 	constructor(props){
 		super(props)
 		this.state = {
-			answer: 'to buy'
+			question: ''
 		}
 	}
 
 	onContinue(){
-		const { answer } = this.state
-		const { room, id } = this.props
-
+		const { question } = this.state
+		const { room } = this.props
 		const data = {
-			answer: answer.toLowerCase(),
-			room,
-			id
+			question,
+			room
 		}
-		this.setState({answer: ''}, () => {
-			sendAnswer(this, data)
-		})
-		
 
+		sendQuestion(this, data)
 	}
 
 	onChange(key, e){
@@ -36,19 +31,18 @@ class AnswerInput extends Component {
 	}
 	
 	render(){
-		const { answer } = this.state
+		const { question } = this.state
 		return(
-			<div className="answerInputContainer">
-				<ColorText text="What's your guess?" letterStyle={{fontSize:'50px'}}/>
-				<p className="title">You've got to be spot on. <br/>Letters, spaces and numbers only.</p>
+			<div className="questionInputErrorContainer">
+				<ColorText text="Search term" letterStyle={{fontSize:'50px'}}/>
+				<p className="error">That didn't work. Try another</p>
 				<TextInput 
-					placeholder="Guess?"
-					value={answer}
-					onContinue={this.onContinue.bind(this)} 
-					onChange={this.onChange.bind(this, 'answer')}
+					placeholder="Search"
+					value={question} 
+					onContinue={this.onContinue.bind(this)}
+					onChange={this.onChange.bind(this, 'question')}
 					/>
 				<div>
-					
 				</div>
 			</div>
 		)
@@ -56,8 +50,9 @@ class AnswerInput extends Component {
 }
 
 const mapStateToProps = state => ({
-	id: state.player.id,
+	users: state.player.users,
 	room: state.player.room,
+	usersSelected: state.player.usersSelected
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -67,4 +62,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AnswerInput)
+)(NameTeam)

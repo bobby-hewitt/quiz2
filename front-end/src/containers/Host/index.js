@@ -28,19 +28,26 @@ class Host extends Component {
 	}
 
 	render(){
-		const { room , players, question, questionIndex} = this.props
+		const { room , players, question, questionIndex, isAnswers} = this.props
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
+				
+				<div className="hostBackground" style={{backgroundImage: 'url(' + require('assets/images/png/hostBackground.png')+ ')'}}>
+					<div className="hostBackgroundOverlay">
+					</div>
+				</div>
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="What would yougle do" room={room}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
-					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} isQuestion/>} />
-					<Route exact path="/host/answers" render={() => <Question question={question.question} answers={question.answers} isAnswers/>} />
+					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers}/>} />
+					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
 				</div>
+				<div className="hostPlayersContainer">
 				<PlayerGrid players={players} title="What would yougle do" room={room}/>	
+				</div>
 			</div>
 		)
 	}
@@ -48,6 +55,7 @@ class Host extends Component {
 
 const mapStateToProps = state => ({
 	room: state.host.room,
+	isAnswers: state.host.viewResponses,
 	players: state.host.players,
 	questionIndex: state.host.questionIndex,
 	question:state.host.question,

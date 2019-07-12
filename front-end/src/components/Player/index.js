@@ -5,6 +5,7 @@ export default class Player extends Component {
 	render(){
 		const { name, image, planet, isConnected, color, index, score, hasSubmitted } = this.props
 		return(
+			<div className="hostPlayerOuterContainer">
 			<div 
 				className={`hostPlayerContainer ${!isConnected && 'isDisconnected'} `}
 				>
@@ -17,6 +18,7 @@ export default class Player extends Component {
 				</div>
 				<p className="name">{name || `Player ${index + 1}`}</p>
 				<p className="score">{score || 0}</p>
+			</div>
 			</div>
 		)
 	}

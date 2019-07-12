@@ -1,22 +1,28 @@
+.hostPlayerOuterContainer{
+	margin:12px 20px;
+	display: block;
+	max-height: 165px;
 .hostPlayerContainer{
 	position: relative;
-	width:100px;
+	width:80px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	margin:10px;
+	
 	.playerCircle{
 		overflow: hidden;
-		min-width:100px;
-		width:100px;
-		height:100px;
+		min-width:80px;
+		width:80px;
+		height:80px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-		color:white;
-		font-size: 40px;
+		p{
+			color:white;
+			font-size: 40px;
+		}
 		.check{
 			font-size: 65px;
 		}
@@ -37,4 +43,5 @@
 		width:100%;
 		text-align: center;
 	}
+}
 }

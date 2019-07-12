@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client';
 import {subscribeToPlayerEvents} from './player'
 import {subscribeToHostEvents} from './host'
-import { hostSetRoom, playerJoined, playerLeft, showHints, playerAnswerReceived, updateAnswers } from 'actions/host'
+import { hostSetRoom, playerJoined, playerLeft, showHints, playerAnswerReceived, updateAnswers, setViewResponses } from 'actions/host'
 import { playerSetRoom, playerSetSelf, setLoading } from 'actions/player'
 
 
@@ -43,6 +43,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   push: (path) => push( path),
   hostSetRoom,
   playerSetSelf,
+  setViewResponses,
   playerJoined,
   setLoading,
   updateAnswers,

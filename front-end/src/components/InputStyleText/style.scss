@@ -1,0 +1,24 @@
+.inputStyleTextContainer{
+		/* border: 1px solid black; */
+		box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+		padding: 5px 20px 10px 30px;
+		border-radius: 30px;
+		margin-top:60px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		background:white;
+		img{
+			margin-top:5px;
+			margin-left:20px;
+			height:33px;
+			width:auto;
+		}
+		.text{
+
+			color:black;
+			letter-spacing:0.5px;;
+			font-size: 30px!important;
+		}
+	}

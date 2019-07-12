@@ -1,28 +1,16 @@
 .answersHeaderContainer{
-	height:150px;
+	
 	margin-bottom:20px;
-	width:50vw;
+	
 	position: relative;
-	.answersHeaderInner{
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		/* justify-content: center; */
-		h4{
-			color:#000;
-		}
-		.answerTitle{
-			opacity:0.5;
-			margin: 0px 5px 0 20px;
-		}
-		.emoji{
-			position: absolute;
-			top:55px;
-			font-size: 40px;
-			line-height: 40px;
-			right:40px;
-		}
+	transition:all 0.3s ease;
+	width:0;
+	overflow: hidden;
+	height:100%;
+	&.isVisible{
+		width:500px;
 	}
+	
 	
 	/*background:red;*/
 
