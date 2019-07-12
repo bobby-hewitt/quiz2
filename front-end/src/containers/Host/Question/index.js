@@ -119,10 +119,10 @@ export default class Question extends Component {
 							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'} ${this.state.visible >= i && 'isVisible'}`}>
 								{answer && answer.hint && answer.hint.map((letter, j) => {
 
-									if (j === 0){
+									if (j === 0 || answer.hint[j-1] === ' '){
 										return(
 											<p key={`${i}${j}`}className={`hintLetter ${letter === ' ' && 'space'}`}>
-												{answer.answer[0]}
+												{answer.answer[j]}
 											</p>
 										)
 									}

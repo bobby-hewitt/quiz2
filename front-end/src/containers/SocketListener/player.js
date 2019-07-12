@@ -3,8 +3,8 @@ var socket;
 
 function subscribeToPlayerEvents(self) {
 	//decalre the socket
-	// socket = openSocket('http://localhost:9000');
-	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	socket = openSocket('http://localhost:9000');
+	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	//notify that it is a player joining.
 	// socket.emit('player-connected', {short: 'ABCD'})
 	socket.on('player-joined-room-successfully', successJoiningRoom.bind(this, self))

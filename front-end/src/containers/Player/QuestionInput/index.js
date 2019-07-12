@@ -11,7 +11,7 @@ class NameTeam extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			question: 'help'
+			question: ''
 		}
 	}
 

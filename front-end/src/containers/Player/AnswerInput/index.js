@@ -11,7 +11,7 @@ class AnswerInput extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			answer: 'to buy'
+			answer: ''
 		}
 	}
 
