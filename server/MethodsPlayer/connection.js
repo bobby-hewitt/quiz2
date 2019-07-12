@@ -37,6 +37,12 @@ exports.startGame = (socket, io, data) => {
 }
 
 exports.submitAnswer = (socket, data) =>{
+	console.log('player submitted answer', data)
+	if (data.answer[0] === ' '){
+		data.answer = data.answer.substring(1);
+	}
+	data.answer = data.answer.replace(/[^\w\s]/gi, '')
+	data.answer = data.answer.toLowerCase()
 	socket.to(data.room.long).emit('player-answer', data)
 }
 
@@ -53,7 +59,7 @@ exports.submitQuestion = (socket, io, data) => {
 				suggestions[i].score = 1500 - (100 * i)
 				suggestions[i].players = []
 			}
-			if (suggestions.length >= 3){
+			if (suggestions.length){
 				const dataToSend = {
 					question: query,
 					answers: suggestions,
@@ -61,8 +67,9 @@ exports.submitQuestion = (socket, io, data) => {
 				socket.to(data.room.long).emit('send-hints-to-host', dataToSend);
 				//should not broadcast immediately to all clients.  
 				//Should wait for host countdown complete
-				io.to(data.room.long).emit('answer-input')
+				// io.to(data.room.long).emit('answer-input')
 			} else {
+				console.log('NOT ANY SUGGESTIONS')
 				socket.emit('player-error-not-enough-suggestions')
 			}	
 		})

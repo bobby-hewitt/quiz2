@@ -48,12 +48,18 @@ exports.connected = function(socket){
 		})
 	}
 
+
+
 	checkRoom()
 	// Rooms.find({}, (err, rooms) => {
 	// 	console.log('All rooms', rooms)
 	// 	checkRoom()
 	// })
 	
+}
+
+exports.showAnswerInput = (socket, io, data) => {
+	io.to(data.long).emit('answer-input')
 }
 
 exports.sendGameState = (socket, io, data) => {
