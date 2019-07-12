@@ -19,6 +19,7 @@ exports.connected = function(socket, data){
 				room, playerData
 			});
 		} else {
+			
 			//there is no host connected.  Come back later
 			return socket.emit('error-joining-room-no-host')
 		}
@@ -36,6 +37,12 @@ exports.startGame = (socket, io, data) => {
 }
 
 exports.submitAnswer = (socket, data) =>{
+	console.log('player submitted answer', data)
+	if (data.answer[0] === ' '){
+		data.answer = data.answer.substring(1);
+	}
+	data.answer = data.answer.replace(/[^\w\s]/gi, '')
+	data.answer = data.answer.toLowerCase()
 	socket.to(data.room.long).emit('player-answer', data)
 }
 
@@ -49,15 +56,22 @@ exports.submitQuestion = (socket, io, data) => {
 			for (var i = 0; i < suggestions.length; i++){
 				suggestions[i].answer = cleanAnswer(suggestions[i].suggestion)
 				suggestions[i].hint = createHint(suggestions[i].answer)
+				suggestions[i].score = 1500 - (100 * i)
+				suggestions[i].players = []
 			}
-			const dataToSend = {
-				question: query,
-				answers: suggestions,
-			}
-			socket.to(data.room.long).emit('send-hints-to-host', dataToSend);
-			//should not broadcast immediately to all clients.  
-			//Should wait for host countdown complete
-			io.to(data.room.long).emit('answer-input')
+			if (suggestions.length){
+				const dataToSend = {
+					question: query,
+					answers: suggestions,
+				}
+				socket.to(data.room.long).emit('send-hints-to-host', dataToSend);
+				//should not broadcast immediately to all clients.  
+				//Should wait for host countdown complete
+				// io.to(data.room.long).emit('answer-input')
+			} else {
+				console.log('NOT ANY SUGGESTIONS')
+				socket.emit('player-error-not-enough-suggestions')
+			}	
 		})
 	})
 	

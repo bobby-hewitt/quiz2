@@ -55,6 +55,8 @@ io.on('connection', function(socket){
   	socket.on('player-submit-question', Player.submitQuestion.bind(this, socket, io))
   	socket.on('disconnect', disconnect.bind(this, socket));
   	socket.on('player-send-answer', Player.submitAnswer.bind(this, socket))
+  	
+  	socket.on('send-player-waiting', Host.sendPlayerWaiting.bind(this, socket, io))
 });
 
 
@@ -88,57 +90,4 @@ http.listen(PORT, function(err){
 
 
 
-function test(){
-	const query = 'what in the world'
-	auto.getQuerySuggestions(query, function(err, rawSuggestions) {
-		if (err ) return console.log('error',err,'error')
-		validateSuggestions(rawSuggestions, query).then((suggestions) => {
-			console.log('resolved')
-			for (var i = 0; i < suggestions.length; i++){
-				suggestions[i].answer = cleanAnswer(suggestions[i].suggestion, query)
-				suggestions[i].hint = createHint(suggestions[i].answer)
-			}
-
-			console.log(suggestions)
-		})
-		
-	})
-}
-
-function validateSuggestions(suggestions, query){
-	return new Promise((resolve, reject) => {
-		var trimmed = []
-		for (var i = 0; i < suggestions.length; i++){
-			if (suggestions[i].suggestion.indexOf(query) === 0){
-				trimmed.push(suggestions[i])
-			}
-		}
-		resolve(trimmed.slice(0,10))
-	})
-}
-
-function cleanAnswer(suggestion, query){
-	let answer = suggestion.replace(query, '')
-	if (answer[0] === ' '){
-		answer = answer.substring(1);
-	}
-	answer = answer.replace(/[^\w\s]/gi, '')
-	return answer.toLowerCase()
-}
-
-function createHint(answer){
-	let hint = []
-	for (var j = 0; j < answer.length; j++){
-		if (answer[j] !== ' '){
-			hint.push('_')
-		} else {
-			hint.push(' ')
-		}
-	}
-	return hint
-}
-
-
-
-test()
 
