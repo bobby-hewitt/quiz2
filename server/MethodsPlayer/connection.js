@@ -19,6 +19,7 @@ exports.connected = function(socket, data){
 				room, playerData
 			});
 		} else {
+			
 			//there is no host connected.  Come back later
 			return socket.emit('error-joining-room-no-host')
 		}
