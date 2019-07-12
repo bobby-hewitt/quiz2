@@ -109,7 +109,7 @@ export default class Question extends Component {
 					} else {
 						
 						return(
-							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'}`}>
+							<div key={i} className={`hostHintContainer isVisible ${i % 2 === 0 && 'grey'}`}>
 								<p className={`revealedAnswer ${answer.isUndiscovered && 'undiscovered'}`}>{answer.answer}</p>
 								<div className="answerScoreContainer">
 								{answer.players && answer.players.map((player, j) => {
