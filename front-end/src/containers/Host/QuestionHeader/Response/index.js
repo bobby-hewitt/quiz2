@@ -45,12 +45,12 @@ export default class Response extends Component {
 	render(){
 		const { color, player, showRightWrong, bonus } = this.props
 		return(
-			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'}`}>
-				<Player color={color}{...player} />
+			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'} ${showRightWrong === 'right' && 'correct'} ${showRightWrong  && showRightWrong !== 'right' && 'incorrect'}`}>
+				<h4 className="answerPlayerName">{player.name}'s answer</h4>
 				{!(bonus || bonus === 0) &&
-				<InputStyleText primaryText={player.answer || '❌'} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
+				<InputStyleText isVisible primaryText={player.answer || '❌'} containerStlye={{margin:'0px', marginTop:'-30px'}}/>
 				}
-					<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>
+					{/*<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>*/}
 				
 				{(bonus || bonus === 0) &&
 					<h4 className="answer">{`500 bonus * ${bonus}`}</h4>	

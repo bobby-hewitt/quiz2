@@ -17,7 +17,11 @@ export default class Question extends Component {
 	}
 
 	componentDidMount(){
-		// this.showAnswer(0)
+		if (this.props.answers.length){
+			setTimeout(() => {
+				this.showSearchTerm(0)
+			},100)
+		}
 	}
 
 	countdown(isStart){
@@ -38,10 +42,22 @@ export default class Question extends Component {
 		},1000)
 	}
 
+	clearCountdown(){
+		clearTimeout(this.countdownTimeout)
+		this.setState({countdown: false})
+	}
+
+	showSearchTerm(){
+		this.setState({showSearchTerm: true})
+		setTimeout(() => {
+			this.showAnswer(0)
+		},300)
+	}
+
 	componentWillReceiveProps(np){
 		if (!this.props.answers.length && np.answers.length){
 			setTimeout(() => {
-				this.showAnswer(0)
+				this.showSearchTerm(0)
 			},100)
 		}
 		if (this.props.isAnswers !== np.isAnswers){
@@ -88,7 +104,7 @@ export default class Question extends Component {
 
 
 	render(){
-		const { question, answers, isQuestion, isAnswers, players, sounds } = this.props
+		const { question, answers, isQuestion, isAnswers, players, sounds, loadingState } = this.props
 		return(
 			<div className="questionContainer">
 				{(this.state.countdown || this.state.countdown === 0) &&
@@ -97,14 +113,16 @@ export default class Question extends Component {
 				<div className="questionInfoContainer">
 				
 				
-					<QuestionHeader text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
-				
+					<QuestionHeader clearCountdown={this.clearCountdown.bind(this)}text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
+	
 				</div>
 				<div className="questionAndAnswerContainer">
 				
-				<div className="questionShadowContainer">
+				<div className={`questionShadowContainer ${loadingState === 'in' && 'isVisible'}`}>
 				<div className="questionInnerContainer">
-					<InputStyleText primaryText={`${question}...`} containerStyle={{margin:'0px'}}/>
+					<div className="questionController">
+					<InputStyleText isVisible={this.state.showSearchTerm}primaryText={`${question}...`} containerStyle={{margin:'0px'}}/>
+					</div>
 					<div className="responseContainer">
 					{players && !isAnswers && players.map((player, i ) => {
 						if (player.answer){

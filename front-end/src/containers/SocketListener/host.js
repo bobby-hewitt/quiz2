@@ -2,14 +2,15 @@ import openSocket from 'socket.io-client';
 var socket;
 
 function subscribeToHostEvents(self) {
-	// socket = openSocket('http://localhost:9000');
-	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	socket = openSocket('http://localhost:9000');
+	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
 	socket.on('player-joined', playerJoined.bind(this, self))
 	socket.on('player-set-name', setPlayerName.bind(this, self))
 	socket.on('player-left', playerLeft.bind(this,self))
 	socket.on('start-game', startGame.bind(this, self))
+	socket.on('restart-game', restartGame.bind(this, self))
 	socket.on('send-hints-to-host', showHints.bind(this, self))
 	socket.on('player-answer', playerAnswer.bind(this, self))
 	// socket.on('host-room-code-generated', successJoiningRoom.bind(this, self))
@@ -75,6 +76,10 @@ function showHints(self, data){
 	self.props.sounds.typing.pause()
 	self.props.setGameState('waiting')
 	self.props.push('/host/question')
+	setTimeout(() => {
+		self.props.setScreenLoadingState('in')
+	})
+	
 	self.props.showHints(data)
 }
 
@@ -93,14 +98,28 @@ function startGame(self, data){
 	self.props.setScreenLoadingState('out')
 	self.props.sounds.start.play()
 	setTimeout(() => {
+		self.props.setScreenLoadingState('in')
 		// self.props.sounds.typing.play()
 		self.props.setGameState('question-entry')
 		self.props.push('/host/instructions')
-	},4000)
-		
+	},3500)
+}
+
+function restartGame(self, data){
 	
-	
-	
+	self.props.sounds.typing.pause()
+	// self.props.sounds.bounce.play()
+	socket.emit('send-player-waiting', self.props.hostRoom)
+	self.props.setScreenLoadingState('out')
+	self.props.setGameState('waiting')
+	self.props.sounds.start.play()
+	setTimeout(() => {
+		self.props.setScreenLoadingState('in')
+		// self.props.sounds.typing.play()
+		self.props.setGameState('question-entry')
+		self.props.push('/host/question-input')
+		sendQuestionInput(self)
+	},3500)
 }
 
 function endGame(self){
@@ -116,9 +135,12 @@ function sendQuestionInput(self){
 	const player = self.props.players[self.props.questionIndex ]
 	const data = {
 		player, 
-		room: self.props.room
+		room: self.props.hostRoom
 	}
+	
 	socket.emit('host-send-question-input' , data)
+	self.props.push('/host/question-input')
+	self.props.setScreenLoadingState('in')
 }
 
 function playerLeft(self, data){
@@ -129,9 +151,41 @@ function roomGenerated(self, data){
 	self.props.hostSetRoom(data)
 }
 
-function playerJoined(self, data){
-	// here we need to establish the state of the game and send the user to the correct page when they rejoin
-	self.props.playerJoined(data.playerData)
+function createNewPlayerObj(self, data){
+	var newPlayers = Object.assign([], self.props.players)
+	  data.isConnected = true
+	  var disconnectedPlayerFound = false 
+	  for (var i = 0; i < newPlayers.length; i++ ){
+	    if (data.name === newPlayers[i].name && !newPlayers[i].isConnected){
+	        console.log('reconnecting existing player')
+	        newPlayers[i].id = data.id
+	        newPlayers[i].isConnected = true
+	        disconnectedPlayerFound = true
+	        return {
+	        	joinState: 'rejoin',
+	  			players: newPlayers
+	  		}
+	    } 
+
+	  }
+	  if (!disconnectedPlayerFound && self.props.gameState === 'welcome'){
+	    console.log('creating new player')
+	    data.score = 0
+	    newPlayers.push(data)
+	    return {
+	    	joinState: 'new',
+	  		players: newPlayers
+	  	}
+	  } else {
+	  	return {
+	  		joinState: false,
+	  		players: newPlayers
+	  	}
+	  } 
+	  
+}
+
+function getRejoinGameState(self, data){
 	if (self.props.gameState === 'question-entry' ){
 		for (var i = 0; i < self.props.players.length; i++){
 			if (data.playerData.id === self.props.players[i].id){
@@ -155,10 +209,34 @@ function playerJoined(self, data){
 	} else {
 		data.gameState = self.props.gameState
 	}
+	return data
+}
+
+function playerJoined(self, data){
+	// here we need to establish the state of the game and send the user to the correct page when they rejoin
+	var { joinState, players } = createNewPlayerObj(self, data.playerData)
+	//update players
+	self.props.updatePlayers(players)
+	if (joinState === 'rejoin'){
+		data = getRejoinGameState(self, data)
+		self.props.sounds.bounce.play()
+		console.log('player rejoined')
+		console.log(data)
+		socket.emit('host-sending-game-state', data)
+	} else if (joinState === 'new'){
+		data.gameState = 'welcome'
+		self.props.sounds.bounce.play()
+		console.log('new player joined')
+		console.log(data)
+		socket.emit('host-sending-game-state', data)
+	} else {
+		socket.emit('host-send-leave-room-instruction', data)
+	}
 	
-	self.props.sounds.bounce.play()
-	socket.emit('host-sending-game-state', data)
-	console.log('player-joined', data)
+	
+
+
+	
 }
 
 function setPlayerName(self, data){

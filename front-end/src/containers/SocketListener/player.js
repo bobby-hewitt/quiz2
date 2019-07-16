@@ -3,10 +3,11 @@ var socket;
 
 function subscribeToPlayerEvents(self) {
 	//decalre the socket
-	// socket = openSocket('http://localhost:9000');
-	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	socket = openSocket('http://localhost:9000');
+	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	//notify that it is a player joining.
 	// socket.emit('player-connected', {short: 'ABCD'})
+	socket.on('host-send-player-leave-room', errorJoiningRoom.bind(this, self))
 	socket.on('player-joined-room-successfully', successJoiningRoom.bind(this, self))
 	socket.on('error-joining-room-no-host', errorJoiningRoom.bind(this, self))
 	socket.on('error-joining-room', errorJoiningRoom.bind(this, self))
@@ -34,6 +35,7 @@ function endGame(self){
 }
 
 function waiting(self){
+	console.log('getting waiting')
 	self.props.push('/p/waiting')
 }
 
@@ -91,6 +93,15 @@ function successJoiningRoom(self, data){
 
 function errorJoiningRoom(self, data){
 	console.log('error joining room')
+	if (data && data.long){
+		console.log('socket leaving room')
+		self.props.setLoading(false)
+		self.props.push('/p')
+		socket.emit('leave-room', data.long)
+	} else {
+		self.props.setLoading(false)
+		self.props.push('/p')
+	}
 }
 
 function startRound(self){
@@ -100,6 +111,10 @@ function startRound(self){
 function startGame(room){
 	console.log(room)
 	socket.emit('player-start-game', room)
+}
+
+function restartGame(room){
+	socket.emit('player-restart-game', room)
 }
 
 function gameEnd(){
@@ -141,6 +156,7 @@ function emit(self, data){
 export { 
 	startGame,
 	joinRoom, 
+	restartGame,
 	sendQuestion,
 	sendAnswer,
 	subscribeToPlayerEvents

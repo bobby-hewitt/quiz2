@@ -39,8 +39,7 @@ class AnswerInput extends Component {
 		const { answer } = this.state
 		return(
 			<div className="answerInputContainer">
-				<ColorText text="What's your guess?" letterStyle={{fontSize:'50px'}}/>
-				<p className="title">You've got to be spot on. <br/>Letters, spaces and numbers only.</p>
+				<ColorText text="Answer" letterStyle={{fontSize:'50px'}}/>
 				<TextInput 
 					placeholder="Guess?"
 					value={answer}

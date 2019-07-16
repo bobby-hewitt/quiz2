@@ -34,8 +34,7 @@ class NameTeam extends Component {
 		const { question } = this.state
 		return(
 			<div className="questionInputContainer">
-				<ColorText text="Search term" letterStyle={{fontSize:'50px'}}/>
-				<p>Remember you score points for every answer discovered</p>
+				<ColorText text="Question" letterStyle={{fontSize:'50px'}}/>
 				<TextInput 
 					placeholder="Search"
 					value={question} 

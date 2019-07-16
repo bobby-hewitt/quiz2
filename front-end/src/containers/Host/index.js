@@ -10,15 +10,14 @@ import Question from './Question'
 import PageTitle from './PageTitle'
 import QuestionInput from './QuestionInput'
 import End from './End'
+import Loading from './Loading'
 import { PlayerGrid } from 'components'
-import { setViewResponses, setGameState } from 'actions/host'
+import { setViewResponses, setGameState, setScreenLoadingState } from 'actions/host'
 import { sendQuestionInput } from 'containers/SocketListener/host'
 class Host extends Component {
 
 	instructionsComplete(){
-		console.log('instructions complete')
 		sendQuestionInput(this)
-		this.props.push('/host/question-input')
 	}
 
 	componentWillMount(){
@@ -38,15 +37,16 @@ class Host extends Component {
 					</div>
 				</div>
 				<div className="hostMainContainer">
-					<Route exact path="/host" render={() => <PageTitle  title="Searches" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
-					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
-					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
+					<Route exact path="/host" render={() => <PageTitle  title="Trending.guru" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
+					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
+					<Route exact path="/host/question" render={() => <Question loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
+					<Loading loading={loadingState === 'out'}/>
 				</div>
 				<div className="hostPlayersContainer">
-				<PlayerGrid players={players} title="What would yougle do" room={room}/>	
+				<PlayerGrid players={players} title="What would yougle do" room={room}/>	<Loading />
 				</div>
 			</div>
 		)
@@ -55,6 +55,7 @@ class Host extends Component {
 
 const mapStateToProps = state => ({
 	room: state.host.room,
+	hostRoom: state.host.room,
 	isAnswers: state.host.viewResponses,
 	players: state.host.players,
 	questionIndex: state.host.questionIndex,
@@ -66,6 +67,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   push: (path) => push(path),
   setViewResponses,
+  setScreenLoadingState,
   setGameState,
 }, dispatch)
 

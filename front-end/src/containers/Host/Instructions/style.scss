@@ -1,0 +1,29 @@
+.instructionContainer{
+	position: relative;
+	.instructions{
+		position: absolute;
+		top:0;
+		left:0;
+		width:100%;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		z-index: 100000;
+		
+		.instruction{
+			font-size: 30px;
+			color:#676767;
+			transition: all 0.3s ease;
+			opacity:1;
+			&.out{
+			opacity:0;
+			transform:translateY(10px);
+		}
+		}
+		
+
+	}
+
+}

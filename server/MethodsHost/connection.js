@@ -58,9 +58,14 @@ exports.connected = function(socket){
 	
 }
 
-
+exports.sendLeaveRoomInstruction = (socket, io, data) => {
+	io.to(data.playerData.id).emit('host-send-player-leave-room', data.room)
+}
 
 exports.sendGameState = (socket, io, data) => {
+	// data.socket.join(data.room.long)
+
+	console.log(data.socket, data.room.long)
 	io.to(data.playerData.id).emit('player-joined-room-successfully', data)
 }
 
@@ -75,6 +80,7 @@ exports.sendQuestionInput = (socket, io, data) => {
 }
 
 exports.sendPlayerWaiting = (socket, io, data) => {
+	console.log('sending waiting', data.long)
 	socket.broadcast.to(data.long).emit('waiting')
 }
 

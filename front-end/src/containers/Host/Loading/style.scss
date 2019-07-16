@@ -1,0 +1,17 @@
+.hostLoadingContainer{
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background:transparent;
+	transition: all 0.3s ease;
+	z-index: 10000000;
+	&.visible{
+		background:#fff;
+	}
+}
+.loadingBit{
+	width:20px;
+	height:20px;
+}

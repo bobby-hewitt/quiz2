@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import './style.scss'
 import Response from './Response'
 import { Button, TextInput, BottomContainer, ColorText, Player, InputStyleText } from 'components'
-import { updateAnswers, updatePlayers, setRound, nextQuestion,setFinalPlayers, setViewResponses } from 'actions/host'
+import { updateAnswers, updatePlayers, setRound, nextQuestion,setFinalPlayers, setViewResponses, setScreenLoadingState } from 'actions/host'
 import { sendAnswerInput, sendQuestionInput, endGame } from 'containers/SocketListener/host'
 const colors = [
 	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
@@ -44,14 +44,13 @@ class QuestionHeader extends Component {
 	showPlayer(i){
 		const { players } = this.props
 		// this.timeouts[i] = setTimeout(() => {
-
-			this.setState({player: players[i], playerIndex: i}, () => {
+			this.setState({player: players[i], playerIndex: i, showRightWrong: false}, () => {
 				this.timeouts[i] = setTimeout(() => {
 					// update scoreboard
 					this.updateAnswers(players[i].answer, i)
 					this.timeouts[i] = setTimeout(() => {
 						this.setState({
-							showRightWrong: false,
+							
 							player: false, 
 							showAnswer:false
 						}, () => {
@@ -137,6 +136,7 @@ class QuestionHeader extends Component {
 		const moreAnswersAvaliable = this.moreAnswersAvaliable()
 		if (!moreAnswersAvaliable || round === 3){
 			//next question
+
 			this.revealAnswers()
 		} else {
 			//next round
@@ -159,6 +159,9 @@ class QuestionHeader extends Component {
 
 
 	revealAnswers(){
+
+		// this.props.setViewResponses(false)
+		this.setState({hideAnswers: true})
 		const { round, questionIndex, players, answers } = this.props
 		var notAnsweredCount = 0;
 		var answeredCount = 0
@@ -179,18 +182,20 @@ class QuestionHeader extends Component {
 			const { round, questionIndex, players, answers } = this.props
 			var newPlayers = Object.assign([], players)
 			setTimeout(() => {
+				console.log('moving forwards')
 				this.setState({player: players[questionIndex], bonus: answeredCount}, () => {
 					newPlayers[questionIndex].score += 500 * answeredCount
 					this.props.updatePlayers(newPlayers)
-					this.props.updateAnswers([])
+					
 					setTimeout(() => {
 						//add bonus points
-						this.setState({player: false, bonus: false}) 
+						this.setState({player: false, bonus: false, hideAnswers: false}) 
 						if (questionIndex === players.length-1){
 							console.log('END GAME')
 							this.setEndGame()
 						} else {
 							//next question
+							this.props.updateAnswers([])
 							this.props.nextQuestion()
 							this.props.setRound(1)
 							var newPlayers = Object.assign([], players)
@@ -231,6 +236,7 @@ class QuestionHeader extends Component {
 	}
 
 	revealAnswer(i, timeout){
+
 		setTimeout(() => {
 			const { answers } = this.props
 			var newAnswers = Object.assign([],answers)
@@ -276,11 +282,10 @@ class QuestionHeader extends Component {
 	}
 
 	render(){
-		const { player, playerIndex, showAnswer, showRightWrong, bonus} = this.state
+		const { player, playerIndex, showAnswer, showRightWrong, bonus, hideAnswers} = this.state
 		const { isAnswers } = this.props
-		console.log(player)
 		return(
-			<div className={`answersHeaderContainer ${isAnswers && ' isVisible'}`}>
+			<div className={`answersHeaderContainer ${(isAnswers && !hideAnswers)  && ' isVisible'}`}>
 				{player && 
 					<Response 
 						timeout={(this.playerDuration /6) * 4}
@@ -309,6 +314,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	push: (path) => push(path),
   updateAnswers,
   nextQuestion,
+  setScreenLoadingState,
   setViewResponses,
   setFinalPlayers,
   updatePlayers,

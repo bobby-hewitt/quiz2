@@ -39,18 +39,18 @@ export default (state = initialState, action) => {
       action.payload.isConnected = true
       var disconnectedPlayerFound = false 
       for (var i = 0; i < newPlayers.length; i++ ){
-        if (action.payload.prevId === newPlayers[i].id && !newPlayers[i].isConnected){
+        if (action.payload.name === newPlayers[i].name && !newPlayers[i].isConnected){
             console.log('reconnecting existing player')
             newPlayers[i].id = action.payload.id
             newPlayers[i].isConnected = true
             disconnectedPlayerFound = true
         } 
       }
-      if (!disconnectedPlayerFound){
+      if (!disconnectedPlayerFound && state.gameState === 'welcome'){
         console.log('creating new player')
         action.payload.score = 0
         newPlayers.push(action.payload)
-      }
+      } 
       return {
         ...state,
         players: newPlayers
@@ -128,7 +128,6 @@ export default (state = initialState, action) => {
         viewResponses: action.payload
       }
     case 'HOST_SET_SCREEN_LOADING_STATE':
-      console.log('setting loading state')
       return {
         ...state,
         screenLoadingState: action.payload

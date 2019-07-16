@@ -3,11 +3,12 @@
 		flex-direction: row;
 		letter-spacing:0.5px;;
 		padding-bottom:10px;
-		opacity:1!important;
+		opacity:!important;
 		.letterTitle{
 			font-size: 100px;
 			font-weight: light!important;
-			opacity:1!important;
+			opacity:0;
+			
 			&.blue{
 				color:#4285F4;
 			}
@@ -20,8 +21,22 @@
 			&.yellow{
 				color: #F4B400;
 			}
+			&.visible{
+				animation-name: example;
+  				animation-duration: 0.1s;
+				opacity:1;
+			}
 		}
 		.space{
 				width:10px;
 		}
 	}
+
+
+	@keyframes example {
+  0%   {transform:translateY(0px)}
+
+  50%  {transform:translateY(-5px)}
+
+  100% {transform:translateY(0px)}
+}

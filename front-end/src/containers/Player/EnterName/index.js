@@ -35,7 +35,7 @@ class NameTeam extends Component {
 		const { name, roomcode } = this.state
 		return(
 			<div className="loginContainer">
-				<ColorText text="Let's get started" letterStyle={{fontSize:'50px'}}/>
+				<ColorText text="Let's go" letterStyle={{fontSize:'50px'}}/>
 				<TextInput 
 					placeholder="Name"
 					value={name} 
