@@ -52,10 +52,12 @@ io.on('connection', function(socket){
   	socket.on('host-send-answer-input', Host.sendAnswerInput.bind(this, socket, io))
   	socket.on('host-end-game', Host.endGame.bind(this, socket, io))
   	socket.on('player-start-game', Player.startGame.bind(this, socket, io))
+  	socket.on('player-restart-game', Player.restartGame.bind(this, socket, io))
   	socket.on('player-submit-question', Player.submitQuestion.bind(this, socket, io))
   	socket.on('disconnect', disconnect.bind(this, socket));
   	socket.on('player-send-answer', Player.submitAnswer.bind(this, socket))
-  	
+  	socket.on('host-send-leave-room-instruction', Host.sendLeaveRoomInstruction.bind(this, socket, io))
+  	socket.on('leave-room', Player.leaveRoom.bind(this,socket))
   	socket.on('send-player-waiting', Host.sendPlayerWaiting.bind(this, socket, io))
 });
 

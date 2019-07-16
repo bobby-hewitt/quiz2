@@ -2,8 +2,8 @@ import openSocket from 'socket.io-client';
 var socket;
 
 function subscribeToHostEvents(self) {
-	socket = openSocket('http://localhost:9000');
-	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	// socket = openSocket('http://localhost:9000');
+	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
 	socket.on('player-joined', playerJoined.bind(this, self))
@@ -35,6 +35,7 @@ function playerAnswer(self, data){
 		self.props.sounds.timer.pause()
 		self.props.sounds.timer.currentTime = 0;
 		self.props.setGameState('waiting')
+		
 		self.props.setViewResponses(true)
 	}
 	
@@ -87,7 +88,10 @@ function endCountdown(self, data){
 	self.props.sounds.timer.pause()
 	self.props.setGameState('waiting')
 	socket.emit('send-player-waiting', data)
-	self.props.setViewResponses(true)
+	
+		self.props.setViewResponses(true)
+	
+	
 }
 
 function startGame(self, data){
@@ -116,7 +120,7 @@ function restartGame(self, data){
 	setTimeout(() => {
 		self.props.setScreenLoadingState('in')
 		// self.props.sounds.typing.play()
-		self.props.setGameState('question-entry')
+		// self.props.setGameState('question-entry')
 		self.props.push('/host/question-input')
 		sendQuestionInput(self)
 	},3500)
@@ -131,7 +135,9 @@ function endGame(self){
 }
 
 function sendQuestionInput(self){
+	self.props.sounds.typing.play()
 	//this function should push to host holding screen
+	self.props.setGameState('question-entry')
 	const player = self.props.players[self.props.questionIndex ]
 	const data = {
 		player, 
@@ -148,8 +154,42 @@ function playerLeft(self, data){
 }
 
 function roomGenerated(self, data){
+	console.log('room generated', data)
 	self.props.hostSetRoom(data)
 }
+
+
+
+const avatars = [
+	'https://media.giphy.com/media/9PgvV8ale90lQwfQTZ/giphy.gif',
+	'https://media.giphy.com/media/JSueytO5O29yM/giphy.gif',
+	'https://media.giphy.com/media/1d7F9xyq6j7C1ojbC5/giphy.gif',
+	'https://media.giphy.com/media/2A75RyXVzzSI2bx4Gj/giphy.gif',
+	'https://media.giphy.com/media/BY0I4J5rnxd8k/giphy.gif',
+	'https://media.giphy.com/media/xTiTnoieCQLmBcZbvq/giphy.gif',
+	'https://media.giphy.com/media/3rhPlyX2NtNHG/giphy.gif',
+	'https://media.giphy.com/media/3i7zenReaUuI0/giphy.gif',
+	'https://media.giphy.com/media/GhNXUOpdNz65q/giphy.gif',
+	'https://media.giphy.com/media/l0HlW453pQmbFiPkY/giphy.gif',
+	'https://media.giphy.com/media/lqqgO1obaMaWWnIjan/giphy.gif',
+	'https://media.giphy.com/media/JrwVklLkeHhtTXnkfR/giphy.gif',
+	'https://media.giphy.com/media/w6VPNx52r60E0K0OCm/giphy.gif',
+	'https://media.giphy.com/media/TGv0G4bP9pIr3RXmZ5/giphy.gif',
+	'https://media.giphy.com/media/8mwyRelmazRrt1uPxZ/giphy.gif',
+	'https://media.giphy.com/media/33zX3zllJBGY8/giphy.gif',
+	'https://media.giphy.com/media/GWx7HFtKBAV3O/giphy.gif',
+	'https://media.giphy.com/media/SA4PLXhPWdWDe/giphy.gif',
+	'https://media.giphy.com/media/yiZKgdA1FvFe/giphy.gif',
+	'https://media.giphy.com/media/3o6ZtgMYOwdlKviWQw/giphy.gif',
+	'https://media.giphy.com/media/3o7btVVQNCCtgf0uXe/giphy.gif',
+	'https://media.giphy.com/media/26Ff7HyH9n400tmta/giphy.gif',
+	'https://media.giphy.com/media/2eaxgABoIjFcc/giphy.gif',
+	'https://media.giphy.com/media/29s9fNQFkfLfXmGk7U/giphy.gif',
+	'https://media.giphy.com/media/2Y8rcThF12v0JBwK50/giphy.gif',
+	'https://media.giphy.com/media/wZtxwyGdLV838qwYNt/giphy.gif',
+	'https://media.giphy.com/media/kfAzHqnteXVF6/giphy.gif',
+
+]
 
 function createNewPlayerObj(self, data){
 	var newPlayers = Object.assign([], self.props.players)
@@ -171,6 +211,7 @@ function createNewPlayerObj(self, data){
 	  if (!disconnectedPlayerFound && self.props.gameState === 'welcome'){
 	    console.log('creating new player')
 	    data.score = 0
+	    data.image = avatars[Math.floor(Math.random() * avatars.length)]
 	    newPlayers.push(data)
 	    return {
 	    	joinState: 'new',
@@ -212,6 +253,8 @@ function getRejoinGameState(self, data){
 	return data
 }
 
+
+
 function playerJoined(self, data){
 	// here we need to establish the state of the game and send the user to the correct page when they rejoin
 	var { joinState, players } = createNewPlayerObj(self, data.playerData)
@@ -222,10 +265,12 @@ function playerJoined(self, data){
 		self.props.sounds.bounce.play()
 		console.log('player rejoined')
 		console.log(data)
+
 		socket.emit('host-sending-game-state', data)
 	} else if (joinState === 'new'){
 		data.gameState = 'welcome'
 		self.props.sounds.bounce.play()
+
 		console.log('new player joined')
 		console.log(data)
 		socket.emit('host-sending-game-state', data)

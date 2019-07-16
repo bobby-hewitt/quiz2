@@ -32,8 +32,16 @@ exports.setName = (socket, data) => {
 	socket.broadcast.to(data.room.long).emit('player-set-name', data);
 }
 
+exports.leaveRoom = (socket, data) => {
+	console.log('player leaving room')
+	socket.leave(data)
+}
+
 exports.startGame = (socket, io, data) => {
 	io.to(data.long).emit('start-game');
+}
+exports.restartGame = (socket, io, data) => {
+	io.to(data.long).emit('restart-game');
 }
 
 exports.submitAnswer = (socket, data) =>{

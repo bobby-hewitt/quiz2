@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "e1f16f71783cc00b07071bc4e09fc303",
-    "url": "/static/media/background.e1f16f71.mp3"
+    "revision": "27d04d7034725ef1adc353c5c3ffa1ce",
+    "url": "/static/media/interstitial1.27d04d70.mp3"
   },
   {
-    "revision": "3cf8c4dee562348f1426",
-    "url": "/static/css/main.0fcacc54.chunk.css"
+    "revision": "56d6d749704c1a7af613",
+    "url": "/static/css/main.7ec7de93.chunk.css"
   },
   {
     "revision": "fdfcfda2d9b1bf31db52",
     "url": "/static/js/runtime~main.fdfcfda2.js"
   },
   {
-    "revision": "50a9540c3466f768983b",
-    "url": "/static/js/2.50a9540c.chunk.js"
+    "revision": "f782805c5bf6db67fad2",
+    "url": "/static/js/2.f782805c.chunk.js"
   },
   {
     "revision": "ec919d7fd6be592ad52fffe57a5ba9a1",
@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "/static/media/coin.b0c2f096.wav"
   },
   {
-    "revision": "3cf8c4dee562348f1426",
-    "url": "/static/js/main.3cf8c4de.chunk.js"
+    "revision": "e1f16f71783cc00b07071bc4e09fc303",
+    "url": "/static/media/background.e1f16f71.mp3"
   },
   {
     "revision": "d9b2eff0d35021682a4f00fa09a17e36",
@@ -52,12 +52,40 @@ self.__precacheManifest = [
     "url": "/static/media/typing.e9b2d6fa.wav"
   },
   {
+    "revision": "56d6d749704c1a7af613",
+    "url": "/static/js/main.56d6d749.chunk.js"
+  },
+  {
+    "revision": "1819abc03e28d76da206cd3cf3f1863d",
+    "url": "/static/media/interstitial2.1819abc0.mp3"
+  },
+  {
+    "revision": "066f116737a7d408077e077995064331",
+    "url": "/static/media/interstitial3.066f1167.mp3"
+  },
+  {
+    "revision": "109ca6fcc1f6fa0996282d8a3676cc14",
+    "url": "/static/media/interstitial4.109ca6fc.mp3"
+  },
+  {
+    "revision": "be9db398224da4ebb9ef6753a17dd2dd",
+    "url": "/static/media/alarm.be9db398.mp3"
+  },
+  {
+    "revision": "cea0f308fac6f9c0a146b271261baa59",
+    "url": "/static/media/bell.cea0f308.wav"
+  },
+  {
     "revision": "85197b81a4f74406fdeffa15f0b8815c",
     "url": "/static/media/forward.85197b81.svg"
   },
   {
     "revision": "fe765dbdcad2c66d6efb45682bd72189",
     "url": "/static/media/end.fe765dbd.wav"
+  },
+  {
+    "revision": "72232038e63ef9d1a4ab406543cddb64",
+    "url": "/static/media/intro2.72232038.mov"
   },
   {
     "revision": "d4c8bff61d3b992820c5217304d76541",
@@ -76,7 +104,7 @@ self.__precacheManifest = [
     "url": "/static/media/user.0a35ba97.svg"
   },
   {
-    "revision": "b2c0e8bfc3f0b16750d0f5182992cd6c",
+    "revision": "24d366ba633cefafde01160250516d18",
     "url": "/index.html"
   }
 ];

@@ -25,7 +25,10 @@ export default class Question extends Component {
 	}
 
 	countdown(isStart){
-		if (isStart) this.setState({countdown: 60})
+		if (isStart) {
+			this.setState({countdown: 60})
+			this.props.sounds.bell.play()
+		}
 		this.countdownTimeout = setTimeout(() => {
 			if (this.state.countdown > 0){
 				this.setState({countdown: this.state.countdown - 1})
@@ -35,6 +38,7 @@ export default class Question extends Component {
 				}
 			} else {
 				this.props.timerSound.pause();
+				this.props.sounds.alarm.play()
     			this.props.timerSound.currentTime = 0;
 				//end countdown
 				endCountdown(this, this.props.room)
@@ -48,6 +52,7 @@ export default class Question extends Component {
 	}
 
 	showSearchTerm(){
+		this.props.sounds.interstitial1.play()
 		this.setState({showSearchTerm: true})
 		setTimeout(() => {
 			this.showAnswer(0)
@@ -72,15 +77,14 @@ export default class Question extends Component {
 
 	showAnswer(index){
 		const { answers } = this.props
-		console.log(answers)
 		this.timeout = setTimeout(() => {
 			this.setState({visible: index}, () => {
 				console.log('showing answers', index, answers.length)
 				if (answers && index < answers.length -1){
 					this.showAnswer(index +1)
-					setTimeout(() => {
-						this.props.sounds.bounce.play()
-					},400)
+					// setTimeout(() => {
+					// 	// this.props.sounds.bounce.play()
+					// },50)
 					
 				} else {
 					setTimeout(() =>{
@@ -91,7 +95,7 @@ export default class Question extends Component {
 				}
 			})
 
-		},300)
+		},100)
 	}
 
 	componentWillUnmount(){

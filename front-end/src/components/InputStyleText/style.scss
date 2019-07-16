@@ -11,30 +11,48 @@
 		justify-content: center;
 		background:white;
 		margin-top:30px;
-		overflow: hidden;	
-		img{
-			margin-top:5px;
-			margin-left:20px;
-			height:33px;
-			width:auto;
-		}
+		overflow: hidden;
 		.inputText{
 			font-weight: bold!important;
 			color:black;
 			letter-spacing:0.5px;
 			font-size: 30px!important;
-			transform: translateX(-100%);
+			transform: translateY(-100%);
 			
 			opacity:0;
-			transition:all 0.3s ease 0.3s, opacity 0.3s ease 0.3s;
+			transition:all 0.3s ease, opacity 0.3s ease;
 		}
+		&.correct{
+			background:#0F9D58;
+
+			.inputText{
+				transition: none;
+				color:white;
+			}
+		}
+		&.incorrect{
+			background:#DB4437;
+			.inputText{
+				transition: none;
+				color:white;
+			}
+		}	
+		.image{
+			font-size:33px;
+			line-height: 33px;
+			margin-top:5px;
+			margin-left:20px;
+			height:33px;
+			width:auto;
+		}
+		
 		&.inputContainerExpanded{
 			transition:opacity 0.3s ease 0.3s;		
 			opacity:1;
 			.inputText{
 
 				opacity:1;
-				transform: translateX(0%);
+				transform: translateY(0%);
 
 			}
 		}

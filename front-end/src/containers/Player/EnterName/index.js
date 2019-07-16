@@ -27,8 +27,8 @@ class NameTeam extends Component {
 	}
 
 	onChange(key, e){
-		console.log(key, e.target.value)
-		this.setState({[key]: e.target.value})
+		const value = key === 'roomcode' ? e.target.value.toUpperCase() : e.target.value
+		this.setState({[key]: value})
 	}
 
 	render(){

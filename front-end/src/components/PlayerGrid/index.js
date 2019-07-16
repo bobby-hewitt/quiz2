@@ -39,7 +39,7 @@ export default class Grid extends Component {
 						{rows.map((color, i) => {
 							// if (players[i] && players[i].name){
 								return(						
-									<Player key={i} color={color} index={i} {...players[i]} />
+									<Player pointsSound={this.props.pointsSound}key={i} color={color} index={i} {...players[i]} />
 								)
 							// } else {
 								// return <div />

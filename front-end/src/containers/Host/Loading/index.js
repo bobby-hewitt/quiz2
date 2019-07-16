@@ -34,6 +34,7 @@ export default class HostLoading extends Component {
 		console.log()
 		if (!this.props.loading&& np.loading){
 			console.log('start of load')
+			
 			this.setState({visible: -1}, () => {
 				this.load(0)
 			})

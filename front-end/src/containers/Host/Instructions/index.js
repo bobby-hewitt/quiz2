@@ -11,18 +11,18 @@ export default class Instructions extends Component {
 				text: 'The auto complete search engine game',
 				time: 1500,
 			},
-			// {
-			// 	text: 'One player enters the beginning of a search term',
-			// 	time: 3000,
-			// },
-			// {
-			// 	text: 'Everyone guesses what the auto complete suggestions might be',
-			// 	time: 3000,
-			// },
-			// {
-			// 	text: 'Pro tip: Be specific with your search terms!',
-			// 	time: 2000,
-			// },
+			{
+				text: 'One player enters the beginning of a search term',
+				time: 3000,
+			},
+			{
+				text: 'Everyone guesses what the auto complete suggestions might be',
+				time: 3000,
+			},
+			{
+				text: 'Pro tip: Be specific with your search terms!',
+				time: 2000,
+			},
 			{
 				text: "Let's go!",
 				time: 1000,
@@ -59,6 +59,7 @@ export default class Instructions extends Component {
 			})
 		} else {
 			this.props.setScreenLoadingState('out')
+			this.props.sounds.interstitial2.play() 
 			setTimeout(() => {
 				this.props.complete()
 			},1500)

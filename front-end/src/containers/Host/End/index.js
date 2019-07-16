@@ -52,7 +52,7 @@ class End extends Component {
 					return(
 						<div key={i}className={`finalPlayerInnerContainer ${this.state.visible >= i && 'isVisible'}`}>
 						<h4>#{i+1}</h4>
-						<Player color={colors[i]}key={i} {...player} />
+						<Player color={colors[i]}key={i} {...player} large/>
 						</div>
 					)
 				})}

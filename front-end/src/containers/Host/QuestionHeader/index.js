@@ -123,6 +123,7 @@ class QuestionHeader extends Component {
 					if (i < answers.length - 1){
 						this.tallyScores(i+1)
 					} else {
+
 						this.nextRound()
 					}
 				},500)
@@ -140,19 +141,22 @@ class QuestionHeader extends Component {
 			this.revealAnswers()
 		} else {
 			//next round
-			this.props.setRound(round + 1)
-			var newPlayers = Object.assign([], players)
-			var newAnswers = Object.assign([], answers)
-			for(var i = 0; i < newPlayers.length; i++){
-				newPlayers[i].answer = false
-			}
-			for (var i = 0; i < answers.length; i++){
-				newAnswers[i].players = []
-			}
-			this.props.updateAnswers(newAnswers)
-			this.props.updatePlayers(newPlayers)
-			sendAnswerInput(this, this.props.room)
-			this.props.setViewResponses(false)
+			setTimeout(() => {
+				this.props.setRound(round + 1)
+				var newPlayers = Object.assign([], players)
+				var newAnswers = Object.assign([], answers)
+				for(var i = 0; i < newPlayers.length; i++){
+					newPlayers[i].answer = false
+				}
+				for (var i = 0; i < answers.length; i++){
+					newAnswers[i].players = []
+				}
+				this.props.updateAnswers(newAnswers)
+				this.props.updatePlayers(newPlayers)
+				sendAnswerInput(this, this.props.room)
+				this.props.setViewResponses(false)
+			},1000)
+			
 		}
 	}
 
@@ -211,7 +215,7 @@ class QuestionHeader extends Component {
 					},2500)
 					
 				})
-			}, (notAnsweredCount + 2) * this.answerDuration)
+			}, (notAnsweredCount + 1) * this.answerDuration)
 	}
 
 	setEndGame(){
@@ -272,7 +276,7 @@ class QuestionHeader extends Component {
 			if(np.isAnswers){
 				setTimeout(() => {
 					this.showPlayer(0)
-				},600)
+				},1500)
 			}
 		} 
 	}
@@ -305,6 +309,7 @@ const mapStateToProps = state => ({
 	answers: state.host.question.answers,
 	round: state.host.round,
 	room: state.host.room,
+	hostRoom:state.host.room,
 	questionIndex: state.host.questionIndex,
 	isAnswers: state.host.viewResponses,
 	

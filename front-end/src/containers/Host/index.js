@@ -38,15 +38,15 @@ class Host extends Component {
 				</div>
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="Trending.guru" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
-					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
+					<Route exact path="/host/instructions" render={() => <Instructions sounds={sounds}complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
 					<Route exact path="/host/question" render={() => <Question loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
-					<Loading loading={loadingState === 'out'}/>
+					<Loading loading={loadingState === 'out'} sounds={sounds}/>
 				</div>
 				<div className="hostPlayersContainer">
-				<PlayerGrid players={players} title="What would yougle do" room={room}/>	<Loading />
+				<PlayerGrid players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	<Loading />
 				</div>
 			</div>
 		)

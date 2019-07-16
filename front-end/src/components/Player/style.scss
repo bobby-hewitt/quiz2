@@ -2,7 +2,13 @@
 	margin:12px 20px;
 	display: block;
 	max-height: 165px;
+	&.large{
+		
+	}
 .hostPlayerContainer{
+	&.large{
+		margin-top:-100px;
+	}
 	position: relative;
 	width:80px;
 	display: flex;
@@ -11,6 +17,8 @@
 	align-items: center;
 	
 	.playerCircle{
+		background-size: cover;
+		background-position:center;
 		overflow: hidden;
 		min-width:80px;
 		width:80px;
@@ -19,6 +27,11 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
+		&.large{
+
+			width:200px;
+			height:200px;
+		}
 		p{
 			color:white;
 			font-size: 40px;
@@ -44,4 +57,57 @@
 		text-align: center;
 	}
 }
+}
+
+
+.pointsContainer{
+	position: absolute;
+	width:30px;
+	height:30px;
+	
+	top:18px;
+	left:23px;
+	.coin{
+		font-size:50px;
+		opacity:0;
+	}
+	.coin1{
+		position:absolute;
+		top:20px;
+		left:20px;
+		animation-name: coin1;
+		animation-duration: 0.5s;
+	}
+	.coin2{
+		position:absolute;
+		top:20px;
+		left:0px;
+		animation-name: coin2;
+		animation-duration: 0.5s;
+	}
+	.coin3{
+		position:absolute;
+		top:0px;
+		left:10px;
+		animation-name: coin3;		
+		animation-duration: 0.5s;
+	}
+
+}
+
+
+@keyframes coin1 {
+  0%   {transform: translate(0);opacity:0;}
+  50% {opacity:1;}
+  100% {transform: translate(20px, -20px); opacity:1;}
+}
+@keyframes coin2 {
+  0%   {transform: translate(0);opacity:0;}
+  50% {opacity:1;}
+  100% {transform: translate(-20px, -20px); opacity:1;}
+}
+@keyframes coin3 {
+  0%   {transform: translateY(0);opacity:0;}
+  50% {opacity:1;}
+  100% {transform: translateY(-28px); opacity:1;}
 }
