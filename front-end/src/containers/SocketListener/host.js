@@ -2,8 +2,8 @@ import openSocket from 'socket.io-client';
 var socket;
 
 function subscribeToHostEvents(self) {
-	socket = openSocket('http://localhost:9000');
-	// socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	// socket = openSocket('http://localhost:9000');
+	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
 	socket.on('player-joined', playerJoined.bind(this, self))
@@ -72,22 +72,35 @@ function allPlayersHaveAnswered(players){
 
 
 function showHints(self, data){
+	self.props.sounds.typing.pause()
 	self.props.setGameState('waiting')
 	self.props.push('/host/question')
 	self.props.showHints(data)
 }
 
 function endCountdown(self, data){
+	self.props.sounds.timer.pause()
 	self.props.setGameState('waiting')
 	socket.emit('send-player-waiting', data)
 	self.props.setViewResponses(true)
 }
 
-function startGame(self){
-	var audio = new Audio(require('assets/sounds/go.wav'));
-	audio.play()
-	self.props.setGameState('question-entry')
-	self.props.push('/host/instructions')
+function startGame(self, data){
+	console.log('starting game', self, data)
+	self.props.sounds.typing.pause()
+	// self.props.sounds.bounce.play()
+	socket.emit('send-player-waiting', self.props.hostRoom)
+	self.props.setScreenLoadingState('out')
+	self.props.sounds.start.play()
+	setTimeout(() => {
+		// self.props.sounds.typing.play()
+		self.props.setGameState('question-entry')
+		self.props.push('/host/instructions')
+	},4000)
+		
+	
+	
+	
 }
 
 function endGame(self){
@@ -142,8 +155,8 @@ function playerJoined(self, data){
 	} else {
 		data.gameState = self.props.gameState
 	}
-	var audio = new Audio(require('assets/sounds/thud.wav'));
-	audio.play()
+	
+	self.props.sounds.bounce.play()
 	socket.emit('host-sending-game-state', data)
 	console.log('player-joined', data)
 }
@@ -153,7 +166,9 @@ function setPlayerName(self, data){
 }
 
 function sendAnswerInput(self, data){
-	
+	self.props.sounds.typing.pause()
+	self.props.sounds.timer.play()
+	self.props.sounds.timer.loop = true
 	self.props.setGameState('answer-entry')
 	socket.emit('host-send-answer-input', self.props.room)
 }

@@ -32,14 +32,18 @@ export default class Grid extends Component {
 						?
 					</div>
 				</div>
-				{/*<PageTitle title="What would yougle do" room={room}/>*/}
+				
 				<div className="playersModalBackground">
 					<div className="playersInner">
 						<div className="playersInnerChevron" />
 						{rows.map((color, i) => {
-							return(						
-								<Player key={i} color={color} index={i} {...players[i]} />
-							)
+							// if (players[i] && players[i].name){
+								return(						
+									<Player key={i} color={color} index={i} {...players[i]} />
+								)
+							// } else {
+								// return <div />
+							// }
 						})}
 					</div>
 					<div className="filler">

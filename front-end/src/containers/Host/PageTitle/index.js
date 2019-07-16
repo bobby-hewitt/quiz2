@@ -18,10 +18,12 @@ export default class PageTitle extends Component {
 		}
 		return newTitle
 	}
+
 	render(){
-		const { room, title } = this.props
+		const { room, title, loadingState } = this.props
+		console.log('loading state', loadingState)
 		return(
-			<div className="titleOuterContainer">
+			<div className={`titleOuterContainer ${loadingState === 'out' && 'out'}`}>
 				<ColorText text={title} />
 				<InputStyleText primaryText={room? room.short : 'no room'} secondaryText="Room code:" />
 				{/*<div className="luckyButtonsContainer">

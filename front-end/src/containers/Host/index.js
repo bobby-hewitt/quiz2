@@ -28,7 +28,7 @@ class Host extends Component {
 	}
 
 	render(){
-		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds} = this.props
+		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState} = this.props
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -38,9 +38,9 @@ class Host extends Component {
 					</div>
 				</div>
 				<div className="hostMainContainer">
-					<Route exact path="/host" render={() => <PageTitle  title="What would yougle do" room={room}/>} />
+					<Route exact path="/host" render={() => <PageTitle  title="Searches" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions complete={this.instructionsComplete.bind(this)} />} />
-					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer}setGameState={this.props.setGameState.bind(this)}/>} />
+					<Route exact path="/host/question" render={() => <Question question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
@@ -60,6 +60,7 @@ const mapStateToProps = state => ({
 	questionIndex: state.host.questionIndex,
 	question:state.host.question,
 	sounds: state.sounds,
+	loadingState: state.host.screenLoadingState,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

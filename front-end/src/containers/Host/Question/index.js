@@ -21,7 +21,7 @@ export default class Question extends Component {
 	}
 
 	countdown(isStart){
-		if (isStart) this.setState({countdown: 30})
+		if (isStart) this.setState({countdown: 60})
 		this.countdownTimeout = setTimeout(() => {
 			if (this.state.countdown > 0){
 				this.setState({countdown: this.state.countdown - 1})
@@ -62,9 +62,16 @@ export default class Question extends Component {
 				console.log('showing answers', index, answers.length)
 				if (answers && index < answers.length -1){
 					this.showAnswer(index +1)
+					setTimeout(() => {
+						this.props.sounds.bounce.play()
+					},400)
+					
 				} else {
-					this.countdown(true)
-					sendAnswerInput(this, this.props.room)
+					setTimeout(() =>{
+						this.countdown(true)
+						sendAnswerInput(this, this.props.room)
+					},2000)
+					
 				}
 			})
 
@@ -81,7 +88,7 @@ export default class Question extends Component {
 
 
 	render(){
-		const { question, answers, isQuestion, isAnswers, players } = this.props
+		const { question, answers, isQuestion, isAnswers, players, sounds } = this.props
 		return(
 			<div className="questionContainer">
 				{(this.state.countdown || this.state.countdown === 0) &&
@@ -90,7 +97,7 @@ export default class Question extends Component {
 				<div className="questionInfoContainer">
 				
 				
-					<QuestionHeader text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)}/>
+					<QuestionHeader text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
 				
 				</div>
 				<div className="questionAndAnswerContainer">
