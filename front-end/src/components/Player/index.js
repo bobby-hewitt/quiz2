@@ -21,7 +21,7 @@ export default class Player extends Component {
 	}
 
 	componentWillReceiveProps(np){
-		if ((np.score && this.props.score) && np.score > this.props.score){
+		if ((np.score && (this.props.score || this.props.score === 0)) && np.score > this.props.score){
 			if (this.props.pointsSound){
 				this.props.pointsSound.play()
 			}
