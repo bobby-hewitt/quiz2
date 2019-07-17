@@ -18,6 +18,12 @@ class End extends Component {
 		}
 	}
 
+	componentWillMount(){
+		const { players } = this.props
+		const newPlayers = players.sort(function(a, b){return b.score-a.score})
+		this.setState({players: newPlayers})
+	}
+
 	componentDidMount(){
 		
 			this.showPlayer(0)
@@ -43,7 +49,7 @@ class End extends Component {
 
 
 	render(){
-		const { players } = this.props
+		const { players } = this.state
 		return(
 			<div className="hostEndContainer">
 				<ColorText text="That's it!"/>
@@ -64,7 +70,7 @@ class End extends Component {
 
 
 const mapStateToProps = state => ({
-	players: state.host.finalPlayers,
+	players: state.host.players,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

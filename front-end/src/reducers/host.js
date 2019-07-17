@@ -86,7 +86,6 @@ export default (state = initialState, action) => {
         question: action.payload
       }
     case 'HOST_PLAYER_ANSWER_RECEIVED':
-    console.log('in player answered reducer')
       var newPlayers = Object.assign([], state.players)
       for(var i = 0; i < newPlayers.length; i++){
         if (action.payload.id === newPlayers[i].id){
@@ -99,7 +98,6 @@ export default (state = initialState, action) => {
         players: newPlayers
       }
     case 'HOST_UPDATE_ANSWERS':
-    console.log('updating answers', action.payload)
       return {
         ...state,
         question: {

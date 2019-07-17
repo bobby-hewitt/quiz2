@@ -2,8 +2,13 @@ import openSocket from 'socket.io-client';
 var socket;
 
 function subscribeToHostEvents(self) {
-	// socket = openSocket('http://localhost:9000');
-	socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	if (self.props.dev){
+		socket = openSocket('http://localhost:9000');
+	} else {
+		socket = openSocket('https://whatpeoplesearch.herokuapp.com');
+	}
+	
+	
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
 	socket.on('player-joined', playerJoined.bind(this, self))
@@ -106,7 +111,21 @@ function startGame(self, data){
 		// self.props.sounds.typing.play()
 		self.props.setGameState('question-entry')
 		self.props.push('/host/instructions')
-	},3500)
+	}, self.props.dev ? 0 : 3500)
+}
+
+function resetAllPlayers(self){
+	var players = Object.assign([], self.props.players)
+	for (var i = 0; i < players.length; i++){
+		players[i].score = 0
+		players[i].answer = false
+		players[i].hasSubmitted = false
+	}
+	self.props.updatePlayers(players)
+	self.props.setRound(1)
+	self.props.nextQuestion(0)
+	self.props.setViewResponses(false)
+
 }
 
 function restartGame(self, data){
@@ -117,13 +136,14 @@ function restartGame(self, data){
 	self.props.setScreenLoadingState('out')
 	self.props.setGameState('waiting')
 	self.props.sounds.start.play()
+	resetAllPlayers(self)
 	setTimeout(() => {
 		self.props.setScreenLoadingState('in')
 		// self.props.sounds.typing.play()
 		// self.props.setGameState('question-entry')
 		self.props.push('/host/question-input')
 		sendQuestionInput(self)
-	},3500)
+	}, self.props.dev ? 0 : 3500)
 }
 
 function endGame(self){

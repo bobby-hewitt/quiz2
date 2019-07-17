@@ -2,11 +2,7 @@ const Rooms = require('../models/rooms')
 
 exports.connected = function(socket){
 	// unique room codes 
-	console.log('connecting')
-
-
 	function createCode(){
-		console.log('creating code')
 		var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
 		var text = '';
 		for (var i = 0; i < 4; i++){
@@ -22,39 +18,37 @@ exports.connected = function(socket){
 		})
 	}
 	function storeRoom(room){
-		Rooms.create({short: room, long: socket.id}, (err, roomCreated)=> {
-			console.log('room', roomCreated)
-			socket.emit('host-room-generated', roomCreated)
+		Rooms.create({short: room, long: socket.id}, (err, roomToSend)=> {
+
+			socket.emit('host-room-generated', roomToSend)
 		})
 	}
-	createUniqueRoomId()
+	
 
 	//generic room code
+	const code = 'ABCD'
+	function createDevRoom(){
+		Rooms.findOne({short: code}, function(err, result){
+			if (result) return deleteRooms()
+			createRoom()
+		})
+	}
 
-	// const code = 'ABCD'
+	function deleteRooms(){
+		Rooms.remove({}, () => {
+			createRoom()
+		})
+	}
 
-	// function checkRoom(){
-	// 	Rooms.findOne({short: code}, function(err, result){
-	// 		if (result) return deleteRooms()
-	// 		createRoom()
-	// 	})
-	// }
-
-	// function deleteRooms(){
-	// 	Rooms.remove({}, () => {
-	// 		createRoom()
-	// 	})
-	// }
-
-	// function createRoom(){
-	// 	Rooms.create({short: code, long: socket.id}, (err, room)=> {
-	// 		socket.emit('host-room-generated', room)
-	// 	})
-	// }
+	function createRoom(){
+		Rooms.create({short: code, long: socket.id}, (err, room)=> {
+			socket.emit('host-room-generated', room)
+		})
+	}
 
 
-
-	// checkRoom()
+	createUniqueRoomId()
+	// createDevRoom()
 	// Rooms.find({}, (err, rooms) => {
 	// 	console.log('All rooms', rooms)
 	// 	checkRoom()

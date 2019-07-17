@@ -27,7 +27,8 @@ class Host extends Component {
 	}
 
 	render(){
-		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState} = this.props
+		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState, dev} = this.props
+		console.log(dev)
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -38,12 +39,12 @@ class Host extends Component {
 				</div>
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="Trending.guru" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
-					<Route exact path="/host/instructions" render={() => <Instructions sounds={sounds}complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
+					<Route exact path="/host/instructions" render={() => <Instructions dev={dev} sounds={sounds}complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
 					<Route exact path="/host/question" render={() => <Question loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
-					<Loading loading={loadingState === 'out'} sounds={sounds}/>
+					<Loading loading={loadingState === 'out'} sounds={sounds} dev={dev}/>
 				</div>
 				<div className="hostPlayersContainer">
 				<PlayerGrid players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	<Loading />
@@ -62,6 +63,7 @@ const mapStateToProps = state => ({
 	question:state.host.question,
 	sounds: state.sounds,
 	loadingState: state.host.screenLoadingState,
+	dev: state.dev
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

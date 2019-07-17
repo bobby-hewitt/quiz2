@@ -6,7 +6,7 @@ export default class Instructions extends Component {
 	constructor(props){
 		super(props)
 		this.timeouts = []
-		this.tips = [
+		this.tips = this.props.dev ? [] : [
 			{
 				text: 'The auto complete search engine game',
 				time: 1500,
@@ -62,7 +62,7 @@ export default class Instructions extends Component {
 			this.props.sounds.interstitial2.play() 
 			setTimeout(() => {
 				this.props.complete()
-			},1500)
+			}, this.props.dev ? 0 : 1500)
 			
 		}
 	}

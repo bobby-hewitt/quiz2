@@ -51,6 +51,7 @@ exports.submitAnswer = (socket, data) =>{
 	}
 	data.answer = data.answer.replace(/[^\w\s]/gi, '')
 	data.answer = data.answer.toLowerCase()
+	data.answer = data.answer.trim()
 	socket.to(data.room.long).emit('player-answer', data)
 }
 

@@ -2,8 +2,9 @@
 	margin:12px 20px;
 	display: block;
 	max-height: 165px;
+	position: relative;
 	&.large{
-		
+		margin: 12px 50px;
 	}
 .hostPlayerContainer{
 	&.large{
@@ -65,8 +66,8 @@
 	width:30px;
 	height:30px;
 	
-	top:18px;
-	left:23px;
+	top:0px;
+	left:5px;
 	.coin{
 		font-size:50px;
 		opacity:0;

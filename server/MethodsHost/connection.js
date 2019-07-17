@@ -2,34 +2,31 @@ const Rooms = require('../models/rooms')
 
 exports.connected = function(socket){
 	// unique room codes 
-
-	// function createCode(){
-	// 	var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
-	// 	var text = '';
-	// 	for (var i = 0; i < 4; i++){
- //    		text += possible.charAt(Math.floor(Math.random() * possible.length));
-	// 	}
-	// 	return text;
-	// }
-	// function createUniqueRoomId(){
-	// 	let room = createCode()
-	// 	Rooms.findOne({short: room}, function(err, result){
-	// 		if (result) return createUniqueRoomId()
-	// 		storeRoom(room)
-	// 	})
-	// }
-	// function storeRoom(room){
-	// 	Rooms.create({short: room, long: socket.id}, ()=> {
-	// 		socket.emit('host-room-code-generated', room)
-	// 	})
-	// }
-	// createUniqueRoomId()
+	function createCode(){
+		var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
+		var text = '';
+		for (var i = 0; i < 4; i++){
+    		text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+		return text;
+	}
+	function createUniqueRoomId(){
+		let room = createCode()
+		Rooms.findOne({short: room}, function(err, result){
+			if (result) return createUniqueRoomId()
+			storeRoom(room)
+		})
+	}
+	function storeRoom(room){
+		Rooms.create({short: room, long: socket.id}, (err, roomToSend)=> {
+			socket.emit('host-room-generated', roomToSend)
+		})
+	}
+	
 
 	//generic room code
-
 	const code = 'ABCD'
-
-	function checkRoom(){
+	function createDevRoom(){
 		Rooms.findOne({short: code}, function(err, result){
 			if (result) return deleteRooms()
 			createRoom()
@@ -49,8 +46,8 @@ exports.connected = function(socket){
 	}
 
 
-
-	checkRoom()
+	createUniqueRoomId()
+	// createDevRoom()
 	// Rooms.find({}, (err, rooms) => {
 	// 	console.log('All rooms', rooms)
 	// 	checkRoom()

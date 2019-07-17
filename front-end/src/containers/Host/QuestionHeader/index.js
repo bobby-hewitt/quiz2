@@ -188,7 +188,7 @@ class QuestionHeader extends Component {
 			setTimeout(() => {
 				console.log('moving forwards')
 				this.setState({player: players[questionIndex], bonus: answeredCount}, () => {
-					newPlayers[questionIndex].score += 500 * answeredCount
+					newPlayers[questionIndex].score += 100 * answeredCount
 					this.props.updatePlayers(newPlayers)
 					
 					setTimeout(() => {
@@ -222,20 +222,23 @@ class QuestionHeader extends Component {
 		const { players } = this.props
 		var newPlayers = Object.assign([], players)
 		let finalPlayers = []
-		for (var i = 0; i < players.length; i++){
-			if (players[i].name.length) finalPlayers.push(players[i])
+		for (var i = 0; i < newPlayers.length; i++){
+			if (newPlayers[i].name.length){
+				console.log('creating final player')
+				finalPlayers.push(newPlayers[i])
+			} 
 		} 
 		finalPlayers.sort(function(a, b){return a.score-b.score});
 		this.props.setFinalPlayers(finalPlayers)
-		for (var i = 0; i < newPlayers.length; i++){
-			players[i].score = 0
-			players[i].answer = false
-			players[i].hasSubmitted = false
-		}
-		this.props.updatePlayers(newPlayers)
-		this.props.setRound(1)
-		this.props.nextQuestion(0)
-		this.props.setViewResponses(false)
+		// for (var i = 0; i < players.length; i++){
+		// 	players[i].score = 0
+		// 	players[i].answer = false
+		// 	players[i].hasSubmitted = false
+		// }
+		// this.props.updatePlayers(newPlayers)
+		// this.props.setRound(1)
+		// this.props.nextQuestion(0)
+		// this.props.setViewResponses(false)
 		endGame(this)
 	}
 
