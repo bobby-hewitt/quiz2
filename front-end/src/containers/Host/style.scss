@@ -31,12 +31,13 @@
 	}
 
 	.hostPlayersContainer{
-		// position:absolute;
+		position:absolute;
 		top:0;
 		right:0;
 		width:280px;
-		height:100vh;
-		position:relative;
+		// height:100vh;
+		z-index: 1000000000;
+		// position:relative;
 
 	}
 	.hostBackground{

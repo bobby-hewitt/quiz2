@@ -6,6 +6,7 @@ const initialState = {
   round: 1,
   viewResponses: false,
   screenLoadingState: 'unloaded',
+  likes: [],
   question: {
     question: '',
     answers: []

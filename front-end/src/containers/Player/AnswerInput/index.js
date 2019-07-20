@@ -20,14 +20,19 @@ class AnswerInput extends Component {
 		const { room, id } = this.props
 
 		const data = {
-			answer: answer.toLowerCase(),
+			answer: answer === 'PASS' ? answer : answer.toLowerCase(),
 			room,
 			id
 		}
 		this.setState({answer: ''}, () => {
 			sendAnswer(this, data)
 		})
-		
+	}
+
+	giveUp(){
+		this.setState({answer: 'PASS'}, () => {
+			this.onContinue()
+		})
 
 	}
 
@@ -46,6 +51,12 @@ class AnswerInput extends Component {
 					onContinue={this.onContinue.bind(this)} 
 					onChange={this.onChange.bind(this, 'answer')}
 					/>
+				<Button
+					danger
+					containerStyle={{backgroundColor:'ff0000'}} 
+					text="Give up"
+					onClick={this.giveUp.bind(this)}
+				/>
 				<div>
 					
 				</div>
@@ -60,7 +71,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setLoading
+  setLoading,
+  push: (path) => push(path),
 }, dispatch)
 
 export default connect(

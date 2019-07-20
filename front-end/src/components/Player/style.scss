@@ -7,8 +7,12 @@
 	height:0;
 	// overflow: visible;
 	&.large{
+		
 
 		margin: 12px 50px;
+		.score{
+			margin-bottom: 20px;
+		}
 	}
 	&.isVisible{
 		height:auto;
@@ -37,7 +41,8 @@
 		justify-content: center;
 		border-radius: 50%;
 		&.large{
-
+			box-shadow: 0 0 20px rgba(0,0,0,0.3);
+			margin-bottom:20px;
 			width:200px;
 			height:200px;
 		}
@@ -76,6 +81,7 @@
 	
 	top:0px;
 	left:5px;
+
 	.coin{
 		font-size:50px;
 		opacity:0;
@@ -85,21 +91,46 @@
 		top:20px;
 		left:20px;
 		animation-name: coin1;
-		animation-duration: 0.5s;
+		animation-duration: 0.8s;
 	}
 	.coin2{
 		position:absolute;
 		top:20px;
 		left:0px;
 		animation-name: coin2;
-		animation-duration: 0.5s;
+		animation-duration: 0.8s;
 	}
 	.coin3{
 		position:absolute;
 		top:0px;
 		left:10px;
 		animation-name: coin3;		
-		animation-duration: 0.5s;
+		animation-duration: 0.8s;
+	}
+	&.large{	
+		top:-50px;
+		.coin{
+			font-size:50px;
+			opacity:0;
+		}
+		.coin1{
+			
+			top:40px;
+			left:40px;
+			
+		}
+		.coin2{
+			
+			top:40px;
+			left:0px;
+			
+		}
+		.coin3{
+			
+			top:0px;
+			left:20px;
+			
+		}
 	}
 
 }

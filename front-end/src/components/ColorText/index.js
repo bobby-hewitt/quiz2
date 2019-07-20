@@ -27,7 +27,7 @@ export default class ColorText extends Component {
 					this.displayTitle(i + 1)
 				})		
 			} else if (this.props.loadComplete){
-				console.log('load compl;ete')
+				
 				this.props.loadComplete()
 			}
 		}, this.timeoutTime)

@@ -1,4 +1,5 @@
 import openSocket from 'socket.io-client';
+import ReactGA from 'react-ga';
 var socket;
 
 function subscribeToPlayerEvents(self) {
@@ -8,6 +9,9 @@ function subscribeToPlayerEvents(self) {
 	} else {
 		socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	}
+
+	ReactGA.initialize('UA-144165883-1');
+	ReactGA.pageview('player');
 	//notify that it is a player joining.
 	// socket.emit('player-connected', {short: 'ABCD'})
 	socket.on('host-send-player-leave-room', errorJoiningRoom.bind(this, self))
@@ -53,13 +57,13 @@ function answerInput(self){
 
 function sendQuestion(self, data){
 	socket.emit('player-submit-question', data)
-	self.props.setLoading(true)
+	self.props.push('/p/waiting')
 }
 
 function sendAnswer(self, data){
 	console.log('sending answer', data)
 	socket.emit('player-send-answer', data)
-	self.props.setLoading(true)
+	self.props.push('/p/waiting')
 }
 
 function hostQuit(self){
@@ -112,11 +116,12 @@ function startRound(self){
 }
 
 function startGame(room){
-	console.log(room)
+	ReactGA.pageview('start game');
 	socket.emit('player-start-game', room)
 }
 
 function restartGame(room){
+	ReactGA.pageview('restart game');
 	socket.emit('player-restart-game', room)
 }
 

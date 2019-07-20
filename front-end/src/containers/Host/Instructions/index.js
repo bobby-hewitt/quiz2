@@ -59,7 +59,7 @@ export default class Instructions extends Component {
 			})
 		} else {
 			this.props.setScreenLoadingState('out')
-			this.props.sounds.interstitial2.play() 
+			this.props.sounds.interstitial4.play() 
 			setTimeout(() => {
 				this.props.complete()
 			}, this.props.dev ? 0 : 1500)

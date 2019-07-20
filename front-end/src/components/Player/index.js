@@ -16,7 +16,7 @@ export default class Player extends Component {
 		this.setState({showPoints:true}, () => {
 			this.timeout = setTimeout(() => {
 				this.setState({showPoints: false})
-			}, 500)
+			}, 800)
 		})
 	}
 
@@ -30,7 +30,7 @@ export default class Player extends Component {
 		}
 	}
 	render(){
-		const { name, image, planet, isConnected, color, index, score, hasSubmitted, large } = this.props
+		const { name, image, planet, isConnected, color, index, score, hasSubmitted, large, showScores } = this.props
 		const playerImage = !isConnected ? require('assets/images/png/disconnected.png') : image
 		return(
 			<div className={`hostPlayerOuterContainer ${large && 'large'}  ${name && 'isVisible'}`}>
@@ -45,10 +45,14 @@ export default class Player extends Component {
 
 				</div>
 				<p className="name">{name || `Player ${index + 1}`}</p>
-				<p className="score">{score || 0}</p>
+				{showScores &&
+					<p className="score">{score || 0}</p>
+				}
 			</div>
 			{this.state.showPoints && 
-				<Points />
+				
+				<Points large={large}/>
+
 			}
 			</div>
 		)

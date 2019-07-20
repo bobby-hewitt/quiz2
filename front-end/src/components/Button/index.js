@@ -3,10 +3,10 @@ import './style.scss'
 
 export default class Button extends Component {
 	render(){
-		const { text, onClick } = this.props
+		const { text, onClick, containerStyle, textStyle, danger } = this.props
 		return(
-			<div className="buttonContainer" onClick={onClick.bind(this)}>
-				<p>{text}</p>
+			<div className={`buttonContainer ${danger && 'danger'}`} onClick={onClick.bind(this)} style={containerStyle ? containerStyle : {}}>
+				<p style={textStyle ? textStyle : {}}>{text}</p>
 			</div>
 		)
 	}

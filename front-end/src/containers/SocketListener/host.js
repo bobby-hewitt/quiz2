@@ -1,4 +1,5 @@
 import openSocket from 'socket.io-client';
+import ReactGA from 'react-ga';
 var socket;
 
 function subscribeToHostEvents(self) {
@@ -7,7 +8,8 @@ function subscribeToHostEvents(self) {
 	} else {
 		socket = openSocket('https://whatpeoplesearch.herokuapp.com');
 	}
-	
+	ReactGA.initialize('UA-144165883-1');
+	ReactGA.pageview('host')
 	
 	socket.emit('host-connected')
 	socket.on('host-room-generated', roomGenerated.bind(this,self))
@@ -47,14 +49,14 @@ function playerAnswer(self, data){
 }
 
 function revealScores(self){
-	console.log('reveal scores', self)
+	
 	var players = Object.assign([], self.props.players)
 	var answers = Object.assign([], self.props.question.answers)
 
-	console.log(self.props.players, self.props.question.answers)
+	
 	for (var i = 0; i < answers.length; i++){
 		var correctAnswer = players.find(p => p.answer === answers[i].answer)
-		console.log('correct answer', correctAnswer)
+		
 		if (correctAnswer){
 
 			
@@ -100,7 +102,7 @@ function endCountdown(self, data){
 }
 
 function startGame(self, data){
-	console.log('starting game', self, data)
+	
 	self.props.sounds.typing.pause()
 	// self.props.sounds.bounce.play()
 	socket.emit('send-player-waiting', self.props.hostRoom)
@@ -174,7 +176,7 @@ function playerLeft(self, data){
 }
 
 function roomGenerated(self, data){
-	console.log('room generated', data)
+	
 	self.props.hostSetRoom(data)
 }
 
@@ -217,7 +219,7 @@ function createNewPlayerObj(self, data){
 	  var disconnectedPlayerFound = false 
 	  for (var i = 0; i < newPlayers.length; i++ ){
 	    if (data.name === newPlayers[i].name && !newPlayers[i].isConnected){
-	        console.log('reconnecting existing player')
+	        
 	        newPlayers[i].id = data.id
 	        newPlayers[i].isConnected = true
 	        disconnectedPlayerFound = true
@@ -229,7 +231,7 @@ function createNewPlayerObj(self, data){
 
 	  }
 	  if (!disconnectedPlayerFound && self.props.gameState === 'welcome'){
-	    console.log('creating new player')
+	    
 	    data.score = 0
 	    data.image = avatars[Math.floor(Math.random() * avatars.length)]
 	    newPlayers.push(data)

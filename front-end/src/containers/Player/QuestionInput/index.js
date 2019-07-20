@@ -22,7 +22,6 @@ class NameTeam extends Component {
 			question,
 			room
 		}
-
 		sendQuestion(this, data)
 	}
 
@@ -55,7 +54,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setLoading
+  setLoading,
+  push: (path) => push(path),
 }, dispatch)
 
 export default connect(

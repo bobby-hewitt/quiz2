@@ -11,6 +11,7 @@ import PageTitle from './PageTitle'
 import QuestionInput from './QuestionInput'
 import End from './End'
 import Loading from './Loading'
+import ScoreBoard from './ScoreBoard'
 import { PlayerGrid } from 'components'
 import { setViewResponses, setGameState, setScreenLoadingState } from 'actions/host'
 import { sendQuestionInput } from 'containers/SocketListener/host'
@@ -28,7 +29,7 @@ class Host extends Component {
 
 	render(){
 		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState, dev} = this.props
-		console.log(dev)
+		
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -44,6 +45,7 @@ class Host extends Component {
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
+					<Route exact path="/host/scores" render={() => <ScoreBoard />} />
 					<Loading loading={loadingState === 'out'} sounds={sounds} dev={dev}/>
 				</div>
 				<div className="hostPlayersContainer">

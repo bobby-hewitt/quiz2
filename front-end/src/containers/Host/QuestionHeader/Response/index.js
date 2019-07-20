@@ -49,7 +49,7 @@ export default class Response extends Component {
 				{/*<h4 className="answerPlayerName">{player.name}'s answer</h4>*/}
 				<Player {...player} large/>
 				{!(bonus || bonus === 0) &&
-				<InputStyleText isVisible primaryText={player.answer || '❌'} correct={showRightWrong && showRightWrong === 'right'} incorrect={showRightWrong && showRightWrong !== 'right'}containerStlye={{margin:'0px', marginTop:'-30px'}}/>
+				<InputStyleText isVisible primaryText={player.answer || '❌'} correct={showRightWrong && showRightWrong === 'right'} incorrect={showRightWrong && showRightWrong !== 'right'}containerStlye={{margin:'0px', marginTop:'-30px', height:'60px'}}/>
 				}
 					{/*<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>*/}
 				

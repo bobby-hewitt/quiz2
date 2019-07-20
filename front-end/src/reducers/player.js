@@ -3,6 +3,7 @@ const initialState = {
   name: '',
   id: null,
   loading:false,
+  answers: [],
 }
 
 export default (state = initialState, action) => {

@@ -19,7 +19,6 @@ exports.connected = function(socket){
 	}
 	function storeRoom(room){
 		Rooms.create({short: room, long: socket.id}, (err, roomToSend)=> {
-
 			socket.emit('host-room-generated', roomToSend)
 		})
 	}
@@ -42,13 +41,14 @@ exports.connected = function(socket){
 
 	function createRoom(){
 		Rooms.create({short: code, long: socket.id}, (err, room)=> {
+			console.log('generated, ', room)
 			socket.emit('host-room-generated', room)
 		})
 	}
 
 
-	createUniqueRoomId()
-	// createDevRoom()
+	// createUniqueRoomId()
+	createDevRoom()
 	// Rooms.find({}, (err, rooms) => {
 	// 	console.log('All rooms', rooms)
 	// 	checkRoom()

@@ -45,6 +45,9 @@ export default class Grid extends Component {
 								// return <div />
 							// }
 						})}
+						{!players.length &&
+							<p className="noPlayers">Where is everyone?</p>
+						}
 					</div>
 					<div className="filler">
 					</div>

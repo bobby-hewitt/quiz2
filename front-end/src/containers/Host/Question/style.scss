@@ -98,12 +98,15 @@
 		
 		z-index: 100;
 		display: flex;
-		width:100%;
+		// width:100%;
+		padding:0 20px;
 		flex:1;
 		flex-direction: column;
 		/* overflow: hidden; */
 		
 		.hostHintContainer{
+			padding-right:300px;
+			box-sizing:border-box;
 			overflow: hidden;
 			position: relative;
 			height:50px;
@@ -114,13 +117,14 @@
 				opacity:1;
 				transform: translateX(0px);
 			}
+			
 			.answerScoreContainer{
 				position: absolute;
 				right:0px;
 				top:0px;
 				bottom:0;
 				align-items: center;
-				padding-right:20px;
+				padding-right:260px;
 				padding-left:30px;
 				display: flex;
 				flex-direction: row;
@@ -137,6 +141,11 @@
 					font-size: 20px;
 				}
 				
+			}
+			&.offsetRight{
+				.answerScoreContainer{
+					padding-right:260px;
+				}
 			}
 			display: block;
 			flex-direction: row;

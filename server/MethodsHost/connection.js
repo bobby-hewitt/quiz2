@@ -41,6 +41,7 @@ exports.connected = function(socket){
 
 	function createRoom(){
 		Rooms.create({short: code, long: socket.id}, (err, room)=> {
+			console.log('generated, ', room)
 			socket.emit('host-room-generated', room)
 		})
 	}

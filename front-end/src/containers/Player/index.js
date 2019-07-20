@@ -27,9 +27,9 @@ class Player extends Component {
 	}
 
 	componentWillMount(){
-		if (window.localStorage.quiz){
+		// if (window.localStorage.quiz){
 			this.props.push('/p')
-		}
+		// }
 	}
 	render(){
 		const { loading, room }= this.props
@@ -45,9 +45,7 @@ class Player extends Component {
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
 					<Route exact path="/p/end" render={() => <End room={room}/>} />
 				</div>
-				{loading && 
-					<Waiting />
-				}
+				
 			</div>
 		)
 	}

@@ -12,6 +12,7 @@ export default class End extends Component {
 		return(
 			<div className="endContainer">
 				<ColorText text="That's it" letterStyle={{fontSize:'50px'}}/>
+				<div className="spacer" />
 				<Button text="Play again!" onClick={this.onClick.bind(this)}/>
 			</div>
 		)

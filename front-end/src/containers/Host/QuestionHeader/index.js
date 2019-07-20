@@ -120,7 +120,7 @@ class QuestionHeader extends Component {
 			} else {
 				for (var j = 0; j < answers[i].players.length; j++){
 
-					newPlayers[answers[i].players[j]].score += answers[i].score / answers[i].players.length
+					newPlayers[answers[i].players[j]].score += Math.floor(answers[i].score / answers[i].players.length)
 					this.props.updatePlayers(newPlayers)
 				}
 
@@ -141,8 +141,7 @@ class QuestionHeader extends Component {
 		const { round, questionIndex, players, answers } = this.props
 		const moreAnswersAvaliable = this.moreAnswersAvaliable()
 		if (!moreAnswersAvaliable || round === 3){
-			//next question
-
+			//next questions
 			this.revealAnswers()
 		} else {
 			//next round
@@ -168,8 +167,6 @@ class QuestionHeader extends Component {
 
 
 	revealAnswers(){
-
-		// this.props.setViewResponses(false)
 		this.setState({hideAnswers: true})
 		const { round, questionIndex, players, answers } = this.props
 		var notAnsweredCount = 0;
@@ -191,7 +188,7 @@ class QuestionHeader extends Component {
 			const { round, questionIndex, players, answers } = this.props
 			var newPlayers = Object.assign([], players)
 			setTimeout(() => {
-				console.log('moving forwards')
+				
 				this.setState({player: players[questionIndex], bonus: answeredCount}, () => {
 					newPlayers[questionIndex].score += 100 * answeredCount
 					this.props.updatePlayers(newPlayers)
@@ -200,12 +197,12 @@ class QuestionHeader extends Component {
 						//add bonus points
 						this.setState({player: false, bonus: false, hideAnswers: false}) 
 						if (questionIndex === players.length-1){
-							console.log('END GAME')
+							
 							this.setEndGame()
 						} else {
 							//next question
 							this.props.updateAnswers([])
-							this.props.nextQuestion()
+							
 							this.props.setRound(1)
 							var newPlayers = Object.assign([], players)
 							for (var i = 0; i < players.length; i++){
@@ -213,9 +210,15 @@ class QuestionHeader extends Component {
 								players[i].hasSubmitted = false
 							}
 							this.props.updatePlayers(newPlayers)
-							sendQuestionInput(this)
+							
 							this.props.setViewResponses(false)
-							this.props.push('/host/question-input')
+							this.props.push('/host/scores')
+							// setTimeout(() => {
+							// 	sendQuestionInput(this)
+							// 	this.props.nextQuestion()
+							// 	this.props.push('/host/question-input')
+							// }, 5000)
+							
 						}
 					},2500)
 					
@@ -229,26 +232,16 @@ class QuestionHeader extends Component {
 		let finalPlayers = []
 		for (var i = 0; i < newPlayers.length; i++){
 			if (newPlayers[i].name.length){
-				console.log('creating final player')
+				
 				finalPlayers.push(newPlayers[i])
 			} 
 		} 
 		finalPlayers.sort(function(a, b){return a.score-b.score});
 		this.props.setFinalPlayers(finalPlayers)
-		// for (var i = 0; i < players.length; i++){
-		// 	players[i].score = 0
-		// 	players[i].answer = false
-		// 	players[i].hasSubmitted = false
-		// }
-		// this.props.updatePlayers(newPlayers)
-		// this.props.setRound(1)
-		// this.props.nextQuestion(0)
-		// this.props.setViewResponses(false)
 		endGame(this)
 	}
 
 	revealAnswer(i, timeout){
-
 		setTimeout(() => {
 			const { answers } = this.props
 			var newAnswers = Object.assign([],answers)
@@ -279,7 +272,7 @@ class QuestionHeader extends Component {
 	}
 
 	componentWillReceiveProps(np){
-		console.log('getting props')
+		
 		if(np.isAnswers !== this.props.isAnswers){
 			if(np.isAnswers){
 				setTimeout(() => {
