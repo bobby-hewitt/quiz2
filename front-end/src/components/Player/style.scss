@@ -1,10 +1,18 @@
 .hostPlayerOuterContainer{
-	margin:12px 20px;
+	margin:12px 20px 0 20px;
 	display: block;
 	max-height: 165px;
 	position: relative;
+	opacity:0;
+	height:0;
+	// overflow: visible;
 	&.large{
+
 		margin: 12px 50px;
+	}
+	&.isVisible{
+		height:auto;
+		opacity: 1;
 	}
 .hostPlayerContainer{
 	&.large{

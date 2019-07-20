@@ -26,7 +26,7 @@ export default class Question extends Component {
 
 	countdown(isStart){
 		if (isStart) {
-			this.setState({countdown: 60})
+			this.setState({countdown: 100000})
 			this.props.sounds.bell.play()
 		}
 		this.countdownTimeout = setTimeout(() => {

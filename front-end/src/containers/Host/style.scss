@@ -22,6 +22,7 @@
 		padding-bottom:20px;
 		max-height: 100vh;
 		height:100vh;
+		// min-width:100vw;
 		position: relative;
 		/* overflow: hidden; */
 
@@ -30,10 +31,12 @@
 	}
 
 	.hostPlayersContainer{
-		
+		// position:absolute;
+		top:0;
+		right:0;
 		width:280px;
 		height:100vh;
-		position: relative;
+		position:relative;
 
 	}
 	.hostBackground{

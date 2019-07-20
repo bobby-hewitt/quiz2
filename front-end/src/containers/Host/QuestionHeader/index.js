@@ -15,7 +15,7 @@ class QuestionHeader extends Component {
 
 	constructor(props){
 		super(props)
-		this.playerDuration = 5000;
+		this.playerDuration = 4000;
 		this.answerDuration = 600;
 		this.timeouts = []
 		this.state = {
@@ -55,7 +55,10 @@ class QuestionHeader extends Component {
 							showAnswer:false
 						}, () => {
 							if (i === players.length-1) {
-								this.tallyScores(0)
+								setTimeout(() => {
+									this.tallyScores(0)
+								},500)
+								
 							} else {
 								this.timeouts[i] = setTimeout(() => {
 									this.showPlayer(i+1)
@@ -116,9 +119,11 @@ class QuestionHeader extends Component {
 				}
 			} else {
 				for (var j = 0; j < answers[i].players.length; j++){
+
 					newPlayers[answers[i].players[j]].score += answers[i].score / answers[i].players.length
 					this.props.updatePlayers(newPlayers)
 				}
+
 				setTimeout(() => {
 					if (i < answers.length - 1){
 						this.tallyScores(i+1)
@@ -291,11 +296,12 @@ class QuestionHeader extends Component {
 	render(){
 		const { player, playerIndex, showAnswer, showRightWrong, bonus, hideAnswers} = this.state
 		const { isAnswers } = this.props
+
 		return(
-			<div className={`answersHeaderContainer ${(isAnswers && !hideAnswers)  && ' isVisible'}`}>
+			<div className={`answersHeaderContainer ${(isAnswers && !hideAnswers )  && ' isVisible'}`}>
 				{player && 
 					<Response 
-						timeout={(this.playerDuration /6) * 4}
+						timeout={(this.playerDuration /4) * 3}
 						player={player}
 						color={colors[playerIndex]}
 						showRightWrong={showRightWrong}

@@ -31,12 +31,13 @@ export default class Player extends Component {
 	}
 	render(){
 		const { name, image, planet, isConnected, color, index, score, hasSubmitted, large } = this.props
+		const playerImage = !isConnected ? require('assets/images/png/disconnected.png') : image
 		return(
-			<div className={`hostPlayerOuterContainer ${large && 'large'}`}>
+			<div className={`hostPlayerOuterContainer ${large && 'large'}  ${name && 'isVisible'}`}>
 			<div 
 				className={`hostPlayerContainer ${!isConnected && 'isDisconnected'} ${large && 'large'}`}
 				>
-				<div className={`playerCircle ${large && 'large'}`} style={image ? {backgroundImage:'url(' + image + ')'} : {background:color}}>
+				<div className={`playerCircle ${large && 'large'}`} style={image ? {backgroundImage:'url(' + playerImage + ')'} : {background:color}}>
 					
 						{/*<p>{name && name[0] && name[0].toUpperCase() ? name[0].toUpperCase() : '?'}</p>*/}
 
