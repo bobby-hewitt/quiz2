@@ -4,6 +4,7 @@ const initialState = {
   id: null,
   loading:false,
   answers: [],
+  likes: [],
 }
 
 export default (state = initialState, action) => {
@@ -19,6 +20,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload
+      }
+    case 'PLAYER_SET_LIKES':
+      return {
+        ...state,
+        likes: action.payload
       }
     default:
       return state

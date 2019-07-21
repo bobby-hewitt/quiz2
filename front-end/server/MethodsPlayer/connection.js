@@ -55,6 +55,11 @@ exports.submitAnswer = (socket, data) =>{
 	socket.to(data.room.long).emit('player-answer', data)
 }
 
+exports.sendLike = (socket, data) => {
+	console.log('player sending like')
+	socket.to(data.room.long).emit('player-send-like', data.like)
+}
+
 
 exports.submitQuestion = (socket, io, data) => {
 	const query = data.question.toLowerCase()

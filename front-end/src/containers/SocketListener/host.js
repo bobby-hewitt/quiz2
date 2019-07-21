@@ -20,6 +20,7 @@ function subscribeToHostEvents(self) {
 	socket.on('restart-game', restartGame.bind(this, self))
 	socket.on('send-hints-to-host', showHints.bind(this, self))
 	socket.on('player-answer', playerAnswer.bind(this, self))
+	socket.on('player-send-like', playerSendLike.bind(this, self))
 	// socket.on('host-room-code-generated', successJoiningRoom.bind(this, self))
 }
 
@@ -31,10 +32,21 @@ function hostQuit(self){
 	
 }
 
+function playerSendLike(self, data){
+	const { players } = self.props
+	console.log('in player send like', data, newPlayers)
+	let newPlayers = Object.assign([], players)
+	for (var i = 0; i < newPlayers.length; i++){
+		if (newPlayers[i].name === data.name && newPlayers[i].answer === data.answer){
+			console.log('player found')
+			newPlayers[i].likes += 1
+			self.props.updatePlayers(newPlayers)
+		}
+	} 
+}
+
 function playerAnswer(self, data){
 	const { players } = self.props
-
-	
 	var audio = new Audio(require('assets/sounds/bounce.wav'));
 	audio.play()
 	self.props.playerAnswerReceived(data)
@@ -176,8 +188,12 @@ function playerLeft(self, data){
 }
 
 function roomGenerated(self, data){
-	
 	self.props.hostSetRoom(data)
+}
+
+function sendLikes(self, data){
+	console.log('sending likes')
+	socket.emit('host-send-likes', data)
 }
 
 
@@ -216,6 +232,7 @@ const avatars = [
 function createNewPlayerObj(self, data){
 	var newPlayers = Object.assign([], self.props.players)
 	  data.isConnected = true
+	  data.likes = 0;
 	  var disconnectedPlayerFound = false 
 	  for (var i = 0; i < newPlayers.length; i++ ){
 	    if (data.name === newPlayers[i].name && !newPlayers[i].isConnected){
@@ -342,5 +359,6 @@ export {
 	endGame,
 	sendAnswerInput,
 	sendQuestionInput,
+	sendLikes,
 	subscribeToHostEvents
 };

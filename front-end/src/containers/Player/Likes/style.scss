@@ -1,0 +1,41 @@
+.likesContainer{
+	// width:100vw;
+	.title{
+		color:#000;
+		margin:20px 0;
+		font-size:30px;
+	}
+	.likeContainer{
+		width:100%;
+		height:70px;
+		margin-bottom:1px;
+		display: flex;
+		align-items:center;
+		position: relative;
+		.thumbsup{
+			opacity: 0;
+			position: absolute;
+			right:10px;
+			width:40px;
+			top:0;
+			// bottom:0;
+			line-height: 70px;
+			font-size:30px;
+		}
+		.answer{	
+			padding-left:10px;
+			font-size:24px;
+			color:#000;
+		}
+		&.isSelected{
+			background:#0F9D58;
+			.thumbsup{
+				opacity: 1!important;
+			}
+			.answer{	
+				color:#fff;
+				// opacity:0.5;
+			}
+		}
+	}
+}

@@ -14,7 +14,7 @@ export default class TextInput extends Component {
 
 		return(
 			<div className="textInputContainer">
-				<input placeholder={placeholder} type="text" ref="input" value={value} onChange={onChange}/>
+				<input autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" placeholder={placeholder} type="text" ref="input" value={value} onChange={onChange}/>
 				{onContinue &&
 					<div className="continue" onClick={this.onContinue.bind(this)}>
 						<img src={require('assets/images/svg/forward.svg')} />

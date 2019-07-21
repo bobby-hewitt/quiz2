@@ -23,10 +23,19 @@ function subscribeToPlayerEvents(self) {
 	socket.on('answer-input', answerInput.bind(this, self))
 	socket.on('end-game', endGame.bind(this, self))
 	socket.on('player-error-not-enough-suggestions', errorWithQuestion.bind(this, self))
+	socket.on('host-sending-likes', getLikes.bind(this, self))
 }
+
+
 
 function roomFull(self){
 	
+}
+
+function getLikes(self, data){
+	console.log('getting likes')
+	self.props.setLikes(data.players)
+	self.props.push('/p/likes')
 }
 
 function errorWithQuestion(self){
@@ -68,6 +77,10 @@ function sendAnswer(self, data){
 
 function hostQuit(self){
 	
+}
+
+function sendLike(data){
+	socket.emit('player-send-like', data)
 }
 
 function successJoiningRoom(self, data){
@@ -133,7 +146,7 @@ function joinRoom(self, data){
 	const prevId = window.localStorage.quiz ? JSON.parse(window.localStorage.quiz).id : false
 	data.prevId = prevId
 	socket.emit('player-connected', data)
-	self.props.setLoading(true)
+	self.props.push('/p/waiting')
 }
 
 function sendName(data){
@@ -162,6 +175,7 @@ function emit(self, data){
 }
 
 export { 
+	sendLike,
 	startGame,
 	joinRoom, 
 	restartGame,

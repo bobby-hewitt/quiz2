@@ -25,5 +25,15 @@ export const setLoading = (payload) => {
   }
 }
 
+export const setLikes = (payload) => {
+  console.log('setting liokes')
+  return dispatch => {
+    dispatch({
+      type: 'PLAYER_SET_LIKES',
+      payload
+    })
+  }
+}
+
 
 

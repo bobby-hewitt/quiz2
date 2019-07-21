@@ -129,6 +129,24 @@ export const nextQuestion = (payload) => {
   }
 }
 
+export const addAnswersToLikes = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'HOST_ADD_ANSWERS_TO_LIKES',
+      payload
+    })
+  }
+}
+
+export const hoseSaveLike = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'HOST_SAVE_LIKE',
+      payload
+    })
+  }
+}
+
 
 
 

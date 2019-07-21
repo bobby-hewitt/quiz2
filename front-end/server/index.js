@@ -59,7 +59,13 @@ io.on('connection', function(socket){
   	socket.on('host-send-leave-room-instruction', Host.sendLeaveRoomInstruction.bind(this, socket, io))
   	socket.on('leave-room', Player.leaveRoom.bind(this,socket))
   	socket.on('send-player-waiting', Host.sendPlayerWaiting.bind(this, socket, io))
+  	socket.on('host-send-likes', Host.sendLikes.bind(this, socket, io))
+  	socket.on('player-send-like', Player.sendLike.bind(this, socket))
 });
+
+
+
+
 
 
 

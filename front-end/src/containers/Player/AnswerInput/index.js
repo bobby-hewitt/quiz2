@@ -53,7 +53,7 @@ class AnswerInput extends Component {
 					/>
 				<Button
 					danger
-					containerStyle={{backgroundColor:'ff0000'}} 
+					
 					text="Give up"
 					onClick={this.giveUp.bind(this)}
 				/>

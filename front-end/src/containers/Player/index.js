@@ -13,8 +13,10 @@ import Waiting from './Waiting'
 import End from './End'
 import QuestionInput from './QuestionInput'
 import AnswerInput from './AnswerInput'
+import Likes from './Likes'
 import Loading from './Loading'
 import QuestionInputError from './QuestionInputError'
+import { setLikes } from 'actions/player'
 
 class Player extends Component {
 
@@ -32,7 +34,7 @@ class Player extends Component {
 		// }
 	}
 	render(){
-		const { loading, room }= this.props
+		const { loading, room, likes }= this.props
 		return(
 			<div className="playerContainer">
 				<SocketListener />
@@ -44,6 +46,7 @@ class Player extends Component {
 					<Route exact path="/p/question-input-error" render={() => <QuestionInputError />} />
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
 					<Route exact path="/p/end" render={() => <End room={room}/>} />
+					<Route exact path="/p/likes" render={() => <Likes setLikes={this.props.setLikes}likes={likes} room={room}/>} />
 				</div>
 				
 			</div>
@@ -53,12 +56,13 @@ class Player extends Component {
 
 const mapStateToProps = state => ({
 	loading:state.player.loading,
-	room:state.player.room
+	room:state.player.room,
+	likes:state.player.likes
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   push: (path) => push(path),
-
+  setLikes
 }, dispatch)
 
 export default connect(

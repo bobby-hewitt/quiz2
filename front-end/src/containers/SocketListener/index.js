@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import {subscribeToPlayerEvents} from './player'
 import {subscribeToHostEvents} from './host'
 import { hostSetRoom, playerJoined, playerLeft, showHints, playerAnswerReceived, updateAnswers, setViewResponses, setGameState, setScreenLoadingState, updatePlayers, setRound, nextQuestion, } from 'actions/host'
-import { playerSetRoom, playerSetSelf, setLoading } from 'actions/player'
+import { playerSetRoom, playerSetSelf, setLoading, setLikes } from 'actions/player'
 import { setSound } from 'actions/sounds'
 
 class SocketListener extends Component {
@@ -65,6 +65,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   hostSetRoom,
   setRound,
   nextQuestion,
+  setLikes,
   playerSetSelf,
   updatePlayers,
   setViewResponses,

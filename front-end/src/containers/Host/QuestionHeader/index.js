@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import './style.scss'
 import Response from './Response'
 import { Button, TextInput, BottomContainer, ColorText, Player, InputStyleText } from 'components'
-import { updateAnswers, updatePlayers, setRound, nextQuestion,setFinalPlayers, setViewResponses, setScreenLoadingState } from 'actions/host'
-import { sendAnswerInput, sendQuestionInput, endGame } from 'containers/SocketListener/host'
+import { updateAnswers, updatePlayers, setRound, nextQuestion,setFinalPlayers, setViewResponses, setScreenLoadingState, addAnswersToLikes } from 'actions/host'
+import { sendAnswerInput, sendQuestionInput, endGame, sendLikes } from 'containers/SocketListener/host'
 const colors = [
 	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
 ]
@@ -185,7 +185,7 @@ class QuestionHeader extends Component {
 
 
 	moveForwards(notAnsweredCount, answeredCount){
-			const { round, questionIndex, players, answers } = this.props
+			const { round, questionIndex, players, answers, hostRoom } = this.props
 			var newPlayers = Object.assign([], players)
 			setTimeout(() => {
 				
@@ -201,24 +201,10 @@ class QuestionHeader extends Component {
 							this.setEndGame()
 						} else {
 							//next question
-							this.props.updateAnswers([])
+							sendLikes(this, {players: Object.assign([], players), room: hostRoom})
 							
-							this.props.setRound(1)
-							var newPlayers = Object.assign([], players)
-							for (var i = 0; i < players.length; i++){
-								players[i].answer = false
-								players[i].hasSubmitted = false
-							}
-							this.props.updatePlayers(newPlayers)
 							
-							this.props.setViewResponses(false)
 							this.props.push('/host/scores')
-							// setTimeout(() => {
-							// 	sendQuestionInput(this)
-							// 	this.props.nextQuestion()
-							// 	this.props.push('/host/question-input')
-							// }, 5000)
-							
 						}
 					},2500)
 					

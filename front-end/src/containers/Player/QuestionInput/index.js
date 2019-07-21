@@ -6,6 +6,8 @@ import './style.scss'
 import { Button, TextInput, BottomContainer, ColorText } from 'components'
 import { sendQuestion } from 'containers/SocketListener/player'
 import { setLoading } from 'actions/player'
+import suggestions from 'data/suggestions'
+
 class NameTeam extends Component {
 
 	constructor(props){
@@ -28,7 +30,11 @@ class NameTeam extends Component {
 	onChange(key, e){
 		this.setState({[key]: e.target.value})
 	}
-	
+
+	suggestion(){
+		const index = Math.floor(Math.random() * suggestions.length)
+		this.setState({question: suggestions[index]})
+	}	
 	render(){
 		const { question } = this.state
 		return(
@@ -40,6 +46,11 @@ class NameTeam extends Component {
 					onContinue={this.onContinue.bind(this)}
 					onChange={this.onChange.bind(this, 'question')}
 					/>
+				<Button
+					help
+					text="Suggest something"
+					onClick={this.suggestion.bind(this)}
+				/>
 				<div>
 				</div>
 			</div>

@@ -6,14 +6,7 @@
 	opacity:0;
 	height:0;
 	// overflow: visible;
-	&.large{
-		
-
-		margin: 12px 50px;
-		.score{
-			margin-bottom: 20px;
-		}
-	}
+	
 	&.isVisible{
 		height:auto;
 		opacity: 1;
@@ -21,6 +14,9 @@
 .hostPlayerContainer{
 	&.large{
 		margin-top:-100px;
+	}
+	&.hideName{
+		margin-top:0;
 	}
 	position: relative;
 	width:80px;
@@ -60,7 +56,7 @@
 		}
 	}
 	.score{
-		color:#ddd;
+		color:#000;
 		font-size: 25px;
 	}
 	.name{
@@ -70,7 +66,48 @@
 		width:100%;
 		text-align: center;
 	}
+	&.large{
+		min-width:150px!important;
+		// margin: 12px 50px;
+		.score{
+			// margin-bottom: 20px;
+		}
+	}
+
 }
+.playerDisplayedAnswerContainer{
+display: flex;
+align-items:center;
+justify-content: center;
+width:200px;
+margin:0!important;
+flex-direction: row;
+.playerDisplayedAnswer{
+	text-align: center;
+	font-size:30px;
+	margin-right: 5px;
+		color:#000;
+	}
+}
+.thumbsup{
+	margin-left:5px;
+		font-size:30px;
+	}
+}
+
+.hostLikeContainer{
+	position: absolute;
+	width:30px;
+	height:30px;
+	
+	top:120px;
+	right:-30px;
+	animation-name: like;
+	animation-duration: 0.8s;
+	animation-fill-mode: forwards;
+	.thumbsup{
+		font-size:50px;
+	}
 }
 
 
@@ -141,6 +178,7 @@
   50% {opacity:1;}
   100% {transform: translate(20px, -20px); opacity:1;}
 }
+
 @keyframes coin2 {
   0%   {transform: translate(0);opacity:0;}
   50% {opacity:1;}
@@ -150,4 +188,11 @@
   0%   {transform: translateY(0);opacity:0;}
   50% {opacity:1;}
   100% {transform: translateY(-28px); opacity:1;}
+}
+
+@keyframes like {
+  0%   {transform: translate(0, 0);opacity:0;}
+  50% {opacity:1;}
+  75% {transform: translate(0, -50px); opacity:1;}
+  100% {transform: translate(0, -66px); opacity:0;}
 }
