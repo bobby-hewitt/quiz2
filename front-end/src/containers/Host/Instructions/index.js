@@ -6,6 +6,7 @@ export default class Instructions extends Component {
 	constructor(props){
 		super(props)
 		this.timeouts = []
+		this.audio = new Audio(require('assets/narration/intro.wav'))
 		this.tips = this.props.dev ? [] : [
 			{
 				text: 'The auto complete search engine game',
@@ -35,11 +36,25 @@ export default class Instructions extends Component {
 
 	}
 	componentDidMount(){
+		// const audio = new Audio(require('assets/narration/intro.wav'))
+		this.audio.onended = () => {
+			this.next()
+		}
+		this.audio.play()
+		
 		this.props.setScreenLoadingState('in')
 		// this.timeouts[0] = setTimeout(() => {
 		// 	this.props.complete()
 		// },10000)
 		// this.showTip(0)
+	}
+
+	next(){
+		this.props.setScreenLoadingState('out')
+			this.props.sounds.interstitial4.play() 
+			setTimeout(() => {
+				this.props.complete()
+			}, this.props.dev ? 0 : 1500)
 	}
 
 	showTip(index){
@@ -58,11 +73,11 @@ export default class Instructions extends Component {
 				}, 100)
 			})
 		} else {
-			this.props.setScreenLoadingState('out')
-			this.props.sounds.interstitial4.play() 
-			setTimeout(() => {
-				this.props.complete()
-			}, this.props.dev ? 0 : 1500)
+			// this.props.setScreenLoadingState('out')
+			// this.props.sounds.interstitial4.play() 
+			// setTimeout(() => {
+			// 	this.props.complete()
+			// }, this.props.dev ? 0 : 1500)
 			
 		}
 	}
