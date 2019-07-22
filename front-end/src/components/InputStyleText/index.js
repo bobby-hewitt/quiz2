@@ -10,16 +10,19 @@ export default class InputStyleText extends Component {
 	}
 
 	render(){
-		const { secondaryText, primaryText, containerStyle, isVisible, correct, incorrect } = this.props
+		const { secondaryText, primaryText, containerStyle, isVisible, correct, incorrect, isLike, onClick } = this.props
 
 
 		return(
-			<div className={`inputStyleTextContainer ${isVisible && 'inputContainerExpanded'} ${correct && 'correct'} ${incorrect && 'incorrect'}`} >
+			<div onClick={onClick ? onClick.bind(this) : () => {return}}className={`inputStyleTextContainer ${isVisible && 'inputContainerExpanded'} ${correct && 'correct'} ${incorrect && 'incorrect'}`} >
 				<p className="inputText"><span className="secondary">{secondaryText} </span>{primaryText}</p>
-				{!correct && !incorrect && 
+				{!correct && !incorrect && !isLike &&
 					<img className="image" src="http://www.gstatic.com/images/branding/googlemic/2x/googlemic_color_24dp.png" />
 				}
-				{correct && 
+				{isLike && 
+					<p className="image">👍</p>
+				}
+				{correct && !isLike &&
 					<p className="image">👌</p>
 				}
 				{incorrect && 

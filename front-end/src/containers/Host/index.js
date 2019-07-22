@@ -27,9 +27,24 @@ class Host extends Component {
 		}
 	}
 
+	showPlayerGrid(){
+		const { players } = this.props 
+		var showPlayers = false
+		if (window.location.pathname === '/host'){
+			showPlayers = true
+		}
+		for (var i = players.length - 1; i >= 0; i--) {
+			if (!players[i].isConnected){
+				showPlayers = true
+			}
+		}
+		return showPlayers
+	}
+
+
 	render(){
-		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState, dev} = this.props
-		
+		const { room , players, question, questionIndex, isAnswers, setViewResponses, sounds, loadingState, dev, round} = this.props
+		const showPlayerGrid = this.showPlayerGrid()
 		return(
 			<div className="hostContainer">
 				<SocketListener isHost/>
@@ -41,7 +56,7 @@ class Host extends Component {
 				<div className="hostMainContainer">
 					<Route exact path="/host" render={() => <PageTitle  title="Trending.guru" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions dev={dev} sounds={sounds}complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
-					<Route exact path="/host/question" render={() => <Question loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
+					<Route exact path="/host/question" render={() => <Question showPlayerGrid={showPlayerGrid} round={round}loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
 					
 					<Route exact path="/host/question-input" render={() => <QuestionInput name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
@@ -49,7 +64,8 @@ class Host extends Component {
 					<Loading loading={loadingState === 'out'} sounds={sounds} dev={dev}/>
 				</div>
 				<div className="hostPlayersContainer">
-				<PlayerGrid players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	<Loading />
+				<PlayerGrid isVisible={showPlayerGrid}players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	
+				<Loading />
 				</div>
 			</div>
 		)
@@ -64,6 +80,7 @@ const mapStateToProps = state => ({
 	questionIndex: state.host.questionIndex,
 	question:state.host.question,
 	sounds: state.sounds,
+	round: state.host.round,
 	loadingState: state.host.screenLoadingState,
 	dev: state.dev
 })

@@ -18,7 +18,7 @@ export default class Response extends Component {
 			this.setState({isAnimatedIn: true}, () => {
 				this.timeouts[1] = setTimeout(() => {
 					this.setState({isAnimatedIn: false})
-				}, timeout)
+				}, timeout * 1.5)
 			})
 		})
 	}
@@ -47,7 +47,7 @@ export default class Response extends Component {
 		return(
 			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'} ${showRightWrong === 'right' && 'correct'} ${showRightWrong  && showRightWrong !== 'right' && 'incorrect'}`}>
 				{/*<h4 className="answerPlayerName">{player.name}'s answer</h4>*/}
-				<Player {...player} large/>
+				<Player {...player} large showLikeAnimation/>
 				{!(bonus || bonus === 0) &&
 				<InputStyleText isVisible primaryText={player.answer || '❌'} correct={showRightWrong && showRightWrong === 'right'} incorrect={showRightWrong && showRightWrong !== 'right'}containerStlye={{margin:'0px', marginTop:'-30px', height:'60px'}}/>
 				}

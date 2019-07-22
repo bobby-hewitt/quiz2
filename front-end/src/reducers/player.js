@@ -4,7 +4,7 @@ const initialState = {
   id: null,
   loading:false,
   answers: [],
-  likes: [],
+  likes: false,
 }
 
 export default (state = initialState, action) => {

@@ -32,37 +32,28 @@ export default class Player extends Component {
 
 
 	render(){
-		const { name, image, planet, isConnected, color, index, score, hasSubmitted, large, showScores, likes, showLikes, answer, hideName } = this.props
-		const playerImage = !isConnected ? require('assets/images/png/disconnected.png') : image
+		const { name, image, planet, disconnected, color, index, score, hasSubmitted, large, showScores, showLikeAnimation, likes, showLikes, answer, hideName } = this.props
+		const playerImage = disconnected ? require('assets/images/png/disconnected.png') : image
 		const scoreToShow = score || 0
-		if (this.props.large){
-			console.log('answer', answer)
-		}
+		
 		return(
 			<div className={`hostPlayerOuterContainer ${large && 'large'}  ${name && 'isVisible'}`}>
 			
-			<div 
-				className={`hostPlayerContainer ${!isConnected && 'isDisconnected'} ${large && 'large'} ${hideName && 'hideName'}`}
-				>
+			<div className={`hostPlayerContainer  ${large && 'large'} ${hideName && 'hideName'}`}>
 				<div className={`playerCircle ${large && 'large'}`} style={image ? {backgroundImage:'url(' + playerImage + ')'} : {background:color}}>
-					
-						{/*<p>{name && name[0] && name[0].toUpperCase() ? name[0].toUpperCase() : '?'}</p>*/}
-
-					
-
 				</div>
 				{!hideName &&
 					<p className="name">{name || `Player ${index + 1}`}</p>
 				}
 				{showScores &&
-					<p className="score">{`Score: ${score || 0}`}</p>
+					<p className="score">{`Score: ${scoreToShow}`}</p>
 				}
-				{showScores &&
+				{showLikeAnimation &&
 					<Likes likes={likes}/>
 				}
 				{showLikes && answer && answer !== 'pass' &&
 					<div className="playerDisplayedAnswerContainer">
-						<p className="playerDisplayedAnswer">{answer}</p>
+						
 						<p className="score">{`${likes}`}<span className="thumbsup">👍</span></p>
 						
 					</div>

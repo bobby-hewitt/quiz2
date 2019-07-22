@@ -6,7 +6,7 @@ import './style.scss'
 import Response from './Response'
 import { Button, TextInput, BottomContainer, ColorText, Player, InputStyleText } from 'components'
 import { updateAnswers, updatePlayers, setRound, nextQuestion,setFinalPlayers, setViewResponses, setScreenLoadingState, addAnswersToLikes } from 'actions/host'
-import { sendAnswerInput, sendQuestionInput, endGame, sendLikes } from 'containers/SocketListener/host'
+import { sendAnswerInput, sendQuestionInput, sendPlayerWaiting, endGame, sendLikes, playVoiceover } from 'containers/SocketListener/host'
 const colors = [
 	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
 ]
@@ -42,15 +42,15 @@ class QuestionHeader extends Component {
 	
 
 	showPlayer(i){
-		const { players } = this.props
+		const { players, hostRoom } = this.props
 		// this.timeouts[i] = setTimeout(() => {
 			this.setState({player: players[i], playerIndex: i, showRightWrong: false}, () => {
+				sendLikes(this, {player: players[i], room: hostRoom})
 				this.timeouts[i] = setTimeout(() => {
 					// update scoreboard
 					this.updateAnswers(players[i].answer, i)
 					this.timeouts[i] = setTimeout(() => {
-						this.setState({
-							
+						this.setState({	
 							player: false, 
 							showAnswer:false
 						}, () => {
@@ -67,7 +67,7 @@ class QuestionHeader extends Component {
 							}
 						})
 
-					}, (this.playerDuration /2) )
+					}, (this.playerDuration / 4 * 3) )
 				},  this.playerDuration / 4)
 			})
 
@@ -108,7 +108,10 @@ class QuestionHeader extends Component {
 			}
 		}
 		if (!answersCount){
+			playVoiceover(this, 'allWrong')
+			sendPlayerWaiting(this.props.hostRoom)
 			return this.revealAnswers()
+
 		} else {
 			var newPlayers = Object.assign([], players)
 			if (!answers[i].players.length){
@@ -142,6 +145,7 @@ class QuestionHeader extends Component {
 		const moreAnswersAvaliable = this.moreAnswersAvaliable()
 		if (!moreAnswersAvaliable || round === 3){
 			//next questions
+			sendPlayerWaiting(this.props.hostRoom)
 			this.revealAnswers()
 		} else {
 			//next round
@@ -201,7 +205,7 @@ class QuestionHeader extends Component {
 							this.setEndGame()
 						} else {
 							//next question
-							sendLikes(this, {players: Object.assign([], players), room: hostRoom})
+							// sendLikes(this, {players: Object.assign([], players), room: hostRoom})
 							
 							
 							this.props.push('/host/scores')
@@ -274,7 +278,7 @@ class QuestionHeader extends Component {
 
 	render(){
 		const { player, playerIndex, showAnswer, showRightWrong, bonus, hideAnswers} = this.state
-		const { isAnswers } = this.props
+		const { isAnswers, isVisible } = this.props
 
 		return(
 			<div className={`answersHeaderContainer ${(isAnswers && !hideAnswers )  && ' isVisible'}`}>

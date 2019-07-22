@@ -12,7 +12,7 @@ export default class Likes extends Component {
 
 	componentWillReceiveProps(np){
 		if (np.likes > this.props.likes){
-			console.log('getting a like')
+			console.log('getting a like', (new Date().getMilliseconds()))
 			const newShow = Object.assign([], this.state.show)
 			newShow.push(true)
 			this.setState({show: newShow})
@@ -25,7 +25,11 @@ export default class Likes extends Component {
 			<div className="hostLikesContainer">
 				{show && show.map((thumbsup, i) => {
 					return(
-						<div key={i} className="hostLikeContainer">
+						<div key={i} className="hostLikeContainer" style={{
+							position:'absolute', 
+							top: Math.floor(Math.random() * 100) + 200,
+							left: Math.floor(Math.random() * 170)
+						}}>
 							<p className="thumbsup">👍</p>
 						</div>
 					)

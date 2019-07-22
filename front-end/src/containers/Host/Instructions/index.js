@@ -37,12 +37,16 @@ export default class Instructions extends Component {
 	}
 	componentDidMount(){
 		// const audio = new Audio(require('assets/narration/intro.wav'))
-		this.audio.onended = () => {
+		if (this.props.dev){
 			this.next()
+		} else {
+			this.audio.onended = () => {
+				this.next()
+			}
+			this.audio.play()
+
+			this.props.setScreenLoadingState('in')
 		}
-		this.audio.play()
-		
-		this.props.setScreenLoadingState('in')
 		// this.timeouts[0] = setTimeout(() => {
 		// 	this.props.complete()
 		// },10000)
@@ -51,44 +55,44 @@ export default class Instructions extends Component {
 
 	next(){
 		this.props.setScreenLoadingState('out')
-			this.props.sounds.interstitial4.play() 
+			this.props.sounds.start.play() 
 			setTimeout(() => {
 				this.props.complete()
-			}, this.props.dev ? 0 : 1500)
+			}, this.props.dev ? 0 : 3500)
 	}
 
-	showTip(index){
-		if (this.tips[index]){
-			this.setState({tip: index}, () => {
-				setTimeout(() => {
-					this.setState({animated: 'in'}, ()=> {
-						setTimeout(() => {
-							this.setState({animated: 'out'}, () => {
-								setTimeout(() => {
-									this.showTip(index + 1)
-								},600)
-							})
-						}, this.tips[index].time)
-					})
-				}, 100)
-			})
-		} else {
-			// this.props.setScreenLoadingState('out')
-			// this.props.sounds.interstitial4.play() 
-			// setTimeout(() => {
-			// 	this.props.complete()
-			// }, this.props.dev ? 0 : 1500)
+	// showTip(index){
+	// 	if (this.tips[index]){
+	// 		this.setState({tip: index}, () => {
+	// 			setTimeout(() => {
+	// 				this.setState({animated: 'in'}, ()=> {
+	// 					setTimeout(() => {
+	// 						this.setState({animated: 'out'}, () => {
+	// 							setTimeout(() => {
+	// 								this.showTip(index + 1)
+	// 							},600)
+	// 						})
+	// 					}, this.tips[index].time)
+	// 				})
+	// 			}, 100)
+	// 		})
+	// 	} else {
+	// 		// this.props.setScreenLoadingState('out')
+	// 		// this.props.sounds.interstitial4.play() 
+	// 		// setTimeout(() => {
+	// 		// 	this.props.complete()
+	// 		// }, this.props.dev ? 0 : 1500)
 			
-		}
-	}
+	// 	}
+	// }
 
 	titleComplete(){
-		this.showTip(0)
+		// this.showTip(0)
 	}
 
 
 	componentWillUnmount(){
-
+		this.audio.pause()
 		for (var i = this.timeouts.length - 1; i >= 0; i--) {
 			clearTimeout(this.timeouts[i])
 		}
@@ -101,7 +105,7 @@ export default class Instructions extends Component {
 				
 				<div className="videoContainer">
 				<video autoPlay loop height={window.innerHeight-110}>
-				  <source src={require('assets/videos/intro2.mov')} type="video/mp4" />
+				  <source src={require('assets/videos/instruction.mov')} type="video/mp4" />
 				  
 				  Your browser does not support the video tag.
 				</video>

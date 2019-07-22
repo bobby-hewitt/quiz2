@@ -34,7 +34,7 @@ function roomFull(self){
 
 function getLikes(self, data){
 	console.log('getting likes')
-	self.props.setLikes(data.players)
+	self.props.setLikes(data.player)
 	self.props.push('/p/likes')
 }
 

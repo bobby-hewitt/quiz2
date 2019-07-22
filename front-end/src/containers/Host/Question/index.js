@@ -28,13 +28,20 @@ export default class Question extends Component {
 		if (isStart) {
 			this.setState({countdown: 60})
 			this.props.sounds.bell.play()
+			this.props.timerSound.playbackRate = 1;
+			this.props.timerSound.play();
 		}
 		this.countdownTimeout = setTimeout(() => {
 			if (this.state.countdown > 0){
 				this.setState({countdown: this.state.countdown - 1})
 				this.countdown()
-				if (this.state.countdown === 11){
-					this.props.timerSound.play()
+				if (this.state.countdown === 30){
+					const audio = new Audio(require('assets/narration/timer/30.wav'))
+					audio.play()
+				} else if (this.state.countdown === 10){
+					this.props.timerSound.playbackRate = 2;
+					const audio = new Audio(require('assets/narration/timer/10.wav'))
+					audio.play()
 				}
 			} else {
 				this.props.timerSound.pause();
@@ -108,8 +115,7 @@ export default class Question extends Component {
 
 
 	render(){
-		const { question, answers, isQuestion, isAnswers, players, sounds, loadingState } = this.props
-		const maxOffsetScoresIndex = players.length <= 2 ? 1 : players.length <= 4 ? 4 : players.length <= 6 ? 7 : 10
+		const { round, question, answers, sounds, isQuestion, isAnswers, players, loadingState, showPlayerGrid } = this.props
 		return(
 			<div className="questionContainer">
 				{(this.state.countdown || this.state.countdown === 0) &&
@@ -118,7 +124,7 @@ export default class Question extends Component {
 				<div className="questionInfoContainer">
 				
 				
-					<QuestionHeader clearCountdown={this.clearCountdown.bind(this)}text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
+					<QuestionHeader sounds={sounds} clearCountdown={this.clearCountdown.bind(this)}text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
 	
 				</div>
 				<div className="questionAndAnswerContainer">
@@ -146,7 +152,7 @@ export default class Question extends Component {
 				{answers && answers.map((answer, i) => {
 					if (!answer.show){
 						return (
-							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'} ${this.state.visible >= i && 'isVisible'} ${i <= maxOffsetScoresIndex && 'offsetRight'}`}>
+							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'} ${this.state.visible >= i && 'isVisible'} ${showPlayerGrid && 'offsetRight'}`}>
 								{answer && answer.hint && answer.hint.map((letter, j) => {
 
 									if (j === 0 || answer.hint[j-1] === ' '){
@@ -170,7 +176,7 @@ export default class Question extends Component {
 						)
 					} else {
 						return(
-							<div key={i} className={`hostHintContainer isVisible ${i % 2 === 0 && 'grey'} ${i <= maxOffsetScoresIndex && 'offsetRight'}`}>
+							<div key={i} className={`hostHintContainer isVisible ${i % 2 === 0 && 'grey'} ${showPlayerGrid && 'offsetRight'}`}>
 								<p className={`revealedAnswer ${answer.isUndiscovered && 'undiscovered'}`}>{answer.answer}</p>
 								<div className="answerScoreContainer">
 								{answer.players && answer.players.map((player, j) => {

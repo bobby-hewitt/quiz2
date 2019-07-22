@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Player, ColorText } from 'components'
 import { setGameState, setScreenLoadingState, nextQuestion, updateAnswers, setRound, updatePlayers, setViewResponses,addAnswersToLikes} from 'actions/host'
-import { sendQuestionInput } from 'containers/SocketListener/host'
+import { sendQuestionInput, playVoiceover } from 'containers/SocketListener/host'
 import './style.scss'
 const colors = [
 	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
@@ -28,6 +28,7 @@ class End extends Component {
 
 	componentDidMount(){
 		this.showPlayer(0)
+		playVoiceover(this, 'scores')
 	}
 
 	showPlayer(index){

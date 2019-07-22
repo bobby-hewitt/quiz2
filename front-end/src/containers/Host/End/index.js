@@ -21,7 +21,28 @@ class End extends Component {
 	componentWillMount(){
 		const { players } = this.props
 		const newPlayers = players.sort(function(a, b){return b.score-a.score})
-		this.setState({players: newPlayers})
+		this.getMostLikes(newPlayers, (brandNewPlayers) => {
+			this.setState({players: brandNewPlayers})
+		})
+		
+	}
+
+	getMostLikes(players, callback){
+		
+		var indexes = []
+		var score = 0
+		for (var i = 0; i < players.length; i++){
+			if (players[i].likes > score){
+				score = players[i].likes 
+				indexes= [i]
+			} else if (players[i].likes ===score){
+				indexes.push(i)
+			}
+		}
+		for (var i = 0; i < indexes.length; i++){
+			players[indexes[i]].mostLiked = true
+		}
+		callback(players)
 	}
 
 	componentDidMount(){
@@ -57,8 +78,8 @@ class End extends Component {
 				{players && players.map((player, i) => {
 					return(
 						<div key={i}className={`finalPlayerInnerContainer ${this.state.visible >= i && 'isVisible'}`}>
-						<h4>#{i+1}</h4>
-						<Player color={colors[i]}key={i} {...player} large showScores/>
+						<h4>#{i+1} {player.name} {player.mostLiked ? 'MOST LIKED' : ''}</h4>
+						<Player color={colors[i]}key={i} {...player} large showScores showLikes hideName/>
 						</div>
 					)
 				})}

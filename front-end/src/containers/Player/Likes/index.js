@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './style.scss'
 import { sendLike } from 'containers/SocketListener/player'
+import { Player, InputStyleText, Button } from 'components'
 
 export default class Likes extends Component {
 
@@ -8,36 +9,41 @@ export default class Likes extends Component {
 
 	like(index){
 		const { likes, room} = this.props
-		if (likes[index] && !likes[index].isSelected){
-			let newLikes = Object.assign( [], likes)
+		if (!likes.isSelected){
+			console.log('liking')
 			const data = { 
-				like: newLikes[index],
+				like: likes,
 				room: room
 			}
 			sendLike(data)
-			newLikes[index].isSelected = true
+			var newLikes = Object.assign({}, likes)
+			newLikes.isSelected = true
 			this.props.setLikes(newLikes)
 		}
+		
 		
 	}
 	render(){
 		const { likes} = this.props
-		return(
-			<div className="likesContainer">
-				<p className="title">Show some appreciation</p>
-				{likes && likes.map((like, i) => {
-					if (like.answer && like.answer !== 'pass'){
-						return (
-							<div key={i} className={`likeContainer ${like.isSelected && 'isSelected'}`} onClick={this.like.bind(this, i)}>
-								<p className="answer">{like.answer}</p>
-								<p className="thumbsup">👍</p>
-							</div>
-						)
-					} else {
-						return <div key={i} />
-					}
-				})}
-			</div>
-		)
+		console.log('likes', likes)
+			
+
+					
+		if (likes.answer && likes.answer !== 'pass'){
+			return (
+				<div  className={`likeContainer ${likes.isSelected && 'isSelected'}`} >
+					<Player {...likes} large/>
+
+					<InputStyleText isLike onClick={this.like.bind(this)} correct={likes.isSelected} isVisible primaryText={likes.answer || '❌'} containerStlye={{margin:'0px', marginTop:'-30px', height:'60px'}}/>
+				
+					
+				</div>
+			)
+		} else {
+			return <div  />
+		}
+				
+		
+		
 	}
 }

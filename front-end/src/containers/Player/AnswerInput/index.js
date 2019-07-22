@@ -18,15 +18,17 @@ class AnswerInput extends Component {
 	onContinue(){
 		const { answer } = this.state
 		const { room, id } = this.props
-
-		const data = {
-			answer: answer === 'PASS' ? answer : answer.toLowerCase(),
-			room,
-			id
+		if (answer.length){
+			const data = {
+				answer: answer === 'PASS' ? answer : answer.toLowerCase(),
+				room,
+				id
+			}
+			this.setState({answer: ''}, () => {
+				sendAnswer(this, data)
+			})
 		}
-		this.setState({answer: ''}, () => {
-			sendAnswer(this, data)
-		})
+
 	}
 
 	giveUp(){
@@ -53,7 +55,6 @@ class AnswerInput extends Component {
 					/>
 				<Button
 					danger
-					
 					text="Give up"
 					onClick={this.giveUp.bind(this)}
 				/>

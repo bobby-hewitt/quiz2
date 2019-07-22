@@ -1,6 +1,7 @@
 .instructionContainer{
 	position: relative;
 	overflow: hidden;
+
 	.instructions{
 		position: absolute;
 		top:0;
@@ -26,8 +27,17 @@
 		
 
 	}
+	.videoContainer{
+		margin-top:50px;
+		display: flex;
+		align-items:center;
+		justify-content: center;
+	}
 	video{
-		max-width: 100%;
+
+		width:60%;
+		
+		margin-top:20px;
 	}
 
 }
