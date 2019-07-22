@@ -16,7 +16,7 @@ class QuestionHeader extends Component {
 	constructor(props){
 		super(props)
 		this.playerDuration = 4000;
-		this.answerDuration = 600;
+		this.answerDuration = 300;
 		this.timeouts = []
 		this.state = {
 			showAnswer: false,
@@ -206,11 +206,12 @@ class QuestionHeader extends Component {
 						} else {
 							//next question
 							// sendLikes(this, {players: Object.assign([], players), room: hostRoom})
-							
-							
+							//experimentally putting this in here.
+							// this.props.nextQuestion()
+
 							this.props.push('/host/scores')
 						}
-					},2500)
+					},5000)
 					
 				})
 			}, (notAnsweredCount + 1) * this.answerDuration)

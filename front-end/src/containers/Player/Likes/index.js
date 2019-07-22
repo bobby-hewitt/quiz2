@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './style.scss'
 import { sendLike } from 'containers/SocketListener/player'
 import { Player, InputStyleText, Button } from 'components'
-
+import Waiting from '../Waiting'
 export default class Likes extends Component {
 
 
@@ -40,7 +40,7 @@ export default class Likes extends Component {
 				</div>
 			)
 		} else {
-			return <div  />
+			return <Waiting />
 		}
 				
 		

@@ -10,7 +10,7 @@ const colors = [
 	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
 ]
 
-class End extends Component {
+class ScoreBoard extends Component {
 
 	constructor(props){
 		super(props)
@@ -50,10 +50,11 @@ class End extends Component {
 						}
 						this.props.updatePlayers(newPlayers)
 						this.props.setViewResponses(false)
-						sendQuestionInput(this)
 						this.props.nextQuestion()
+						sendQuestionInput(this)
+						
 						this.props.push('/host/question-input')
-					}, 7000)
+					}, 5000)
 				}
 			})
 		},500)
@@ -110,4 +111,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(End)
+)(ScoreBoard)

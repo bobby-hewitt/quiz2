@@ -33,7 +33,7 @@ function hostQuit(self){
 }
 
 function playVoiceover(self, key){
-	console.log('playing voice', key, self)
+	
 	const index = Math.floor(Math.random() * self.props.sounds[key].length)
 	const audio = self.props.sounds[key][index]
 	audio.play()
@@ -41,7 +41,7 @@ function playVoiceover(self, key){
 
 function playerSendLike(self, data){
 	const { players } = self.props
-	console.log('platyer sending like',  (new Date().getMilliseconds()))
+	
 	let newPlayers = Object.assign([], players)
 	for (var i = 0; i < newPlayers.length; i++){
 		if (newPlayers[i].name === data.name && newPlayers[i].answer === data.answer){
@@ -125,7 +125,7 @@ function startGame(self, data){
 	setTimeout(() => {
 		self.props.setScreenLoadingState('in')
 		// self.props.sounds.typing.play()
-		self.props.setGameState('question-entry')
+		self.props.setGameState('waiting')
 		self.props.push('/host/instructions')
 	}, self.props.dev ? 0 : 3500)
 }
@@ -164,30 +164,51 @@ function restartGame(self, data){
 
 function endGame(self){
 	
-	var audio = new Audio(require('assets/sounds/end.wav'));
-	audio.play()
-	audio.onended = () => {
+	// var audio = new Audio(require('assets/sounds/end.wav'));
+	// audio.play()
+	// audio.onended = () => {
 		playVoiceover(self, 'end')
-	}
+	// }
 	self.props.setGameState('end')
 	self.props.push('/host/end')
 	socket.emit('host-end-game', self.props.room)
 }
 
+
+
 function sendQuestionInput(self){
-	playVoiceover(self, 'enterTerm')
+	
 	// self.props.sounds.typing.play()
 	//this function should push to host holding screen
-	self.props.setGameState('question-entry')
-	const player = self.props.players[self.props.questionIndex ]
-	const data = {
-		player, 
-		room: self.props.hostRoom
-	}
 	
-	socket.emit('host-send-question-input' , data)
-	self.props.push('/host/question-input')
-	self.props.setScreenLoadingState('in')
+	
+		
+		self.props.push('/host/question-input')
+		self.props.setScreenLoadingState('in')	
+		if (!self.props.dev) playVoiceover(self, 'choosePlayer')
+
+			setTimeout(() => {
+				if (!self.props.dev) playVoiceover(self, 'affirmative')
+				self.props.setGameState('question-entry')
+				setTimeout(() => {
+
+					playVoiceover(self, 'enterTerm')
+					const player = self.props.players[self.props.questionIndex ]
+					
+					const data = {
+						player, 
+						room: self.props.hostRoom
+					}
+					socket.emit('host-send-question-input' , data)
+					self.props.setScreenLoadingState('in')
+				}, self.props.dev ? 1 : 1000)
+				
+			}, self.props.dev ? 1 : 4000)
+		
+	
+	
+	
+	
 }
 
 function playerLeft(self, data){
@@ -308,16 +329,16 @@ function playerJoined(self, data){
 	if (joinState === 'rejoin'){
 		data = getRejoinGameState(self, data)
 		self.props.sounds.bounce.play()
-		console.log('player rejoined')
-		console.log(data)
+		
+		
 
 		socket.emit('host-sending-game-state', data)
 	} else if (joinState === 'new'){
 		data.gameState = 'welcome'
 		self.props.sounds.bounce.play()
 
-		console.log('new player joined')
-		console.log(data)
+		
+		
 		socket.emit('host-sending-game-state', data)
 	} else {
 		socket.emit('host-send-leave-room-instruction', data)

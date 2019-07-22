@@ -121,6 +121,7 @@ export const setGameState = (payload) => {
 }
 
 export const nextQuestion = (payload) => {
+  console.log('CALLING NEXT QUESTION')
   return dispatch => {
     dispatch({
       type: 'HOST_NEXT_QUESTION',

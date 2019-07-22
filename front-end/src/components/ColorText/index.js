@@ -26,9 +26,12 @@ export default class ColorText extends Component {
 				this.setState({visible: i}, () => {
 					this.displayTitle(i + 1)
 				})		
-			} else if (this.props.loadComplete){
+			} else {
+				this.setState({visible: 20})
+				if (this.props.loadComplete){
 				
-				this.props.loadComplete()
+					this.props.loadComplete()
+				}
 			}
 		}, this.timeoutTime)
 	}
@@ -44,6 +47,12 @@ export default class ColorText extends Component {
 			newText.push(text[i])
 		}
 		return newText
+	}
+
+	componentWillReceiveProps(np){
+		if (np.text !== this.props.text){
+			this.text = this.createTitle()
+		}
 	}
 	render(){
 		const { letterStyle, containerStyle } = this.props

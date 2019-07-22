@@ -33,9 +33,10 @@ function roomFull(self){
 }
 
 function getLikes(self, data){
-	console.log('getting likes')
-	self.props.setLikes(data.player)
+	
 	self.props.push('/p/likes')
+	self.props.setLikes(data.player)
+	
 }
 
 function errorWithQuestion(self){
@@ -51,7 +52,6 @@ function endGame(self){
 }
 
 function waiting(self){
-	console.log('getting waiting')
 	self.props.push('/p/waiting')
 }
 

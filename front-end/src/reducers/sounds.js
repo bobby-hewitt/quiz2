@@ -20,7 +20,6 @@ const initialState = {
     new Audio(require('assets/narration/choosePlayer/3.wav')),
     new Audio(require('assets/narration/choosePlayer/4.wav')),
     new Audio(require('assets/narration/choosePlayer/5.wav')),
-    new Audio(require('assets/narration/choosePlayer/6.wav')),
   ],
   round1: [
     new Audio(require('assets/narration/round1/1.wav')),
@@ -77,6 +76,11 @@ const initialState = {
     new Audio(require('assets/narration/allWrong/2.wav')),
     new Audio(require('assets/narration/allWrong/3.wav')),
   ],
+  affirmative: [
+    new Audio(require('assets/narration/affirmative/1.wav')),
+    new Audio(require('assets/narration/affirmative/2.wav')),
+    new Audio(require('assets/narration/affirmative/3.wav')),
+  ]
   
 
 

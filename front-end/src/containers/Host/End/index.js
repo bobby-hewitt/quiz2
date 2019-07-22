@@ -78,7 +78,7 @@ class End extends Component {
 				{players && players.map((player, i) => {
 					return(
 						<div key={i}className={`finalPlayerInnerContainer ${this.state.visible >= i && 'isVisible'}`}>
-						<h4>#{i+1} {player.name} {player.mostLiked ? 'MOST LIKED' : ''}</h4>
+						<h4>#{i+1} {player.name} {player.mostLiked ? '👍🥇' : ''}</h4>
 						<Player color={colors[i]}key={i} {...player} large showScores showLikes hideName/>
 						</div>
 					)

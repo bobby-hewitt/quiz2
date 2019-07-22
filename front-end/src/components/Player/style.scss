@@ -14,7 +14,7 @@
 	}
 .hostPlayerContainer{
 	&.large{
-		margin-top:-100px;
+		margin-top:-150px;
 	}
 	&.hideName{
 		margin-top:0;
@@ -37,6 +37,9 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
+		&.disconnected{
+			border:9px solid red;
+		}
 		&.large{
 			box-shadow: 0 0 20px rgba(0,0,0,0.3);
 			margin-bottom:20px;
@@ -58,10 +61,10 @@
 	}
 	.score{
 		color:#000;
-		font-size: 25px;
+		font-size: 30px;
 	}
 	.name{
-		font-size: 25px;
+		font-size: 30px;
 		color:#000;
 		font-weight:bold;
 		width:100%;
@@ -182,6 +185,28 @@ flex-direction: row;
 		}
 	}
 
+}
+
+.mostLikedContainer{
+	background:white;
+	box-shadow: 0 0 20px rgba(0,0,0,0.3);
+	border-radius:50%;
+	height:60px;
+	width:60px;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+	position: absolute;
+	top:-10px;
+	right:-30px;
+	&:after{
+		width:20px;
+		height:30px;
+		background:green;
+		position:absolute;
+		top:-20px;
+		right:-20px;
+	}
 }
 
 

@@ -47,6 +47,7 @@ export default class Response extends Component {
 		return(
 			<div className={`answersHeaderInner ${this.state.isAnimatedIn && 'isAnimated'} ${showRightWrong === 'right' && 'correct'} ${showRightWrong  && showRightWrong !== 'right' && 'incorrect'}`}>
 				{/*<h4 className="answerPlayerName">{player.name}'s answer</h4>*/}
+				<div className="answersHeaderController">
 				<Player {...player} large showLikeAnimation/>
 				{!(bonus || bonus === 0) &&
 				<InputStyleText isVisible primaryText={player.answer || '❌'} correct={showRightWrong && showRightWrong === 'right'} incorrect={showRightWrong && showRightWrong !== 'right'}containerStlye={{margin:'0px', marginTop:'-30px', height:'60px'}}/>
@@ -54,8 +55,9 @@ export default class Response extends Component {
 					{/*<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>*/}
 				
 				{(bonus || bonus === 0) &&
-					<h4 className="answer">{`500 bonus * ${bonus}`}</h4>	
+					<h4 className="bonus">{`500 bonus * ${bonus}`}</h4>	
 				}
+				</div>
 			</div>
 		)
 	}

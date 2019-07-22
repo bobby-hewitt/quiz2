@@ -32,7 +32,7 @@ export default class Player extends Component {
 
 
 	render(){
-		const { name, image, planet, disconnected, color, index, score, hasSubmitted, large, showScores, showLikeAnimation, likes, showLikes, answer, hideName } = this.props
+		const { name, image, planet, disconnected, color, index, score, hasSubmitted, large, showScores, showLikeAnimation, likes, showLikes, answer, hideName, mostLiked } = this.props
 		const playerImage = disconnected ? require('assets/images/png/disconnected.png') : image
 		const scoreToShow = score || 0
 		
@@ -40,7 +40,12 @@ export default class Player extends Component {
 			<div className={`hostPlayerOuterContainer ${large && 'large'}  ${name && 'isVisible'}`}>
 			
 			<div className={`hostPlayerContainer  ${large && 'large'} ${hideName && 'hideName'}`}>
-				<div className={`playerCircle ${large && 'large'}`} style={image ? {backgroundImage:'url(' + playerImage + ')'} : {background:color}}>
+				<div className={`playerCircle ${large && 'large'} ${disconnected && 'disconnected'}`}   style={image ? {backgroundImage:'url(' + playerImage + ')'} : {background:color}}>
+					{/*mostLiked && 
+						<div className="mostLikedContainer">
+							<p><span>👍</span></p>
+						</div>
+					*/}
 				</div>
 				{!hideName &&
 					<p className="name">{name || `Player ${index + 1}`}</p>

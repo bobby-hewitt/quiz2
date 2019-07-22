@@ -87,6 +87,7 @@ exports.sendAnswerInput = ( socket, io, data) => {
 }
 
 exports.sendLikes = ( socket, io, data) => {
-	console.log('sending likes')
+	
 	socket.broadcast.to(data.room.long).emit('host-sending-likes', data)	
+	socket.to(data.player.id).emit('waiting')
 }

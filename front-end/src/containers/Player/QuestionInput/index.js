@@ -48,7 +48,7 @@ class NameTeam extends Component {
 					/>
 				<Button
 					help
-					text="Suggest something"
+					text="Give me ideas"
 					onClick={this.suggestion.bind(this)}
 				/>
 				<div>

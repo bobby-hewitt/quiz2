@@ -45,7 +45,7 @@ class Player extends Component {
 					<Route exact path="/p/question-input" render={() => <QuestionInput />} />
 					<Route exact path="/p/question-input-error" render={() => <QuestionInputError />} />
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
-					<Route exact path="/p/end" render={() => <End room={room}/>} />
+					<Route exact path="/p/end" render={() => <End push={this.props.push.bind(this)}room={room}/>} />
 					<Route exact path="/p/likes" render={() => <Likes setLikes={this.props.setLikes}likes={likes} room={room}/>} />
 				</div>
 				

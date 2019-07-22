@@ -6,7 +6,9 @@ import { restartGame } from 'containers/SocketListener/player'
 export default class End extends Component {
 
 	onClick(){
+
 		restartGame(this.props.room)
+		this.props.push('/p/waiting')
 	}
 	render(){
 		return(

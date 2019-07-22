@@ -3,6 +3,7 @@ import './style.scss'
 import { ColorText, InputStyleText} from 'components'
 import QuestionHeader from '../QuestionHeader'
 import { sendAnswerInput, endCountdown } from 'containers/SocketListener/host'
+import AnswerRow from './AnswerRow'
 export default class Question extends Component {
 
 	constructor(props){
@@ -116,17 +117,19 @@ export default class Question extends Component {
 
 	render(){
 		const { round, question, answers, sounds, isQuestion, isAnswers, players, loadingState, showPlayerGrid } = this.props
+		const { countdown, visible }= this.state
 		return(
 			<div className="questionContainer">
-				{(this.state.countdown || this.state.countdown === 0) &&
-					<p className="countdown"><span className="secondary">Time left: </span>{this.state.countdown}</p>
+				{(countdown || countdown === 0) &&
+					<p className={`countdown ${countdown > 50 ? 'green' : 'red'}`}><span className="a">Time left: </span>{this.state.countdown}</p>
 				}
-				<div className="questionInfoContainer">
+				
+
 				
 				
 					<QuestionHeader sounds={sounds} clearCountdown={this.clearCountdown.bind(this)}text="Fill in the blanks" setGameState={this.props.setGameState.bind(this)} sounds={sounds}/>
 	
-				</div>
+			
 				<div className="questionAndAnswerContainer">
 				
 				<div className={`questionShadowContainer ${loadingState === 'in' && 'isVisible'}`}>
@@ -150,46 +153,10 @@ export default class Question extends Component {
 				</div>
 				<div className="hostHintsContainer">
 				{answers && answers.map((answer, i) => {
-					if (!answer.show){
-						return (
-							<div key={i} className={`hostHintContainer ${i % 2 === 0 && 'grey'} ${this.state.visible >= i && 'isVisible'} ${showPlayerGrid && 'offsetRight'}`}>
-								{answer && answer.hint && answer.hint.map((letter, j) => {
-
-									if (j === 0 || answer.hint[j-1] === ' '){
-										return(
-											<p key={`${i}${j}1`}className={`hintLetter ${letter === ' ' && 'space'}`}>
-												{answer.answer[j]}
-											</p>
-										)
-									} else {
-										return(
-											<p key={`${i}${j}2`}className={`hintLetter ${letter === ' ' && 'space'}`}>
-												{letter}
-											</p>
-										)
-									}
-								})}
-								<div className="answerScoreContainer">
-									<p className="answerScore">{answer.score}</p>
-								</div>
-							</div>
-						)
-					} else {
-						return(
-							<div key={i} className={`hostHintContainer isVisible ${i % 2 === 0 && 'grey'} ${showPlayerGrid && 'offsetRight'}`}>
-								<p className={`revealedAnswer ${answer.isUndiscovered && 'undiscovered'}`}>{answer.answer}</p>
-								<div className="answerScoreContainer">
-								{answer.players && answer.players.map((player, j) => {
-									
-									return(
-										<p key={`${i}${j}3`}className="playerInAnswer">{players[player].name}</p>
-									)
-								})}
-								<p className="answerScore">{answer.score}</p>
-								</div>
-							</div>
-						)
-					}
+					const score = answer.players.length ? Math.floor(answer.score / answer.players.length) : answer.score
+					return(
+						<AnswerRow key={i} {...answer} isGrey={i % 2 } showPlayerGrid={showPlayerGrid} visible={visible} index={i} score={score}/>
+					)
 				})}
 				</div>
 				</div>

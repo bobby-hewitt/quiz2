@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './style.scss'
+import suggestions from 'data/suggestions'
 
 const colors = [
 	'#4285F4', '#DB4437', '#0F9D58', '#F4B400'
@@ -22,7 +23,8 @@ export default class HostLoading extends Component {
 		for (var i = 0; i < limit; i++){
 			bits.push({
 				color: colors[i%colors.length],
-				x: Math.floor(Math.random() * 100) + '%',
+				rotate: (Math.floor(Math.random() * 30) - 15) + 'deg', 
+				x: Math.floor(Math.random() * 90) + '%',
 				y: Math.floor(Math.random() * 100) + '%',
 			})
 		}
@@ -51,7 +53,7 @@ export default class HostLoading extends Component {
 				this.setState({visible: index})
 				this.load(index + 1)
 			}
-		}, 100)
+		}, 150)
 		
 	}
 	
@@ -65,9 +67,13 @@ export default class HostLoading extends Component {
 								position:'absolute',
 								left:bit.x,
 								top: bit.y,
-								background: i < this.state.visible ? bit.color : 'transparent'
+								transform:`rotate(${bit.rotate})`,
+								width:'100%',
+								opacity: i < this.state.visible && i > this.state.visible - 8 ? 1 : 0
 							}}
-						/>
+						>
+						<p style={{color: bit.color}}>{suggestions[i]}...</p>
+						</div>
 					)
 				})}
 			</div>

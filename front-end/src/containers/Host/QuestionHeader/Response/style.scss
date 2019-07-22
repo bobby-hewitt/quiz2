@@ -6,12 +6,21 @@
 		opacity:0;
 		transform: translateY(30px);
 		transition: all 0.3s ease;
-		padding: 0 20px 40px 20px;
+		padding: 0 20px 0px 20px;
 		width:100%;
+		max-height: 300px;
 		height:100%;
-			box-shadow: 0px 0px 20px rgba(0,0,0,0.3);	
+		box-shadow: 0px 0px 20px rgba(0,0,0,0.3);	
+		background:white;
+		border-radius: 5px;
+		.answersHeaderController{
+			margin-top:-20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
 	// position: relative;
-	background:white;
 		.answerTitle{
 			transition: all 0.3s ease;
 			transform: translateY(50px);
@@ -27,6 +36,10 @@
 		}
 		h4{
 			color:#000;
+		}
+		.bonus{
+			height:60px;
+			margin-top:20px;
 		}
 
 		.answerPlayerName{

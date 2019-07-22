@@ -27,7 +27,7 @@ export default class Likes extends Component {
 					return(
 						<div key={i} className="hostLikeContainer" style={{
 							position:'absolute', 
-							top: Math.floor(Math.random() * 100) + 200,
+							top: 180,
 							left: Math.floor(Math.random() * 170)
 						}}>
 							<p className="thumbsup">👍</p>

@@ -7,6 +7,7 @@ export default class Instructions extends Component {
 		super(props)
 		this.timeouts = []
 		this.audio = new Audio(require('assets/narration/intro.wav'))
+		// this.audio = new Audio(require('assets/sounds/bounce.wav'))
 		this.tips = this.props.dev ? [] : [
 			{
 				text: 'The auto complete search engine game',
@@ -42,6 +43,12 @@ export default class Instructions extends Component {
 		} else {
 			this.audio.onended = () => {
 				this.next()
+			}
+			this.audio.onerror = () => {
+				setTimeout(() => {
+					this.next()	
+				},1000)
+				
 			}
 			this.audio.play()
 

@@ -16,7 +16,6 @@ export default class Grid extends Component {
 
 	render(){
 		const { players, title, room, isVisible } = this.props
-		console.log('player grid visible', isVisible)
 		return(
 			<div className="playersContainer">
 				<div className="fakeMenu">
@@ -36,7 +35,11 @@ export default class Grid extends Component {
 				
 				<div className={`playersModalBackground ${isVisible && 'isVisible'}`}>
 					<div className="playersInner">
+
 						<div className="playersInnerChevron" />
+						{window.location.pathname !== '/host' &&
+							<p className="modalInfo">Uh oh, you've disconnected</p>
+						}
 						{players.map((player, i) => {
 							if (window.location.pathname === '/host' || !player.isConnected){
 								return(						
@@ -47,7 +50,7 @@ export default class Grid extends Component {
 							}
 						})}
 						{!players.length &&
-							<p className="noPlayers">Where is everyone?</p>
+							<p className="noPlayers">?</p>
 						}
 					</div>
 					<div className="filler">
