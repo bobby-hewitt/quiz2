@@ -72,6 +72,7 @@ exports.submitQuestion = (socket, io, data) => {
 				suggestions[i].hint = createHint(suggestions[i].answer)
 				suggestions[i].score = 1500 - (100 * i)
 				suggestions[i].players = []
+				suggestions[i].correctPlayers = []
 			}
 			if (suggestions.length >= 5){
 				const dataToSend = {

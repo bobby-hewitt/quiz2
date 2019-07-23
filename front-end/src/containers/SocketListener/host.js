@@ -33,7 +33,6 @@ function hostQuit(self){
 }
 
 function playVoiceover(self, key){
-	
 	const index = Math.floor(Math.random() * self.props.sounds[key].length)
 	const audio = self.props.sounds[key][index]
 	audio.play()
@@ -67,7 +66,6 @@ function playerAnswer(self, data){
 }
 
 function revealScores(self){
-	
 	var players = Object.assign([], self.props.players)
 	var answers = Object.assign([], self.props.question.answers)
 	for (var i = 0; i < answers.length; i++){
@@ -256,10 +254,15 @@ const avatars = [
 
 ]
 
+const colors = [
+	'#4285F4','#DB4437','#F4B400','#4285F4','#0F9D58','#DB4437'
+]
+
 function createNewPlayerObj(self, data){
 	var newPlayers = Object.assign([], self.props.players)
 	  data.isConnected = true
 	  data.likes = 0;
+	  data.color = colors[self.props.players.length % 6]
 	  var disconnectedPlayerFound = false 
 	  for (var i = 0; i < newPlayers.length; i++ ){
 	    if (data.name === newPlayers[i].name && !newPlayers[i].isConnected){

@@ -90,6 +90,7 @@ class QuestionHeader extends Component {
 			if (newAnswers[i].answer === playerAnswer && (!newAnswers[i].show || newAnswers[i].show === round)){
 				newAnswers[i].show = round
 				isCorrect = true
+				newAnswers[i].correctPlayers.push(index)
 				newAnswers[i].players.push(index)
 				// this.updateScore(index, newAnswers[i].relevance + 500)
 			}

@@ -11,11 +11,25 @@ import PageTitle from './PageTitle'
 import QuestionInput from './QuestionInput'
 import End from './End'
 import Loading from './Loading'
+import RequireAudio from './RequireAudio'
 import ScoreBoard from './ScoreBoard'
 import { PlayerGrid } from 'components'
 import { setViewResponses, setGameState, setScreenLoadingState, nextQuestion } from 'actions/host'
 import { sendQuestionInput } from 'containers/SocketListener/host'
 class Host extends Component {
+
+	constructor(props){
+		super(props)
+		this.state = {
+			requireAudio: false
+		}
+	}
+
+	onRequireAudio(){
+		this.setState({requireAudio: false})
+		this.props.sounds.typing.play()
+	}
+
 
 	instructionsComplete(){
 
@@ -25,6 +39,19 @@ class Host extends Component {
 	componentWillMount(){
 		if (!this.props.room){
 			this.props.push('/host')
+		}
+		var playPromise = this.props.sounds.silence.play();
+
+		// In browsers that don’t yet support this functionality,
+		// playPromise won’t be defined.
+		if (playPromise !== undefined) {
+		  playPromise.then(function() {
+		    // Automatic playback started!
+		  }).catch((error) => {
+		  	this.setState({requireAudio: true})
+		    // Automatic playback failed.
+		    // Show a UI element to let the user manually start playback.
+		  });
 		}
 	}
 
@@ -67,6 +94,9 @@ class Host extends Component {
 				<div className="hostPlayersContainer">
 				<PlayerGrid isVisible={showPlayerGrid}players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	
 				<Loading />
+				{this.state.requireAudio && 
+					<RequireAudio onRequireAudio={this.onRequireAudio.bind(this)}/>
+				}
 				</div>
 			</div>
 		)

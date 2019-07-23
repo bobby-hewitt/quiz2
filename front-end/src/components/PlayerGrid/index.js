@@ -43,7 +43,7 @@ export default class Grid extends Component {
 						{players.map((player, i) => {
 							if (window.location.pathname === '/host' || !player.isConnected){
 								return(						
-									<Player key={i} disconnected={window.location.pathname !== '/host'}  pointsSound={this.props.pointsSound}key={i} index={i} {...player} />
+									<Player key={i} disconnected={window.location.pathname !== '/host' || !player.isConnected}  pointsSound={this.props.pointsSound}key={i} index={i} {...player} />
 								)
 							} else {
 								return <div key={i}/>

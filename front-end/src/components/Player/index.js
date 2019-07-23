@@ -32,7 +32,7 @@ export default class Player extends Component {
 
 
 	render(){
-		const { name, image, planet, disconnected, color, index, score, hasSubmitted, large, showScores, showLikeAnimation, likes, showLikes, answer, hideName, mostLiked } = this.props
+		const { name, image, planet, disconnected, index, score, hasSubmitted, color,  large, showScores, showLikeAnimation, likes, showLikes, answer, hideName, mostLiked } = this.props
 		const playerImage = disconnected ? require('assets/images/png/disconnected.png') : image
 		const scoreToShow = score || 0
 		
@@ -48,7 +48,7 @@ export default class Player extends Component {
 					*/}
 				</div>
 				{!hideName &&
-					<p className="name">{name || `Player ${index + 1}`}</p>
+					<p style={{color: color}}className="name">{name || `Player ${index + 1}`}</p>
 				}
 				{showScores &&
 					<p className="score">{`Score: ${scoreToShow}`}</p>

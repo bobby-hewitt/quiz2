@@ -47,8 +47,8 @@ exports.connected = function(socket){
 	}
 
 
-	// createUniqueRoomId()
-	createDevRoom()
+	createUniqueRoomId()
+	// createDevRoom()
 	// Rooms.find({}, (err, rooms) => {
 	// 	console.log('All rooms', rooms)
 	// 	checkRoom()

@@ -13,20 +13,29 @@ export default class AnswerRow extends Component {
 
 	componentWillReceiveProps(np){
 		if (np.score !== this.state.score && !this.state.isAdjusting){
-			this.adjustScore(parseInt(np.score))
+			
+			setTimeout(() => {
+				this.adjustScore(parseInt(np.score))
+			},750)
+			
 		}
 	}
 
 	adjustScore(target){
+		
+
+		this.props.down.play()
 		const minus = (value) => {
 			setTimeout(() => {
 				this.setState({isAdjusting: true, score: this.state.score - value}, () => {
+
 					if (this.state.score >= target + 50){
 						minus(50)
 					} else if (this.state.score !== target){
 						
 						minus(this.state.score - target)
 					} else {
+
 						this.setState({isAdjusting: false})
 					}
 				})
@@ -41,7 +50,7 @@ export default class AnswerRow extends Component {
 
 
 	render(){
-		const { answer, show, visible, showPlayerGrid, hint, isUndiscovered, players, isGrey, index } = this.props
+		const { answer, show, visible, showPlayerGrid, hint, isUndiscovered, players, isGrey, index, allPlayers, correctPlayers} = this.props
 		const { score } = this.state
 		
 			if (!show){
@@ -64,22 +73,23 @@ export default class AnswerRow extends Component {
 							}
 						})}
 						<div className="answerScoreContainer">
-							<p className="answerScore">{score}</p>
+							<p className="answerScore">{score}💰</p>
 						</div>
 					</div>
 				)
 			} else {
+				// console.log('revealed answer', allPlayers, player)
 				return(
 					<div className={`hostHintContainer isVisible ${isGrey && 'grey'} ${showPlayerGrid && 'offsetRight'}`}>
 						<p className={`revealedAnswer ${isUndiscovered && 'undiscovered'}`}>{answer}</p>
 						<div className="answerScoreContainer">
-						{players && players.map((player, j) => {
+						{correctPlayers && correctPlayers.map((player, j) => {
 							
 							return(
-								<p key={`${j}3`}className="playerInAnswer">{players[player].name}</p>
+								<p key={`${j}3`}className="playerInAnswer">{allPlayers[player].name}</p>
 							)
 						})}
-						<p className="answerScore">{score}</p>
+						<p className="answerScore">{score}💰</p>
 						</div>
 					</div>
 				)

@@ -153,9 +153,9 @@ export default class Question extends Component {
 				</div>
 				<div className="hostHintsContainer">
 				{answers && answers.map((answer, i) => {
-					const score = answer.players.length ? Math.floor(answer.score / answer.players.length) : answer.score
+					const score = answer.correctPlayers.length ? Math.floor(answer.score / answer.correctPlayers.length) : answer.score
 					return(
-						<AnswerRow key={i} {...answer} isGrey={i % 2 } showPlayerGrid={showPlayerGrid} visible={visible} index={i} score={score}/>
+						<AnswerRow down={sounds.down} key={i} {...answer} allPlayers={players} isGrey={i % 2 === 0 } showPlayerGrid={showPlayerGrid} visible={visible} index={i} score={score}/>
 					)
 				})}
 				</div>
