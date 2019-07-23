@@ -85,14 +85,13 @@ class Host extends Component {
 					<Route exact path="/host" render={() => <PageTitle  title="Trending.guru" room={room} backgroundSound={sounds.typing} loadingState={loadingState}/>} />
 					<Route exact path="/host/instructions" render={() => <Instructions dev={dev} sounds={sounds}complete={this.instructionsComplete.bind(this)} setScreenLoadingState={this.props.setScreenLoadingState.bind(this)}/>} />
 					<Route exact path="/host/question" render={() => <Question showPlayerGrid={showPlayerGrid} round={round}loadingState={loadingState} question={question.question} answers={question.answers} players={players} isAnswers={isAnswers} room={room} setViewResponses={this.props.setViewResponses.bind(this)} timerSound={sounds.timer} sounds={sounds}setGameState={this.props.setGameState.bind(this)}/>} />
-					
 					<Route exact path="/host/question-input" render={() => <QuestionInput isChoosing={gameState !== 'question-entry'} players={players} name={players && players[questionIndex] ? players[questionIndex].name: ''} />} />
 					<Route exact path="/host/end" render={() => <End />} />
 					<Route exact path="/host/scores" render={() => <ScoreBoard />} />
 					<Loading loading={loadingState === 'out'} sounds={sounds} dev={dev}/>
 				</div>
 				<div className="hostPlayersContainer">
-				<PlayerGrid isVisible={showPlayerGrid}players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	
+				<PlayerGrid isVisible={showPlayerGrid && players.length} players={players} pointsSound={sounds.coin}title="What would yougle do" room={room}/>	
 				<Loading />
 				{this.state.requireAudio && 
 					<RequireAudio onRequireAudio={this.onRequireAudio.bind(this)}/>

@@ -73,7 +73,7 @@ export default class AnswerRow extends Component {
 							}
 						})}
 						<div className="answerScoreContainer">
-							<p className="answerScore">{score}💰</p>
+							<p className="answerScore">{score} 💰</p>
 						</div>
 					</div>
 				)
@@ -84,12 +84,12 @@ export default class AnswerRow extends Component {
 						<p className={`revealedAnswer ${isUndiscovered && 'undiscovered'}`}>{answer}</p>
 						<div className="answerScoreContainer">
 						{correctPlayers && correctPlayers.map((player, j) => {
-							
+							const p = allPlayers[player]
 							return(
-								<p key={`${j}3`}className="playerInAnswer">{allPlayers[player].name}</p>
+								<p key={`${j}3`}className="playerInAnswer" style={{color: p.color}}>{p.name}</p>
 							)
 						})}
-						<p className="answerScore">{score}💰</p>
+						<p className="answerScore">{score}<span className="spacing"> 💰</span></p>
 						</div>
 					</div>
 				)

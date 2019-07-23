@@ -24,6 +24,11 @@ function subscribeToPlayerEvents(self) {
 	socket.on('end-game', endGame.bind(this, self))
 	socket.on('player-error-not-enough-suggestions', errorWithQuestion.bind(this, self))
 	socket.on('host-sending-likes', getLikes.bind(this, self))
+	socket.on('host-disconnected', hostDisconnected.bind(this, self))
+}
+
+function hostDisconnected(self){
+	self.props.push('/p/host-disconnected')
 }
 
 

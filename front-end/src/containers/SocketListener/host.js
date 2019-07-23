@@ -32,10 +32,16 @@ function hostQuit(self){
 	
 }
 
-function playVoiceover(self, key){
+function playVoiceover(self, key, callback){
 	const index = Math.floor(Math.random() * self.props.sounds[key].length)
 	const audio = self.props.sounds[key][index]
 	audio.play()
+	audio.onended = () => {
+		if (callback){
+			callback()
+		}
+	}
+	
 }
 
 function playerSendLike(self, data){
@@ -360,10 +366,13 @@ function setPlayerName(self, data){
 function sendAnswerInput(self, data){
 	// self.props.sounds.typing.pause()
 	// self.props.sounds.timer.play()
-	playVoiceover(self, 'round' + self.props.round)
 	self.props.sounds.timer.loop = true
+	playVoiceover(self, 'round' + self.props.round)
 	self.props.setGameState('answer-entry')
 	socket.emit('host-send-answer-input', self.props.room)
+	
+	
+
 }
 
 function gameEnd(){

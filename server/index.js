@@ -73,7 +73,11 @@ function disconnect(socket){
 	// Rooms.remove({})
 	Rooms.findOne({long: socket.id}, (err, room) => {
 		//if it is a host leaving then delete room from database
-		if (room) return room.remove()
+		if (room){
+			console.log('host gone')
+			socket.broadcast.to(room.long).emit('host-disconnected')
+			return room.remove()
+		} 
 		else {
 			const rooms = Object.keys(socket.adapter.rooms)
 			for (var i = 0; i < rooms.length; i++){

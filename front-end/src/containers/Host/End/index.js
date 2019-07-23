@@ -35,7 +35,7 @@ class End extends Component {
 			if (players[i].likes > score){
 				score = players[i].likes 
 				indexes= [i]
-			} else if (players[i].likes ===score){
+			} else if (players[i].likes ===score && score !== 0){
 				indexes.push(i)
 			}
 		}

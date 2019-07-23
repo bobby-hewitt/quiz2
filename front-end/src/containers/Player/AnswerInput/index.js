@@ -55,7 +55,7 @@ class AnswerInput extends Component {
 					/>
 				<Button
 					danger
-					text="Give up"
+					text="Pass"
 					onClick={this.giveUp.bind(this)}
 				/>
 				<div>

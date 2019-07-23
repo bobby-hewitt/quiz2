@@ -20,11 +20,14 @@
 			flex-direction: row;
 			align-items: center;
 			margin-bottom:10px;
+			position: absolute;
+			right:40px;
+			top:0px;
 			.fakeMenuItem{
 				font-weight: extra-light!important;
 				color:#000;
 				margin:10px;
-				font-size:25px;
+				font-size:30px;
 				opacity:0.5;
 			}
 			.gridIcon{

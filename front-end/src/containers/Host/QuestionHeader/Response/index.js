@@ -55,7 +55,7 @@ export default class Response extends Component {
 					{/*<h4 className={`emoji ${showRightWrong && ' isVisible'}`}>{showRightWrong === 'right' ? '✅' : '❌'}</h4>*/}
 				
 				{(bonus || bonus === 0) &&
-					<h4 className="bonus">{`500 bonus * ${bonus}`}</h4>	
+					<h4 className="bonus">{`100 bonus x ${bonus}`}</h4>	
 				}
 				</div>
 			</div>

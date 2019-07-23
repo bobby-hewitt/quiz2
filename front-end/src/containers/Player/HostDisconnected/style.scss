@@ -1,0 +1,16 @@
+.hostDisconnectedContainer{
+	width:100vw;
+	position: fixed;
+	top:0;
+	left:0;
+	height:100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	.explainer{
+		color:#000;
+		margin:10px 0 30px 0;
+		font-size: 30px;
+	}
+}

@@ -13,6 +13,7 @@ import Waiting from './Waiting'
 import End from './End'
 import QuestionInput from './QuestionInput'
 import AnswerInput from './AnswerInput'
+import HostDisconnected from './HostDisconnected'
 import Likes from './Likes'
 import Loading from './Loading'
 import QuestionInputError from './QuestionInputError'
@@ -47,6 +48,7 @@ class Player extends Component {
 					<Route exact path="/p/answer-input" render={() => <AnswerInput />} />
 					<Route exact path="/p/end" render={() => <End push={this.props.push.bind(this)}room={room}/>} />
 					<Route exact path="/p/likes" render={() => <Likes setLikes={this.props.setLikes}likes={likes} room={room}/>} />
+					<Route exact path="/p/host-disconnected" render={() => <HostDisconnected push={this.props.push.bind(this)}/>} />
 				</div>
 				
 			</div>
