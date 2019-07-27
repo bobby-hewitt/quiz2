@@ -3,6 +3,7 @@ const User = require('../models/users')
 const auto = require('google-autocomplete');
 
 exports.connected = function(socket, data){
+	console.log('joining')
 	Rooms.findOne({short: data.room}, (err, room) => {
 		if (err) {
 			//unknown error joining room
@@ -15,6 +16,7 @@ exports.connected = function(socket, data){
 				name: data.name
 			}
 			socket.join(room.long)
+			console.log('going. ')
 			socket.broadcast.to(room.long).emit('player-joined', {
 				room, playerData
 			});
@@ -64,9 +66,7 @@ exports.sendLike = (socket, data) => {
 
 
 exports.submitQuestion = (socket, io, data) => {
-	// const query = data.question.toLowerCase()
-	const query = 'help'
-	console.log(query)
+	const query = data.question.toLowerCase()
 	auto.getQuerySuggestions(query, function(err, rawSuggestions) {
 		if (err ) return console.log('error',err,'error')
 		validateSuggestions(rawSuggestions).then((suggestions) => {
