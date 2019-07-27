@@ -66,7 +66,7 @@ io.on('connection', function(socket){
 });
 
 
-
+Player.submitQuestion()
 
 
 
