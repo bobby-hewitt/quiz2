@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 
 // set up database connection
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_URL);
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 mongoose.connection.on('error', function() {
     console.info('Error: Could not connect to MongoDB.?')
 });
